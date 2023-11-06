@@ -1,0 +1,14 @@
+python3 transformers/examples/legacy/question-answering/run_squad.py \
+  --model_type=bert-base-japanese-whole-word-masking \
+  --model_name_or_path=cl-tohoku/bert-base-japanese-whole-word-masking \
+  --do_train \
+  --train_file=データセット/訓練データ.json \
+  --predict_file=データセット/検証用データ.json \
+  --per_gpu_train_batch_size 12 \
+  --learning_rate 3e-5 \
+  --num_train_epochs 10 \
+  --max_seq_length 384 \
+  --doc_stride 128 \
+  --do_eval \
+  --overwrite_output_dir \
+  --output_dir output/

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block body %}
+<h1>アプリ一覧(GooglePlayストア)</h1>
+{% for app_name in app_names %}
+    <a href="google/detail/{{ app_name }}" role="button">{{ app_name }}</a>
+{% endfor %}
+<h1>アプリ一覧(Twitter)</h1>
+{% for app_name in app_names %}
+    <a href="twitter/detail/{{ app_name }}" role="button">{{ app_name }}</a>
+{% endfor %}
+{% endblock %}
