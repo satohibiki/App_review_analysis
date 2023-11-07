@@ -68,6 +68,10 @@ input[type="submit"] {
   margin: 10px auto 50px; /* 上下左右のマージンを調整して中央に配置 */
 }
 
+.date-img {
+  text-align: center;
+}
+
 /* アコーディオンスタイル設定 */
 .accordion-area {
   list-style: none;

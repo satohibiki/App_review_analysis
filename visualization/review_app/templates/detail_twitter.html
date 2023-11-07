@@ -15,19 +15,23 @@
     <div id="app_name">{{ app }}</div>
 </div>
 
-<div class="search">
+<div class="search" id="search">
     <form>
         <div class="date-input">
             <label for="start-date">開始日:</label>
-            <input type="date" name="start-date" value="2021-10-15">
+            <input type="date" name="start-date" id="start-date" value="2021-10-15">
         </div>
         <div class="date-input"> ~ </div>
         <div class="date-input">
             <label for="end-date">終了日:</label>
-            <input type="date" name="end-date" value="2021-12-15">
+            <input type="date" name="end-date" id="end-date" value="2021-12-15">
         </div>
         <input type="submit" value="検索">
     </form>
+</div>
+
+<div class="date-img">
+    <img src="data:image/png;base64,{{data}}"/>
 </div>
 
 <ul class="accordion-area">
