@@ -1,8 +1,7 @@
 import csv
 import random
-import pandas as pd
 
-app_names_in_twitter = ['Buzzvideo', 
+twitter_app_names = ['Buzzvideo', 
              'CapCut', 
              'Coke_ON', 
              'Google_Fit', 
@@ -20,7 +19,7 @@ app_names_in_twitter = ['Buzzvideo',
              'ファミマのアプリ', 
              '楽天ペイ']
 
-app_names_in_google = ['BuzzVideo', 
+google_app_names = ['BuzzVideo', 
              'capcut', 
              'CokeON', 
              'google_fit', 
@@ -37,7 +36,7 @@ app_names_in_google = ['BuzzVideo',
 def select_tweet():
     index = 1
     output = []
-    for app_name in app_names_in_twitter:
+    for app_name in twitter_app_names:
         with open(f'twitter/preprocessing_Twitter_data(10_21~12_15)/{app_name}.csv', 'r', encoding='utf-8') as csv_file:
             csv_reader = csv.reader(csv_file)
             rows = list(csv_reader)
@@ -63,7 +62,7 @@ def select_tweet():
 def select_google():
     index = 1
     output = []
-    for app_name in app_names_in_google:
+    for app_name in google_app_names:
         with open(f'google_play/preprocessing_google_data(10_21~12_15)/{app_name}.csv', 'r', encoding='utf-8') as csv_file:
             csv_reader = csv.reader(csv_file)
             rows = list(csv_reader)
@@ -101,7 +100,7 @@ def select_10000():
 def main():
     select_tweet()
     select_google()
-    # select_10000()
+    select_10000()
 
 if __name__ == "__main__":
     main()

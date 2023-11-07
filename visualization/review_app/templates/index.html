@@ -2,11 +2,15 @@
 
 {% block body %}
 <h1>アプリ一覧(GooglePlayストア)</h1>
-{% for app_name in app_names %}
-    <a href="google/detail/{{ app_name }}" role="button">{{ app_name }}</a>
-{% endfor %}
+<div class="app_list">
+    {% for app_name in app_names %}
+        <a href="/google/detail/{{ app_name }}" role="button">{{ app_name }}</a>
+    {% endfor %}
+</div>
 <h1>アプリ一覧(Twitter)</h1>
-{% for app_name in app_names %}
-    <a href="twitter/detail/{{ app_name }}" role="button">{{ app_name }}</a>
-{% endfor %}
+<div class="app_list">
+    {% for app_name in app_names %}
+        <a href="twitter/detail/{{ app_name }}" role="button">{{ app_name }}</a>
+    {% endfor %}
+</div>
 {% endblock %}

@@ -2,9 +2,7 @@ from transformers import BertJapaneseTokenizer, BertModel
 import torch
 import csv
 import datetime
-import scipy.spatial
 from sentence_transformers import util
-from tqdm import tqdm
 import numpy as np
 import networkx as nx
 from chinese_whispers import chinese_whispers
@@ -51,14 +49,14 @@ def time_check(id, time, start_time, end_time):
     else:
         return datetime.datetime.strptime(time, "%Y-%m-%dT%H:%M:%S.%fZ") >= start_time and datetime.datetime.strptime(time, "%Y-%m-%dT%H:%M:%S.%fZ") <= end_time
 
-def create_review_list(input_csv_file, app_name, start_time, end_time):
+def create_review_list(input_csv_file, app_name):
     output = []
     with open(input_csv_file, 'r', encoding='utf-8-sig') as csv_file:
         csv_reader = csv.reader(csv_file)
         rows = list(csv_reader)
         for row in rows[1:]:
-            is_time = time_check(row[0], row[2], start_time, end_time)
-            if is_time and app_name == row[1] and row[4] != '':
+            # is_time = time_check(row[0], row[2], start_time, end_time)
+            if app_name == row[1] and row[4] != '':
                 output.append(row[4])
     return output
 
@@ -121,49 +119,14 @@ def doc_distance(compare_vectors, sentence_vector):
 
     return np.array([util.pytorch_cos_sim(sentence_vector, compare_vector) for compare_vector in compare_vectors])
 
-# def calculate_cosine_distances(sentences, threshold):
-#     model = SentenceBertJapanese("sonoisa/sentence-bert-base-ja-mean-tokens")
-#     sentence_vectors = model.encode(sentences)
-#     similar_sentences = []
-
-#     for i in range(len(sentences)):
-#         for j in range(i + 1, len(sentences)):
-#             cos_sim = util.pytorch_cos_sim(sentence_vectors[i], sentence_vectors[j])
-
-#             if cos_sim > threshold:
-#                 similar_sentences.append((sentences[i], sentences[j], cos_sim.item()))
-#     return similar_sentences
-
-# def calculate_distances(sentences):
-#     model = SentenceBertJapanese("sonoisa/sentence-bert-base-ja-mean-tokens")
-#     sentence_vectors = model.encode(sentences)
-#     queries = ['暴走したAI', '暴走した人工知能', 'いらすとやさんに感謝', 'つづく']
-#     query_embeddings = model.encode(queries).numpy()
-
-#     closest_n = 5
-#     for query, query_embedding in zip(queries, query_embeddings):
-#         distances = scipy.spatial.distance.cdist([query_embedding], sentence_vectors, metric="cosine")[0]
-
-#         results = zip(range(len(distances)), distances)
-#         results = sorted(results, key=lambda x: x[1])
-
-#         print("\n\n======================\n\n")
-#         print("Query:", query)
-#         print("\nTop 5 most similar sentences in corpus:")
-
-#         for idx, distance in results[0:closest_n]:
-#             print(sentences[idx].strip(), "(Score: %.4f)" % (distance / 2))
-
-def clustering(input_csv_file, category, app_name, start_time, end_time): # 指定されたアプリ, 期間でのクラスタリング
-    sentences = create_review_list(input_csv_file, app_name, start_time, end_time)
+def clustering(input_csv_file, category, app_name): # 指定されたアプリでのクラスタリング
+    sentences = create_review_list(input_csv_file, app_name)
     model = SentenceBertJapanese("sonoisa/sentence-bert-base-ja-mean-tokens")
     sentence_vectors = model.encode(sentences)
     domain_docs = {f'{app_name}': sentences}
     threshold = 0.8
     clusters = []
     reviews = []
-    str_start_time = start_time.strftime('%Y-%m-%d')
-    str_end_time = end_time.strftime('%Y-%m-%d')
     
     doc_embeddings = compute_embeddings(domain_docs)
     G = create_graph(doc_embeddings, threshold, sentence_vectors)
@@ -178,8 +141,8 @@ def clustering(input_csv_file, category, app_name, start_time, end_time): # 指�
         csv_reader = csv.reader(csv_file)
         rows = list(csv_reader)
         for row in rows[1:]:
-            is_time = time_check(row[0], row[2], start_time, end_time)
-            if is_time and app_name == row[1] and row[4] != '':
+            # is_time = time_check(row[0], row[2], start_time, end_time)
+            if app_name == row[1] and row[4] != '':
                 reviews.append(row)
 
     for cluster, review in zip(clusters, reviews):
@@ -197,13 +160,32 @@ def clustering(input_csv_file, category, app_name, start_time, end_time): # 指�
 
 
 def main():
-    app_name = 'google_fit'
-    category = 'google'
-    input_csv_file = f'抽出結果/{category}_{app_name}.csv'
-    start_time =  datetime.datetime(2021, 10, 1, 0, 0, 0)
-    end_time =  datetime.datetime(2022, 1, 1, 0, 0, 0)
+    app_names = ['capcut', 
+             'coke_on', 
+             'google_fit', 
+             'lemon8', 
+             'line_music', 
+             'majica', 
+             'paypay',  
+             'simeji', 
+             'スマートニュース', 
+             'にゃんトーク', 
+             'ファミペイ', 
+             '楽天ペイ',
+             'buzzvideo']
 
-    clustering(input_csv_file, category, app_name, start_time, end_time)
+    for app_name in app_names:
+        category = 'google'
+        input_csv_file = f'抽出結果/{category}_{app_name}.csv'
+        # start_time =  datetime.datetime(2021, 10, 1, 0, 0, 0)
+        # end_time =  datetime.datetime(2022, 1, 1, 0, 0, 0)
+        clustering(input_csv_file, category, app_name)
+
+        category = 'twitter'
+        input_csv_file = f'抽出結果/{category}_{app_name}.csv'
+        # start_time =  datetime.datetime(2021, 10, 1, 0, 0, 0)
+        # end_time =  datetime.datetime(2022, 1, 1, 0, 0, 0)
+        clustering(input_csv_file, category, app_name)
 
 
 if __name__ == '__main__':

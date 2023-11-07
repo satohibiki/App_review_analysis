@@ -1,5 +1,5 @@
 from review_app import app
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import render_template, request
 import csv
 import os
 
