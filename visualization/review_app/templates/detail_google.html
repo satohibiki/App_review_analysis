@@ -31,10 +31,26 @@
 </div>
 
 <div class="graph-title">日付ごとのレビュー数の推移</div>
+<div id="scatter"></div>
 
-<div class="date-img">
-    <img src="data:image/png;base64,{{data}}" alt=""/>
-</div>
+<script>
+    // 2次元データからラベルと値を分離
+    var labels = JSON.parse('{{ date_graph_list | map(attribute=0) | list | tojson | safe }}');
+    var values = JSON.parse('{{ date_graph_list | map(attribute=1) | list | tojson | safe }}');
+
+    var dateData = [{
+        x: labels,
+        y: values,
+        type: 'scatter',
+    }];
+
+    var layout = {
+        height: 400,
+        width: 1000
+    };
+
+    Plotly.newPlot('scatter', dateData, layout);
+</script>
 
 <div class="graph-title">種類ごとのレビュー数の割合 TOP5</div>
 <div id="pie-chart"></div>

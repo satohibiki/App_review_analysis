@@ -4,9 +4,6 @@ import csv
 import os
 from datetime import datetime as dt
 from datetime import timedelta
-from matplotlib.figure import Figure
-import base64
-from io import BytesIO
 
 app_names = ['capcut', 
          'coke_on', 
@@ -88,25 +85,9 @@ def google_read(app_name):
     if rows != []:
         for date in date_range(rows[0][2], rows[-1][2]):
             count = sum(1 for row in rows if dt.strptime(row[2], '%Y-%m-%d %H:%M:%S').date() == date)
-            date_graph_list.append([date, count])
-        dates = [item[0] for item in date_graph_list]
-        counts = [item[1] for item in date_graph_list]
+            date_graph_list.append([date.strftime('%Y/%m/%d'), count])
 
-        #グラフ描画
-        fig = Figure(figsize=(10, 3))
-        ax = fig.subplots()
-        ax.plot(dates, counts, marker='o', linestyle='-', markersize=5)
-
-        #画像をバッファに保存
-        buf = BytesIO()
-        fig.savefig(buf, format="png")
-
-        #画像データをBase64にエンコード
-        data = base64.b64encode(buf.getbuffer()).decode("ascii")
-    else:
-        data = ""
-
-    return render_template("detail_google.html", app_names=app_names, rows=rows, app=app, clusters=clusters, data=data, top_review=top_5_review)
+    return render_template("detail_google.html", app_names=app_names, rows=rows, app=app, clusters=clusters, date_graph_list=date_graph_list, top_review=top_5_review)
 
 @app.route('/twitter/detail/<string:app_name>')
 def twitter_read(app_name):
@@ -150,22 +131,6 @@ def twitter_read(app_name):
     if rows != []:
         for date in twitter_date_range(rows[0][2], rows[-1][2]):
             count = sum(1 for row in rows if dt.strptime(row[2], "%Y-%m-%dT%H:%M:%S.%fZ").date() == date)
-            date_graph_list.append([date, count])
-        dates = [item[0] for item in date_graph_list]
-        counts = [item[1] for item in date_graph_list]
+            date_graph_list.append([date.strftime('%Y/%m/%d'), count])
 
-        #グラフ描画
-        fig = Figure(figsize=(10, 3))
-        ax = fig.subplots()
-        ax.plot(dates, counts, marker='o', linestyle='-', markersize=5)
-
-        #画像をバッファに保存
-        buf = BytesIO()
-        fig.savefig(buf, format="png")
-
-        #画像データをBase64にエンコード
-        data = base64.b64encode(buf.getbuffer()).decode("ascii")
-    else:
-        data = ""
-
-    return render_template("detail_twitter.html", app_names=app_names, rows=rows, app=app, clusters=clusters, data=data, top_review=top_5_review)
+    return render_template("detail_twitter.html", app_names=app_names, rows=rows, app=app, clusters=clusters, date_graph_list=date_graph_list, top_review=top_5_review)
