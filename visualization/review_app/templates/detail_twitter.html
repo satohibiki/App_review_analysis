@@ -36,6 +36,28 @@
     <img src="data:image/png;base64,{{data}}"/>
 </div>
 
+<div class="graph-title">種類ごとのレビュー数の割合</div>
+<div id="pie-chart"></div>
+
+<script>
+    // 2次元データからラベルと値を分離
+    var labels = JSON.parse('{{ clusters[:10] | map(attribute=2) | list | tojson | safe }}');
+    var values = JSON.parse('{{ clusters[:10] | map(attribute=1) | list | tojson | safe }}');
+
+    var clusters = [{
+        labels: labels,
+        values: values,
+        type: 'pie'
+    }];
+
+    var layout = {
+        height: 400,
+        width: 1000
+    };
+
+    Plotly.newPlot('pie-chart', clusters, layout);
+</script>
+
 <ul class="accordion-area">
     {% for cluster in clusters %}
         {% set title = "" %}

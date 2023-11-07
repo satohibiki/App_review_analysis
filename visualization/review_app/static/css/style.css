@@ -78,6 +78,12 @@ input[type="submit"] {
   text-align: center;
 }
 
+.svg-container {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 /* アコーディオンスタイル設定 */
 .accordion-area {
   list-style: none;
