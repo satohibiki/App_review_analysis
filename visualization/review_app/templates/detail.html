@@ -1,15 +1,29 @@
 {% extends "base.html" %}
 
 {% block body %}
-<div class="app_list">
-    <a href="../../google/detail/{{ app }}" role="button">◁ GooglePlayストアへ</a>
-</div>
-<h1>アプリ一覧(Twitter)</h1>
-<div class="app_list">
-    {% for app_name in app_names %}
-        <a href="/twitter/detail/{{ app_name }}" role="button">{{ app_name }}</a>
-    {% endfor %}
-</div>
+{% if category == "twitter" %}
+    <div class="app_list">
+        <a href="/google/detail/{{ app }}" role="button">◁ GooglePlayストアへ</a>
+    </div>
+    <h1>アプリ一覧(Twitter)</h1>
+    <div class="app_list">
+        {% for app_name in app_names %}
+            <a href="/twitter/detail/{{ app_name }}" role="button">{{ app_name }}</a>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% if category == "google" %}
+    <div class="app_list">
+        <a href="/twitter/detail/{{ app }}" role="button">◁ Twitterへ</a>
+    </div>
+    <h1>アプリ一覧(GooglePlayストア)</h1>
+    <div class="app_list">
+        {% for app_name in app_names %}
+            <a href="/google/detail/{{ app_name }}" role="button">{{ app_name }}</a>
+        {% endfor %}
+    </div>
+{% endif %}
 
 <div class="appname">
     <div id="app_name">{{ app }}</div>
