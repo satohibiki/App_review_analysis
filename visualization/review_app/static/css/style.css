@@ -68,6 +68,12 @@ input[type="submit"] {
   margin: 10px auto 50px; /* 上下左右のマージンを調整して中央に配置 */
 }
 
+.graph-title {
+  font-size: 20px;
+  text-align: center;
+  font-weight: bold;
+}
+
 .date-img {
   text-align: center;
 }
