@@ -1,15 +1,29 @@
 {% extends "base.html" %}
 
 {% block body %}
-<div class="app_list">
-    <a href="../../twitter/detail/{{ app }}" role="button">◁ Twitterへ</a>
-</div>
-<h1>アプリ一覧(GooglePlayストア)</h1>
-<div class="app_list">
-    {% for app_name in app_names %}
-        <a href="/google/detail/{{ app_name }}" role="button">{{ app_name }}</a>
-    {% endfor %}
-</div>
+{% if category == "twitter" %}
+    <div class="app_list">
+        <a href="/google/detail/{{ app }}" role="button">◁ GooglePlayストアへ</a>
+    </div>
+    <h1>アプリ一覧(Twitter)</h1>
+    <div class="app_list">
+        {% for app_name in app_names %}
+            <a href="/twitter/detail/{{ app_name }}" role="button">{{ app_name }}</a>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% if category == "google" %}
+    <div class="app_list">
+        <a href="/twitter/detail/{{ app }}" role="button">◁ Twitterへ</a>
+    </div>
+    <h1>アプリ一覧(GooglePlayストア)</h1>
+    <div class="app_list">
+        {% for app_name in app_names %}
+            <a href="/google/detail/{{ app_name }}" role="button">{{ app_name }}</a>
+        {% endfor %}
+    </div>
+{% endif %}
 
 <div class="appname">
     <div id="app_name">{{ app }}</div>
@@ -29,6 +43,51 @@
         <input type="submit" value="検索">
     </form>
 </div>
+
+<div class="graph-title">日付ごとのレビュー数の推移</div>
+<div id="scatter"></div>
+
+<script>
+    // 2次元データからラベルと値を分離
+    var labels = JSON.parse('{{ date_graph_list | map(attribute=0) | list | tojson | safe }}');
+    var values = JSON.parse('{{ date_graph_list | map(attribute=1) | list | tojson | safe }}');
+
+    var dateData = [{
+        x: labels,
+        y: values,
+        type: 'scatter',
+    }];
+
+    var layout = {
+        height: 400,
+        width: 1000
+    };
+
+    Plotly.newPlot('scatter', dateData, layout);
+</script>
+
+<div class="graph-title">種類ごとのレビュー数の割合 TOP5</div>
+<div id="pie-chart"></div>
+
+<script>
+    // 2次元データからラベルと値を分離
+    var labels = JSON.parse('{{ top_review | map(attribute=2) | list | tojson | safe }}');
+    var values = JSON.parse('{{ top_review | map(attribute=1) | list | tojson | safe }}');
+
+    var clusters = [{
+        labels: labels,
+        values: values,
+        type: 'pie',
+        direction: 'clockwise',
+    }];
+
+    var layout = {
+        height: 400,
+        width: 1000
+    };
+
+    Plotly.newPlot('pie-chart', clusters, layout);
+</script>
 
 <ul class="accordion-area">
     {% for cluster in clusters %}

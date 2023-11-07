@@ -8,11 +8,12 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/reset.css">
     <link rel="stylesheet" type="text/css" href="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/9-2-1/css/9-2-1.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <title>レビュー一覧</title>
     {% block head %}{% endblock %}
 </head>
 <body>
     {% block body %}{% endblock %}
-    <script src="{{ url_for('static', filename='js/modal.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/detail.js') }}"></script>
 </body>
 </html>

@@ -65,7 +65,25 @@ input[type="submit"] {
   border: none;
   padding: 10px 80px;
   cursor: pointer;
-  margin: 10px auto 50px; /* 上下左右のマージンを調整して中央に配置 */
+  margin: 10px auto;
+}
+
+.graph-title {
+  font-size: 25px;
+  text-align: center;
+  font-weight: bold;
+  margin: 50px;
+}
+
+.date-img {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.svg-container {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 /* アコーディオンスタイル設定 */
