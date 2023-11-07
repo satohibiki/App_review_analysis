@@ -32,7 +32,7 @@ def organize_dataset():
         csv_writer.writerows(output)
 
 def main():
-    # diff_check()
+    diff_check()
     organize_dataset()
 
 if __name__ == "__main__":

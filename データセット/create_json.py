@@ -5,7 +5,6 @@ import json
 # CSVファイルを読み込んで処理する関数
 def process_csv(input_csv_file, output_csv_file):
     with open(input_csv_file, 'r', encoding='utf-8') as csv_file:
-        index = 0
         csv_reader = csv.reader(csv_file)
         rows = list(csv_reader)
         rows[0] = ["id", "datetime", "context", "question", "answer"]

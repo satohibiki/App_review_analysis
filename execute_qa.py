@@ -65,7 +65,7 @@ def create_answer_google(app_name):
         csv_writer.writerows(output)
 
 def main():
-    twitter_app_names = ['CapCut', 
+    app_names = ['capcut', 
              'coke_on', 
              'google_fit', 
              'lemon8', 
@@ -78,22 +78,10 @@ def main():
              'ファミペイ', 
              '楽天ペイ',
              'buzzvideo']
-    
-    google_app_names = ['capcut', 
-             'coke_on', 
-             'google_fit', 
-             'lemon8', 
-             'line_music', 
-             'majica', 
-             'paypay',  
-             'simeji', 
-             'スマートニュース', 
-             'にゃんトーク', 
-             'ファミペイ', 
-             '楽天ペイ',
-             'buzzvideo']
-    # create_answer_twitter(twitter_app_names[0])
-    create_answer_google(google_app_names[2])
+
+    for app_name in app_names:
+        create_answer_twitter(app_name)
+        create_answer_google(app_name)
 
 if __name__ == "__main__":
     main()
