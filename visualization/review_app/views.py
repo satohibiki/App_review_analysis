@@ -80,6 +80,11 @@ def google_read(app_name):
         clusters.append([index, count, title])
     clusters = sorted(clusters, reverse=True, key=lambda x: x[1])
 
+    top_5_review = clusters[:5]
+    other_count = sum(cluster[1] for cluster in clusters[5:])
+    other_title = "その他"
+    # top_5_review.append([9999, other_count, other_title])
+
     if rows != []:
         for date in date_range(rows[0][2], rows[-1][2]):
             count = sum(1 for row in rows if dt.strptime(row[2], '%Y-%m-%d %H:%M:%S').date() == date)
@@ -101,7 +106,7 @@ def google_read(app_name):
     else:
         data = ""
 
-    return render_template("detail_google.html", app_names=app_names, rows=rows, app=app, clusters=clusters, data=data)
+    return render_template("detail_google.html", app_names=app_names, rows=rows, app=app, clusters=clusters, data=data, top_review=top_5_review)
 
 @app.route('/twitter/detail/<string:app_name>')
 def twitter_read(app_name):
@@ -137,6 +142,11 @@ def twitter_read(app_name):
         clusters.append([index, count, title])
     clusters = sorted(clusters, reverse=True, key=lambda x: x[1])
 
+    top_5_review = clusters[:5]
+    other_count = sum(cluster[1] for cluster in clusters[5:])
+    other_title = "その他"
+    # top_5_review.append([9999, other_count, other_title])
+
     if rows != []:
         for date in twitter_date_range(rows[0][2], rows[-1][2]):
             count = sum(1 for row in rows if dt.strptime(row[2], "%Y-%m-%dT%H:%M:%S.%fZ").date() == date)
@@ -158,4 +168,4 @@ def twitter_read(app_name):
     else:
         data = ""
 
-    return render_template("detail_twitter.html", app_names=app_names, rows=rows, app=app, clusters=clusters, data=data)
+    return render_template("detail_twitter.html", app_names=app_names, rows=rows, app=app, clusters=clusters, data=data, top_review=top_5_review)

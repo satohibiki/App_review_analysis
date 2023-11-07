@@ -33,21 +33,22 @@
 <div class="graph-title">日付ごとのレビュー数の推移</div>
 
 <div class="date-img">
-    <img src="data:image/png;base64,{{data}}"/>
+    <img src="data:image/png;base64,{{data}}" alt=""/>
 </div>
 
-<div class="graph-title">種類ごとのレビュー数の割合</div>
+<div class="graph-title">種類ごとのレビュー数の割合 TOP5</div>
 <div id="pie-chart"></div>
 
 <script>
     // 2次元データからラベルと値を分離
-    var labels = JSON.parse('{{ clusters[:10] | map(attribute=2) | list | tojson | safe }}');
-    var values = JSON.parse('{{ clusters[:10] | map(attribute=1) | list | tojson | safe }}');
+    var labels = JSON.parse('{{ top_review | map(attribute=2) | list | tojson | safe }}');
+    var values = JSON.parse('{{ top_review | map(attribute=1) | list | tojson | safe }}');
 
     var clusters = [{
         labels: labels,
         values: values,
-        type: 'pie'
+        type: 'pie',
+        direction: 'clockwise',
     }];
 
     var layout = {
