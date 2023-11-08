@@ -28,6 +28,15 @@ h1 {
   text-decoration: none;
 }
 
+.top a {
+  display: inline-block;
+  margin: 5px;
+  padding: 10px 20px;
+  background-color: #5334db;
+  color: #fff;
+  text-decoration: none;
+}
+
 /* アプリ名と検索フォームのスタイル設定 */
 .appname, .search {
   margin: 20px auto;

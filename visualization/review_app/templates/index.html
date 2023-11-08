@@ -13,4 +13,91 @@
         <a href="twitter/detail/{{ app_name }}" role="button">{{ app_name }}</a>
     {% endfor %}
 </div>
+
+<div class="search" id="search">
+    <form>
+        <div class="date-input">
+            <label for="start-date">開始日:</label>
+            <input type="date" name="start-date" id="start-date" value="2021-10-15">
+        </div>
+        <div class="date-input"> ~ </div>
+        <div class="date-input">
+            <label for="end-date">終了日:</label>
+            <input type="date" name="end-date" id="end-date" value="2021-12-15">
+        </div>
+        <input type="submit" value="検索">
+    </form>
+</div>
+
+<div class="graph-title">日付ごとのレビュー数の推移 (GooglePlayストア)</div>
+<div id="google-scatter"></div>
+
+<script>
+    // 2次元データからラベルと値を分離
+    var capcutLabels = JSON.parse('{{ google_graphs[0] | map(attribute=0) | list | tojson | safe }}');
+    var capcutValues = JSON.parse('{{ google_graphs[0] | map(attribute=1) | list | tojson | safe }}');
+
+    var googleFitLabels = JSON.parse('{{ google_graphs[2] | map(attribute=0) | list | tojson | safe }}');
+    var googleFitValues = JSON.parse('{{ google_graphs[2] | map(attribute=1) | list | tojson | safe }}');
+
+    var capcutData = {
+        x: capcutLabels,
+        y: capcutValues,
+        type: 'scatter',
+        name: 'capcut'
+    };
+
+    var googleFitData = {
+        x: googleFitLabels,
+        y: googleFitValues,
+        type: 'scatter',
+        name: 'google_fit'
+    };
+
+    var data = [capcutData, googleFitData];
+
+    var layout = {
+        title: '日付ごとのレビュー数の推移',
+        height: 600,
+        width: 1200
+    };
+
+    Plotly.newPlot('google-scatter', data, layout);
+</script>
+
+<div class="graph-title">日付ごとのレビュー数の推移 (Twitter)</div>
+<div id="twitter-scatter"></div>
+
+<script>
+    // 2次元データからラベルと値を分離
+    var capcutLabels = JSON.parse('{{ twitter_graphs[0] | map(attribute=0) | list | tojson | safe }}');
+    var capcutValues = JSON.parse('{{ twitter_graphs[0] | map(attribute=1) | list | tojson | safe }}');
+
+    var googleFitLabels = JSON.parse('{{ twitter_graphs[2] | map(attribute=0) | list | tojson | safe }}');
+    var googleFitValues = JSON.parse('{{ twitter_graphs[2] | map(attribute=1) | list | tojson | safe }}');
+
+    var capcutData = {
+        x: capcutLabels,
+        y: capcutValues,
+        type: 'scatter',
+        name: 'capcut'
+    };
+
+    var googleFitData = {
+        x: googleFitLabels,
+        y: googleFitValues,
+        type: 'scatter',
+        name: 'google_fit'
+    };
+
+    var data = [capcutData, googleFitData];
+
+    var layout = {
+        title: '日付ごとのレビュー数の推移',
+        height: 600,
+        width: 1200
+    };
+
+    Plotly.newPlot('twitter-scatter', data, layout);
+</script>
 {% endblock %}

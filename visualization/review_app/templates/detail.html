@@ -3,6 +3,7 @@
 {% block body %}
 {% if category == "twitter" %}
     <div class="app_list">
+        <a href="/" role="button">◁ トップページへ</a>
         <a href="/google/detail/{{ app }}" role="button">◁ GooglePlayストアへ</a>
     </div>
     <h1>アプリ一覧(Twitter)</h1>
@@ -15,6 +16,7 @@
 
 {% if category == "google" %}
     <div class="app_list">
+        <a href="/" role="button">◁ トップページへ</a>
         <a href="/twitter/detail/{{ app }}" role="button">◁ Twitterへ</a>
     </div>
     <h1>アプリ一覧(GooglePlayストア)</h1>
@@ -59,15 +61,16 @@
     }];
 
     var layout = {
-        height: 400,
-        width: 1000
+        title: '日付ごとのレビュー数の推移',
+        height: 600,
+        width: 1200
     };
 
     Plotly.newPlot('scatter', dateData, layout);
 </script>
 
-<div class="graph-title">種類ごとのレビュー数の割合 TOP5</div>
-<div id="pie-chart"></div>
+<div class="graph-title">種類ごとのレビュー数 TOP10</div>
+<div id="bar"></div>
 
 <script>
     // 2次元データからラベルと値を分離
@@ -75,18 +78,18 @@
     var values = JSON.parse('{{ top_review | map(attribute=1) | list | tojson | safe }}');
 
     var clusters = [{
-        labels: labels,
-        values: values,
-        type: 'pie',
-        direction: 'clockwise',
+        x: labels,
+        y: values,
+        type: 'bar',
     }];
 
     var layout = {
-        height: 400,
-        width: 1000
+        title: '種類ごとのレビュー数',
+        height: 600,
+        width: 1300
     };
 
-    Plotly.newPlot('pie-chart', clusters, layout);
+    Plotly.newPlot('bar', clusters, layout);
 </script>
 
 <ul class="accordion-area">

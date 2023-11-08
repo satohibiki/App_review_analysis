@@ -20,21 +20,72 @@ app_names = ['capcut',
          'buzzvideo']
 
 def date_range(category, start, stop, step = timedelta(1)):
-    if category == "google":
-        current = dt.strptime(start, '%Y-%m-%d %H:%M:%S')
-        stop = dt.strptime(stop, '%Y-%m-%d %H:%M:%S')
-    else:
+    if category == "twitter":
         current = dt.strptime(start, "%Y-%m-%dT%H:%M:%S.%fZ")
         stop = dt.strptime(stop, "%Y-%m-%dT%H:%M:%S.%fZ")
+    else:
+        current = dt.strptime(start, '%Y-%m-%d %H:%M:%S')
+        stop = dt.strptime(stop, '%Y-%m-%d %H:%M:%S')
     current = current.date()
     stop = stop.date()
-    while current < stop:
+    while current <= stop:
         yield current
         current += step
 
 @app.route('/')
 def index():
-    return render_template("index.html", app_names=app_names)
+    start_date = request.args.get('start-date')
+    end_date = request.args.get('end-date')
+    google_graphs = []
+    twitter_graphs = []
+
+    for app_name in app_names:
+        # google用のグラフ作成
+        path = f'../クラスタリング/google_{app_name}.csv'
+        is_file = os.path.isfile(path)
+        if is_file:
+            with open(path, 'r', encoding='utf-8-sig') as google_csv_file:
+                google_csv_reader = csv.reader(google_csv_file)
+                google_rows = list(google_csv_reader)
+                google_rows = sorted(google_rows, reverse=False, key=lambda x: x[2]) # 日付で並び替え
+                if start_date is not None or end_date is not None: # 日付範囲内のアイテムをフィルタリング
+                    result = []
+                    for row in google_rows:
+                        if start_date <= row[2][:10] <= end_date:
+                            result.append(row)
+                    google_rows = result
+        if google_rows != []:
+            google_date_list = []
+            for date in date_range("google", '2021-10-21 00:00:00', '2021-12-15 23:59:59'):
+                count = sum(1 for row in google_rows if dt.strptime(row[2], '%Y-%m-%d %H:%M:%S').date() == date)
+                google_date_list.append([date.strftime('%Y/%m/%d'), count])
+            google_graphs.append(google_date_list)
+
+        # twitter用のグラフ作成
+        path = f'../クラスタリング/twitter_{app_name}.csv'
+        is_file = os.path.isfile(path)
+        if is_file:
+            with open(path, 'r', encoding='utf-8-sig') as twitter_csv_file:
+                twitter_csv_reader = csv.reader(twitter_csv_file)
+                twitter_rows = list(twitter_csv_reader)
+                twitter_rows = sorted(twitter_rows, reverse=False, key=lambda x: x[2]) # 日付で並び替え
+                if start_date is not None or end_date is not None: # 日付範囲内のアイテムをフィルタリング
+                    result = []
+                    for row in twitter_rows:
+                        if start_date <= row[2][:10] <= end_date:
+                            result.append(row)
+                    twitter_rows = result
+        if twitter_rows != []:
+            twitter_date_list = []
+            for date in date_range("", '2021-10-21 00:00:00', '2021-12-15 23:59:59'):
+                count = sum(1 for row in twitter_rows if dt.strptime(row[2], "%Y-%m-%dT%H:%M:%S.%fZ").date() == date)
+                twitter_date_list.append([date.strftime('%Y/%m/%d'), count])
+            twitter_graphs.append(twitter_date_list)
+
+    return render_template("index.html", 
+                           app_names=app_names,
+                           google_graphs=google_graphs,
+                           twitter_graphs=twitter_graphs)
 
 @app.route('/<string:category>/detail/<string:app_name>')
 def read(category, app_name):
@@ -49,20 +100,14 @@ def read(category, app_name):
     path = f'../クラスタリング/{category}_{app}.csv'
     is_file = os.path.isfile(path)
     if is_file:
-        if start_date is None and end_date is None:
-            with open(path, 'r', encoding='utf-8-sig') as csv_file:
-                csv_reader = csv.reader(csv_file)
-                rows = list(csv_reader)
-                rows = sorted(rows, reverse=False, key=lambda x: x[2]) # 日付で並び替え
-        else:
-            with open(path, 'r', encoding='utf-8-sig') as csv_file:
-                csv_reader = csv.reader(csv_file)
-                rows_list = list(csv_reader)
-                rows_list = sorted(rows_list, reverse=False, key=lambda x: x[2]) # 日付で並び替え
-                # 日付範囲内のアイテムをフィルタリング
+         with open(path, 'r', encoding='utf-8-sig') as csv_file:
+            csv_reader = csv.reader(csv_file)
+            rows = list(csv_reader)
+            rows = sorted(rows, reverse=False, key=lambda x: x[2]) # 日付で並び替え
+            if start_date is not None or end_date is not None: # 日付範囲内のアイテムをフィルタリング
                 result = []
-                for row in rows_list:
-                    if start_date <= row[2] <= end_date:
+                for row in rows:
+                    if start_date <= row[2][:10] <= end_date:
                         result.append(row)
                 rows = result
     for index in range(len(rows)):
@@ -71,7 +116,7 @@ def read(category, app_name):
         clusters.append([index, count, title])
     clusters = sorted(clusters, reverse=True, key=lambda x: x[1])
 
-    top_5_review = clusters[:5]
+    top_review = clusters[:10]
     # other_count = sum(cluster[1] for cluster in clusters[5:])
     # other_title = "その他"
     # top_5_review.append([9999, other_count, other_title])
@@ -84,4 +129,4 @@ def read(category, app_name):
                 count = sum(1 for row in rows if dt.strptime(row[2], "%Y-%m-%dT%H:%M:%S.%fZ").date() == date)
             date_graph_list.append([date.strftime('%Y/%m/%d'), count])
 
-    return render_template("detail.html", app_names=app_names, rows=rows, app=app, category=category, clusters=clusters, date_graph_list=date_graph_list, top_review=top_5_review)
+    return render_template("detail.html", app_names=app_names, rows=rows, app=app, category=category, clusters=clusters, date_graph_list=date_graph_list, top_review=top_review)
