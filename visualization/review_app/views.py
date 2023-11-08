@@ -110,17 +110,25 @@ def read(category, app_name):
                     if start_date <= row[2][:10] <= end_date:
                         result.append(row)
                 rows = result
-    for index in range(len(rows)):
-        count = sum(1 for row in rows if row[5] == str(index))
-        title = next((row[4] for row in rows if row[5] == str(index)), None)
-        clusters.append([index, count, title])
+
+    # クラスタリング
+    count_dict = {}
+    for item in rows:
+        key = item[5]  # 6番目の要素をキーとします
+        if key in count_dict:
+            count_dict[key] += 1
+        else:
+            count_dict[key] = 1
+    
+    clusters = [[key, value] for key, value in count_dict.items()]
+    for cluster in clusters:
+        title = next(row[4] for row in rows if row[5] == cluster[0])
+        cluster.append(title)
     clusters = sorted(clusters, reverse=True, key=lambda x: x[1])
 
     top_review = clusters[:10]
-    # other_count = sum(cluster[1] for cluster in clusters[5:])
-    # other_title = "その他"
-    # top_5_review.append([9999, other_count, other_title])
 
+    # 日時リスト作成
     if rows != []:
         for date in date_range(category, rows[0][2], rows[-1][2]):
             if category=="google":

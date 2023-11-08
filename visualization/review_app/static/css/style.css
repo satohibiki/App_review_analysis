@@ -40,7 +40,7 @@ h1 {
 /* アプリ名と検索フォームのスタイル設定 */
 .appname, .search {
   margin: 20px auto;
-  text-align: center; /* テキストを中央に配置 */
+  text-align: center;
 }
 
 .appname div {
@@ -49,9 +49,16 @@ h1 {
   font-weight: bold;
 }
 
+.length {
+  margin: 50px;
+  font-size: 30px;
+  text-align: center;
+  font-weight: bold;
+}
+
 .date-input {
   display: inline-block;
-  margin-right: 20px; /* 入力フィールド間のスペースを調整 */
+  margin-right: 20px;
 }
 
 form label {
