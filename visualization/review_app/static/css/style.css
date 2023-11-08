@@ -85,10 +85,11 @@ input[type="submit"] {
 }
 
 .graph-title {
-  font-size: 25px;
+  font-size: 30px;
   text-align: center;
   font-weight: bold;
-  margin: 50px;
+  margin-top: 100px;
+  margin-bottom: 20px;
 }
 
 .date-img {
