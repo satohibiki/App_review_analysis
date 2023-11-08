@@ -32,72 +32,62 @@
 <div class="graph-title">日付ごとのレビュー数の推移 (GooglePlayストア)</div>
 <div id="google-scatter"></div>
 
-<script>
-    // 2次元データからラベルと値を分離
-    var capcutLabels = JSON.parse('{{ google_graphs[0] | map(attribute=0) | list | tojson | safe }}');
-    var capcutValues = JSON.parse('{{ google_graphs[0] | map(attribute=1) | list | tojson | safe }}');
-
-    var googleFitLabels = JSON.parse('{{ google_graphs[2] | map(attribute=0) | list | tojson | safe }}');
-    var googleFitValues = JSON.parse('{{ google_graphs[2] | map(attribute=1) | list | tojson | safe }}');
-
-    var capcutData = {
-        x: capcutLabels,
-        y: capcutValues,
-        type: 'scatter',
-        name: 'capcut'
-    };
-
-    var googleFitData = {
-        x: googleFitLabels,
-        y: googleFitValues,
-        type: 'scatter',
-        name: 'google_fit'
-    };
-
-    var data = [capcutData, googleFitData];
-
-    var layout = {
-        title: '日付ごとのレビュー数の推移',
-        height: 600,
-        width: 1200
-    };
-
-    Plotly.newPlot('google-scatter', data, layout);
-</script>
-
 <div class="graph-title">日付ごとのレビュー数の推移 (Twitter)</div>
 <div id="twitter-scatter"></div>
 
 <script>
-    // 2次元データからラベルと値を分離
-    var capcutLabels = JSON.parse('{{ twitter_graphs[0] | map(attribute=0) | list | tojson | safe }}');
-    var capcutValues = JSON.parse('{{ twitter_graphs[0] | map(attribute=1) | list | tojson | safe }}');
+    // 横軸: 日付
+    var labels = JSON.parse('{{ google_graphs[0] | map(attribute=0) | list | tojson | safe }}');
+    // ラベル用日付
+    var displayLabels = [];
+    for (var i = 0; i < labels.length; i += 5) {
+        displayLabels.push(labels[i]);
+    }
 
-    var googleFitLabels = JSON.parse('{{ twitter_graphs[2] | map(attribute=0) | list | tojson | safe }}');
-    var googleFitValues = JSON.parse('{{ twitter_graphs[2] | map(attribute=1) | list | tojson | safe }}');
-
-    var capcutData = {
-        x: capcutLabels,
-        y: capcutValues,
+    // googleデータ
+    var googleCapcutValues = JSON.parse('{{ google_graphs[0] | map(attribute=1) | list | tojson | safe }}');
+    var googleGoogleFitValues = JSON.parse('{{ google_graphs[2] | map(attribute=1) | list | tojson | safe }}');
+    var googleCapcutData = {
+        x: labels,
+        y: googleCapcutValues,
         type: 'scatter',
         name: 'capcut'
     };
-
-    var googleFitData = {
-        x: googleFitLabels,
-        y: googleFitValues,
+    var googleGoogleFitData = {
+        x: labels,
+        y: googleGoogleFitValues,
         type: 'scatter',
         name: 'google_fit'
     };
+    var googleData = [googleCapcutData, googleGoogleFitData];
 
-    var data = [capcutData, googleFitData];
+    // twitterデータ
+    var twitterCapcutValues = JSON.parse('{{ twitter_graphs[0] | map(attribute=1) | list | tojson | safe }}');
+    var twitterGoogleFitValues = JSON.parse('{{ twitter_graphs[2] | map(attribute=1) | list | tojson | safe }}');
+    var twitterCapcutData = {
+        x: labels,
+        y: twitterCapcutValues,
+        type: 'scatter',
+        name: 'capcut'
+    };
+    var twitterGoogleFitData = {
+        x: labels,
+        y: twitterGoogleFitValues,
+        type: 'scatter',
+        name: 'google_fit'
+    };
+    var twitterData = [twitterCapcutData, twitterGoogleFitData];
 
     var layout = {
         title: '日付ごとのレビュー数の推移',
         height: 600,
-        width: 1200
+        width: 1200,
+        xaxis: {
+            tickvals: displayLabels,  // 5日おきの日付を指定
+        }
     };
 
-    Plotly.newPlot('twitter-scatter', data, layout);
+    Plotly.newPlot('google-scatter', googleData, layout);
+    Plotly.newPlot('twitter-scatter', twitterData, layout);
 </script>
 {% endblock %}

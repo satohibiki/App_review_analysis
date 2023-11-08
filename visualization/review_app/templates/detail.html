@@ -50,11 +50,16 @@
 <div id="scatter"></div>
 
 <script>
-    // 2次元データからラベルと値を分離
+    // 横軸: 日付
     var labels = JSON.parse('{{ date_graph_list | map(attribute=0) | list | tojson | safe }}');
+    // ラベル用日付
+    var displayLabels = [];
+    for (var i = 0; i < labels.length; i += 5) {
+        displayLabels.push(labels[i]);
+    }
     var values = JSON.parse('{{ date_graph_list | map(attribute=1) | list | tojson | safe }}');
 
-    var dateData = [{
+    var data = [{
         x: labels,
         y: values,
         type: 'scatter',
@@ -63,10 +68,13 @@
     var layout = {
         title: '日付ごとのレビュー数の推移',
         height: 600,
-        width: 1200
+        width: 1200,
+        xaxis: {
+            tickvals: displayLabels,  // 配列の5つおきの目盛り位置を指定
+        }
     };
 
-    Plotly.newPlot('scatter', dateData, layout);
+    Plotly.newPlot('scatter', data, layout);
 </script>
 
 <div class="graph-title">種類ごとのレビュー数 TOP10</div>
@@ -77,7 +85,7 @@
     var labels = JSON.parse('{{ top_review | map(attribute=2) | list | tojson | safe }}');
     var values = JSON.parse('{{ top_review | map(attribute=1) | list | tojson | safe }}');
 
-    var clusters = [{
+    var data = [{
         x: labels,
         y: values,
         type: 'bar',
@@ -89,7 +97,7 @@
         width: 1300
     };
 
-    Plotly.newPlot('bar', clusters, layout);
+    Plotly.newPlot('bar', data, layout);
 </script>
 
 <ul class="accordion-area">
