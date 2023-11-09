@@ -32,6 +32,7 @@ def date_range(start, stop, step = timedelta(1)):
 def index():
     start_date = request.args.get('start-date', '2021-10-21')
     end_date = request.args.get('end-date', '2021-12-15')
+    keyword = request.args.get('keyword', '')
     google_rows = []
     twitter_rows = []
     google_graphs = []
@@ -51,7 +52,11 @@ def index():
         search_result = []
         for row in google_rows:
             if start_date <= row[2][:10] <= end_date:
-                search_result.append(row)
+                if keyword != '':
+                    if keyword in row[3]:
+                        search_result.append(row)
+                else:
+                    search_result.append(row)
         google_rows = search_result
 
         # 日付ごとのレビュー数のリストを作成
@@ -76,7 +81,11 @@ def index():
         search_result = []
         for row in twitter_rows:
             if start_date <= row[2][:10] <= end_date:
-                search_result.append(row)
+                if keyword != '':
+                    if keyword in row[3]:
+                        search_result.append(row)
+                else:
+                    search_result.append(row)
         twitter_rows = search_result
 
         # 日付ごとのレビュー数のリストを作成
@@ -91,12 +100,14 @@ def index():
                            google_graphs=google_graphs,
                            twitter_graphs=twitter_graphs,
                            start_date=start_date, 
-                           end_date=end_date)
+                           end_date=end_date,
+                           keyword=keyword)
 
 @app.route('/<string:category>/detail/<string:app_name>')
 def read(category, app_name):
     start_date = request.args.get('start-date', '2021-10-21')
     end_date = request.args.get('end-date', '2021-12-15')
+    keyword = request.args.get('keyword', '')
     app = app_name
     category = category
     rows = []
@@ -116,7 +127,11 @@ def read(category, app_name):
     search_result = []
     for row in rows:
         if start_date <= row[2][:10] <= end_date:
-            search_result.append(row)
+            if keyword != '':
+                if keyword in row[3]:
+                    search_result.append(row)
+            else:
+                search_result.append(row)
     rows = search_result
 
     # クラスタリング
@@ -151,4 +166,5 @@ def read(category, app_name):
                            graphs=graphs, 
                            top_review=top_review, 
                            start_date=start_date, 
-                           end_date=end_date)
+                           end_date=end_date,
+                           keyword=keyword)
