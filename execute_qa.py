@@ -25,7 +25,7 @@ def create_answer_twitter(app_name):
         csv_reader = csv.reader(csv_file)
         rows = list(csv_reader)
 
-        for row in tqdm(rows, total=len(rows), desc="Processing Rows"):
+        for row in tqdm(rows, total=len(rows), desc=f"Processing Rows {app_name}"):
             if row[1] == app_name:
                 context = row[3]
                 question = f"この文はTwitterのツイートです。{app_name}アプリの欠陥や{app_name}アプリに対する要望が書かれているのはどこですか？"
@@ -47,7 +47,7 @@ def create_answer_google(app_name):
         csv_reader = csv.reader(csv_file)
         rows = list(csv_reader)
 
-        for row in tqdm(rows, total=len(rows), desc="Processing Rows"):
+        for row in tqdm(rows, total=len(rows), desc=f"Processing Rows {app_name}"):
             if row[1] == app_name:
                 context = row[3]
                 question = f"この文章はGooglePlayストアのレビューです。{app_name}アプリの欠陥や{app_name}アプリに対する要望が書かれているのはどこですか？"
@@ -56,7 +56,7 @@ def create_answer_google(app_name):
                 if prediction != '[CLS]':
                     if "[CLS]" in prediction:
                         prediction = prediction.replace(f"[CLS]この文章はGooglePlayストアのレビューです。{app_name}アプリの欠陥や{app_name}アプリに対する要望が書かれているのはどこですか?[SEP]", '')
-                        print(prediction)
+                        # print(prediction)
                     row.append(prediction)
                     output.append(row)
     # 結果をCSVファイルに書き込む
