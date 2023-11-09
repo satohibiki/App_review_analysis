@@ -61,13 +61,13 @@
 
 <script>
     // 横軸: 日付
-    var labels = JSON.parse('{{ date_graph_list | map(attribute=0) | list | tojson | safe }}');
+    var labels = JSON.parse('{{ graphs | map(attribute=0) | list | tojson | safe }}');
     // ラベル用日付
     var displayLabels = [];
     for (var i = 0; i < labels.length; i += 5) {
         displayLabels.push(labels[i]);
     }
-    var values = JSON.parse('{{ date_graph_list | map(attribute=1) | list | tojson | safe }}');
+    var values = JSON.parse('{{ graphs | map(attribute=1) | list | tojson | safe }}');
 
     var data = [{
         x: labels,
