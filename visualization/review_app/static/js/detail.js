@@ -1,24 +1,24 @@
 $(document).ready(function() {
-  var startDateInput = $("#start-date");
-  var endDateInput = $("#end-date");
+  // var startDateInput = $("#start-date");
+  // var endDateInput = $("#end-date");
 
-  var storedStartDate = localStorage.getItem("start-date");
-  var storedEndDate = localStorage.getItem("end-date");
+  // var storedStartDate = localStorage.getItem("start-date");
+  // var storedEndDate = localStorage.getItem("end-date");
 
-  if (storedStartDate) {
-      startDateInput.val(storedStartDate);
-  }
+  // if (storedStartDate) {
+  //     startDateInput.val(storedStartDate);
+  // }
 
-  if (storedEndDate) {
-      endDateInput.val(storedEndDate);
-  }
+  // if (storedEndDate) {
+  //     endDateInput.val(storedEndDate);
+  // }
 
-  // フォームが送信されたときに日付を保存
-  var searchForm = $("#search");
-  searchForm.on("submit", function(event) {
-      localStorage.setItem("start-date", startDateInput.val());
-      localStorage.setItem("end-date", endDateInput.val());
-  });
+  // // フォームが送信されたときに日付を保存
+  // var searchForm = $("#search");
+  // searchForm.on("submit", function(event) {
+  //     localStorage.setItem("start-date", startDateInput.val());
+  //     localStorage.setItem("end-date", endDateInput.val());
+  // });
 
   // モーダルのボタンがクリックされたときの処理
   $("button.openModal").on("click", function() {

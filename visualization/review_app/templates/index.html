@@ -18,15 +18,23 @@
     <form>
         <div class="date-input">
             <label for="start-date">開始日:</label>
-            <input type="date" name="start-date" id="start-date" value="2021-10-15">
+            <input type="date" name="start-date" id="start-date" value="{{ start_date }}">
         </div>
         <div class="date-input"> ~ </div>
         <div class="date-input">
             <label for="end-date">終了日:</label>
-            <input type="date" name="end-date" id="end-date" value="2021-12-15">
+            <input type="date" name="end-date" id="end-date" value="{{ end_date }}">
         </div>
         <input type="submit" value="検索">
     </form>
+</div>
+
+<div class="length">
+    検索結果
+</div>
+
+<div class="length">
+    {{ start_date }} ~ {{ end_date }}
 </div>
 
 <div class="graph-title">日付ごとのレビュー数の推移 (GooglePlayストア)</div>

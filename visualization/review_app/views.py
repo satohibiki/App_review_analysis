@@ -19,13 +19,9 @@ app_names = ['capcut',
          '楽天ペイ',
          'buzzvideo']
 
-def date_range(category, start, stop, step = timedelta(1)):
-    if category == "twitter":
-        current = dt.strptime(start, "%Y-%m-%dT%H:%M:%S.%fZ")
-        stop = dt.strptime(stop, "%Y-%m-%dT%H:%M:%S.%fZ")
-    else:
-        current = dt.strptime(start, '%Y-%m-%d %H:%M:%S')
-        stop = dt.strptime(stop, '%Y-%m-%d %H:%M:%S')
+def date_range(start, stop, step = timedelta(1)):
+    current = dt.strptime(start, "%Y-%m-%d")
+    stop = dt.strptime(stop, "%Y-%m-%d")
     current = current.date()
     stop = stop.date()
     while current <= stop:
@@ -34,8 +30,8 @@ def date_range(category, start, stop, step = timedelta(1)):
 
 @app.route('/')
 def index():
-    start_date = request.args.get('start-date')
-    end_date = request.args.get('end-date')
+    start_date = request.args.get('start-date', '2021-10-21')
+    end_date = request.args.get('end-date', '2021-12-15')
     google_graphs = []
     twitter_graphs = []
 
@@ -56,7 +52,7 @@ def index():
                     google_rows = result
         if google_rows != []:
             google_date_list = []
-            for date in date_range("google", '2021-10-21 00:00:00', '2021-12-15 23:59:59'):
+            for date in date_range(start_date, end_date):
                 count = sum(1 for row in google_rows if dt.strptime(row[2], '%Y-%m-%d %H:%M:%S').date() == date)
                 google_date_list.append([date.strftime('%Y/%m/%d'), count])
             google_graphs.append(google_date_list)
@@ -77,7 +73,7 @@ def index():
                     twitter_rows = result
         if twitter_rows != []:
             twitter_date_list = []
-            for date in date_range("", '2021-10-21 00:00:00', '2021-12-15 23:59:59'):
+            for date in date_range(start_date, end_date):
                 count = sum(1 for row in twitter_rows if dt.strptime(row[2], "%Y-%m-%dT%H:%M:%S.%fZ").date() == date)
                 twitter_date_list.append([date.strftime('%Y/%m/%d'), count])
             twitter_graphs.append(twitter_date_list)
@@ -85,12 +81,14 @@ def index():
     return render_template("index.html", 
                            app_names=app_names,
                            google_graphs=google_graphs,
-                           twitter_graphs=twitter_graphs)
+                           twitter_graphs=twitter_graphs,
+                           start_date=start_date, 
+                           end_date=end_date)
 
 @app.route('/<string:category>/detail/<string:app_name>')
 def read(category, app_name):
-    start_date = request.args.get('start-date')
-    end_date = request.args.get('end-date')
+    start_date = request.args.get('start-date', '2021-10-21')
+    end_date = request.args.get('end-date', '2021-12-15')
     app = app_name
     category = category
     rows = []
@@ -130,11 +128,20 @@ def read(category, app_name):
 
     # 日時リスト作成
     if rows != []:
-        for date in date_range(category, rows[0][2], rows[-1][2]):
+        for date in date_range(start_date, end_date):
             if category=="google":
                 count = sum(1 for row in rows if dt.strptime(row[2], '%Y-%m-%d %H:%M:%S').date() == date)
             else:
                 count = sum(1 for row in rows if dt.strptime(row[2], "%Y-%m-%dT%H:%M:%S.%fZ").date() == date)
             date_graph_list.append([date.strftime('%Y/%m/%d'), count])
 
-    return render_template("detail.html", app_names=app_names, rows=rows, app=app, category=category, clusters=clusters, date_graph_list=date_graph_list, top_review=top_review)
+    return render_template("detail.html", 
+                           app_names=app_names, 
+                           rows=rows, 
+                           app=app, 
+                           category=category, 
+                           clusters=clusters, 
+                           date_graph_list=date_graph_list, 
+                           top_review=top_review, 
+                           start_date=start_date, 
+                           end_date=end_date)
