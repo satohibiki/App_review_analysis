@@ -3,6 +3,7 @@
 {% block body %}
 {% if category == "twitter" %}
     <div class="app_list">
+        <a href="/" role="button">◁ トップページへ</a>
         <a href="/google/detail/{{ app }}" role="button">◁ GooglePlayストアへ</a>
     </div>
     <h1>アプリ一覧(Twitter)</h1>
@@ -15,6 +16,7 @@
 
 {% if category == "google" %}
     <div class="app_list">
+        <a href="/" role="button">◁ トップページへ</a>
         <a href="/twitter/detail/{{ app }}" role="button">◁ Twitterへ</a>
     </div>
     <h1>アプリ一覧(GooglePlayストア)</h1>
@@ -33,61 +35,82 @@
     <form>
         <div class="date-input">
             <label for="start-date">開始日:</label>
-            <input type="date" name="start-date" id="start-date" value="2021-10-15">
+            <input type="date" name="start-date" id="start-date" value="{{ start_date }}">
         </div>
         <div class="date-input"> ~ </div>
         <div class="date-input">
             <label for="end-date">終了日:</label>
-            <input type="date" name="end-date" id="end-date" value="2021-12-15">
+            <input type="date" name="end-date" id="end-date" value="{{ end_date }}">
         </div>
         <input type="submit" value="検索">
     </form>
 </div>
 
+<div class="length">
+    検索結果
+</div>
+
+<div class="length">
+    {{ start_date }} ~ {{ end_date }}
+</div>
+
+<div class="length">総レビュー数: {{ rows|length }}件</div>
+
 <div class="graph-title">日付ごとのレビュー数の推移</div>
 <div id="scatter"></div>
 
 <script>
-    // 2次元データからラベルと値を分離
-    var labels = JSON.parse('{{ date_graph_list | map(attribute=0) | list | tojson | safe }}');
-    var values = JSON.parse('{{ date_graph_list | map(attribute=1) | list | tojson | safe }}');
+    // 横軸: 日付
+    var labels = JSON.parse('{{ graphs | map(attribute=0) | list | tojson | safe }}');
+    // ラベル用日付
+    var displayLabels = [];
+    for (var i = 0; i < labels.length; i += 5) {
+        displayLabels.push(labels[i]);
+    }
+    var values = JSON.parse('{{ graphs | map(attribute=1) | list | tojson | safe }}');
 
-    var dateData = [{
+    var data = [{
         x: labels,
         y: values,
         type: 'scatter',
     }];
 
     var layout = {
-        height: 400,
-        width: 1000
+        title: '日付ごとのレビュー数の推移',
+        height: 600,
+        width: 1200,
+        xaxis: {
+            tickvals: displayLabels,  // 配列の5つおきの目盛り位置を指定
+        }
     };
 
-    Plotly.newPlot('scatter', dateData, layout);
+    Plotly.newPlot('scatter', data, layout);
 </script>
 
-<div class="graph-title">種類ごとのレビュー数の割合 TOP5</div>
-<div id="pie-chart"></div>
+<div class="graph-title">種類ごとのレビュー数 TOP10</div>
+<div id="bar"></div>
 
 <script>
     // 2次元データからラベルと値を分離
     var labels = JSON.parse('{{ top_review | map(attribute=2) | list | tojson | safe }}');
     var values = JSON.parse('{{ top_review | map(attribute=1) | list | tojson | safe }}');
 
-    var clusters = [{
-        labels: labels,
-        values: values,
-        type: 'pie',
-        direction: 'clockwise',
+    var data = [{
+        x: labels,
+        y: values,
+        type: 'bar',
     }];
 
     var layout = {
-        height: 400,
-        width: 1000
+        title: '種類ごとのレビュー数',
+        height: 600,
+        width: 1300
     };
 
-    Plotly.newPlot('pie-chart', clusters, layout);
+    Plotly.newPlot('bar', data, layout);
 </script>
+
+<div class="graph-title">レビュー一覧</div>
 
 <ul class="accordion-area">
     {% for cluster in clusters %}

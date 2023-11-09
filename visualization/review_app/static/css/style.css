@@ -28,10 +28,19 @@ h1 {
   text-decoration: none;
 }
 
+.top a {
+  display: inline-block;
+  margin: 5px;
+  padding: 10px 20px;
+  background-color: #5334db;
+  color: #fff;
+  text-decoration: none;
+}
+
 /* アプリ名と検索フォームのスタイル設定 */
 .appname, .search {
   margin: 20px auto;
-  text-align: center; /* テキストを中央に配置 */
+  text-align: center;
 }
 
 .appname div {
@@ -40,9 +49,16 @@ h1 {
   font-weight: bold;
 }
 
+.length {
+  margin: 50px;
+  font-size: 30px;
+  text-align: center;
+  font-weight: bold;
+}
+
 .date-input {
   display: inline-block;
-  margin-right: 20px; /* 入力フィールド間のスペースを調整 */
+  margin-right: 20px;
 }
 
 form label {
@@ -69,10 +85,11 @@ input[type="submit"] {
 }
 
 .graph-title {
-  font-size: 25px;
+  font-size: 30px;
   text-align: center;
   font-weight: bold;
-  margin: 50px;
+  margin-top: 100px;
+  margin-bottom: 20px;
 }
 
 .date-img {

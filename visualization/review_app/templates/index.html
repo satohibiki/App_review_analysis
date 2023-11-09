@@ -13,4 +13,152 @@
         <a href="twitter/detail/{{ app_name }}" role="button">{{ app_name }}</a>
     {% endfor %}
 </div>
+
+<div class="search" id="search">
+    <form>
+        <div class="date-input">
+            <label for="start-date">開始日:</label>
+            <input type="date" name="start-date" id="start-date" value="{{ start_date }}">
+        </div>
+        <div class="date-input"> ~ </div>
+        <div class="date-input">
+            <label for="end-date">終了日:</label>
+            <input type="date" name="end-date" id="end-date" value="{{ end_date }}">
+        </div>
+        <input type="submit" value="検索">
+    </form>
+</div>
+
+<div class="length">
+    検索結果
+</div>
+
+<div class="length">
+    {{ start_date }} ~ {{ end_date }}
+</div>
+
+<div class="graph-title">日付ごとのレビュー数の推移 (GooglePlayストア)</div>
+<div id="google-scatter"></div>
+
+<div class="graph-title">日付ごとのレビュー数の推移 (Twitter)</div>
+<div id="twitter-scatter"></div>
+
+<script>
+    var app_names = ['capcut', 
+             'coke_on', 
+             'google_fit', 
+             'lemon8', 
+             'line_music', 
+             'majica', 
+             'paypay',  
+             'simeji', 
+             'スマートニュース', 
+             'にゃんトーク', 
+             'ファミペイ', 
+             '楽天ペイ',
+             'buzzvideo']
+    // 横軸: 日付
+    var labels = JSON.parse('{{ google_graphs[0] | map(attribute=0) | list | tojson | safe }}');
+    // ラベル用日付
+    var displayLabels = [];
+    for (var i = 0; i < labels.length; i += 5) {
+        displayLabels.push(labels[i]);
+    };
+
+    // googleデータ
+    var googleValueDatas = []
+    var googleValueData
+    googleValueData = JSON.parse('{{ google_graphs[0] | map(attribute=1) | list | tojson | safe }}');
+    googleValueDatas.push(googleValueData);
+    googleValueData = JSON.parse('{{ google_graphs[1] | map(attribute=1) | list | tojson | safe }}');
+    googleValueDatas.push(googleValueData);
+    googleValueData = JSON.parse('{{ google_graphs[2] | map(attribute=1) | list | tojson | safe }}');
+    googleValueDatas.push(googleValueData);
+    googleValueData = JSON.parse('{{ google_graphs[3] | map(attribute=1) | list | tojson | safe }}');
+    googleValueDatas.push(googleValueData);
+    googleValueData = JSON.parse('{{ google_graphs[4] | map(attribute=1) | list | tojson | safe }}');
+    googleValueDatas.push(googleValueData);
+    googleValueData = JSON.parse('{{ google_graphs[5] | map(attribute=1) | list | tojson | safe }}');
+    googleValueDatas.push(googleValueData);
+    googleValueData = JSON.parse('{{ google_graphs[6] | map(attribute=1) | list | tojson | safe }}');
+    googleValueDatas.push(googleValueData);
+    googleValueData = JSON.parse('{{ google_graphs[7] | map(attribute=1) | list | tojson | safe }}');
+    googleValueDatas.push(googleValueData);
+    googleValueData = JSON.parse('{{ google_graphs[8] | map(attribute=1) | list | tojson | safe }}');
+    googleValueDatas.push(googleValueData);
+    googleValueData = JSON.parse('{{ google_graphs[9] | map(attribute=1) | list | tojson | safe }}');
+    googleValueDatas.push(googleValueData);
+    googleValueData = JSON.parse('{{ google_graphs[10] | map(attribute=1) | list | tojson | safe }}');
+    googleValueDatas.push(googleValueData);
+    googleValueData = JSON.parse('{{ google_graphs[11] | map(attribute=1) | list | tojson | safe }}');
+    googleValueDatas.push(googleValueData);
+    googleValueData = JSON.parse('{{ google_graphs[12] | map(attribute=1) | list | tojson | safe }}');
+    googleValueDatas.push(googleValueData);
+
+
+    var googleData = []
+    for (var i = 0; i < googleValueDatas.length; i += 1) {
+        var element = {
+            x: labels,
+            y: googleValueDatas[i],
+            type: 'scatter',
+            name: app_names[i]
+        };
+        googleData.push(element)
+    };
+
+    // twitterデータ
+    var twitterValueDatas = []
+    var twitterValueData
+    twitterValueData = JSON.parse('{{ twitter_graphs[0] | map(attribute=1) | list | tojson | safe }}');
+    twitterValueDatas.push(twitterValueData);
+    twitterValueData = JSON.parse('{{ twitter_graphs[1] | map(attribute=1) | list | tojson | safe }}');
+    twitterValueDatas.push(twitterValueData);
+    twitterValueData = JSON.parse('{{ twitter_graphs[2] | map(attribute=1) | list | tojson | safe }}');
+    twitterValueDatas.push(twitterValueData);
+    twitterValueData = JSON.parse('{{ twitter_graphs[3] | map(attribute=1) | list | tojson | safe }}');
+    twitterValueDatas.push(twitterValueData);
+    twitterValueData = JSON.parse('{{ twitter_graphs[4] | map(attribute=1) | list | tojson | safe }}');
+    twitterValueDatas.push(twitterValueData);
+    twitterValueData = JSON.parse('{{ twitter_graphs[5] | map(attribute=1) | list | tojson | safe }}');
+    twitterValueDatas.push(twitterValueData);
+    twitterValueData = JSON.parse('{{ twitter_graphs[6] | map(attribute=1) | list | tojson | safe }}');
+    twitterValueDatas.push(twitterValueData);
+    twitterValueData = JSON.parse('{{ twitter_graphs[7] | map(attribute=1) | list | tojson | safe }}');
+    twitterValueDatas.push(twitterValueData);
+    twitterValueData = JSON.parse('{{ twitter_graphs[8] | map(attribute=1) | list | tojson | safe }}');
+    twitterValueDatas.push(twitterValueData);
+    twitterValueData = JSON.parse('{{ twitter_graphs[9] | map(attribute=1) | list | tojson | safe }}');
+    twitterValueDatas.push(twitterValueData);
+    twitterValueData = JSON.parse('{{ twitter_graphs[10] | map(attribute=1) | list | tojson | safe }}');
+    twitterValueDatas.push(twitterValueData);
+    twitterValueData = JSON.parse('{{ twitter_graphs[11] | map(attribute=1) | list | tojson | safe }}');
+    twitterValueDatas.push(twitterValueData);
+    twitterValueData = JSON.parse('{{ twitter_graphs[12] | map(attribute=1) | list | tojson | safe }}');
+    twitterValueDatas.push(twitterValueData);
+
+
+    var twitterData = []
+    for (var i = 0; i < twitterValueDatas.length; i += 1) {
+        var element = {
+            x: labels,
+            y: twitterValueDatas[i],
+            type: 'scatter',
+            name: app_names[i]
+        };
+        twitterData.push(element)
+    };
+
+    var layout = {
+        title: '日付ごとのレビュー数の推移',
+        height: 600,
+        width: 1200,
+        xaxis: {
+            tickvals: displayLabels,  // 5日おきの日付を指定
+        }
+    };
+
+    Plotly.newPlot('google-scatter', googleData, layout);
+    Plotly.newPlot('twitter-scatter', twitterData, layout);
+</script>
 {% endblock %}
