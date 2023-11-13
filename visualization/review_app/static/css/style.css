@@ -26,6 +26,12 @@ h1 {
   background-color: #3498db;
   color: #fff;
   text-decoration: none;
+
+  /* ホバーエフェクト */
+  &:hover {
+    background-color: #FFFFFF;
+    color: #007BFF;
+  }
 }
 
 .top a {
@@ -56,7 +62,7 @@ h1 {
   font-weight: bold;
 }
 
-.date-input {
+.search-input {
   display: inline-block;
   margin-right: 20px;
 }
@@ -67,6 +73,14 @@ form label {
 }
 
 input[type="date"] {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+input[type="text"] {
   width: 100%;
   padding: 10px;
   margin: 5px 0;
@@ -123,7 +137,8 @@ input[type="submit"] {
 }
 
 .title:hover {
-  background-color: #2980b9;
+  background-color: #FFFFFF;
+  color: #000;
 }
 
 .box {

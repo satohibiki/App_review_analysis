@@ -4,6 +4,10 @@ import csv
 import os
 from datetime import datetime as dt
 from datetime import timedelta
+import collections
+
+import MeCab
+mecab = MeCab.Tagger("mecabrc")
 
 app_names = ['capcut', 
          'coke_on', 
@@ -19,6 +23,25 @@ app_names = ['capcut',
          '楽天ペイ',
          'buzzvideo']
 
+# 名刺のみを抽出
+def ma_parse(sentence, fileter="名詞"):
+  node = mecab.parseToNode(sentence)
+  while node:
+    if node.feature.startswith(fileter):
+      yield node.surface
+    node = node.next
+
+# クラス名を決定
+def create_class_title(text):
+    # 名刺のみを抽出
+    words = [word for word in ma_parse(text)]
+    c = collections.Counter(words)
+    try:
+        top_word = c.most_common()[0][0]
+    except IndexError:
+        top_word = ""
+    return top_word
+
 def date_range(start, stop, step = timedelta(1)):
     current = dt.strptime(start, "%Y-%m-%d")
     stop = dt.strptime(stop, "%Y-%m-%d")
@@ -32,6 +55,7 @@ def date_range(start, stop, step = timedelta(1)):
 def index():
     start_date = request.args.get('start-date', '2021-10-21')
     end_date = request.args.get('end-date', '2021-12-15')
+    keyword = request.args.get('keyword', '')
     google_rows = []
     twitter_rows = []
     google_graphs = []
@@ -51,7 +75,11 @@ def index():
         search_result = []
         for row in google_rows:
             if start_date <= row[2][:10] <= end_date:
-                search_result.append(row)
+                if keyword != '':
+                    if keyword in row[3]:
+                        search_result.append(row)
+                else:
+                    search_result.append(row)
         google_rows = search_result
 
         # 日付ごとのレビュー数のリストを作成
@@ -76,7 +104,11 @@ def index():
         search_result = []
         for row in twitter_rows:
             if start_date <= row[2][:10] <= end_date:
-                search_result.append(row)
+                if keyword != '':
+                    if keyword in row[3]:
+                        search_result.append(row)
+                else:
+                    search_result.append(row)
         twitter_rows = search_result
 
         # 日付ごとのレビュー数のリストを作成
@@ -91,12 +123,14 @@ def index():
                            google_graphs=google_graphs,
                            twitter_graphs=twitter_graphs,
                            start_date=start_date, 
-                           end_date=end_date)
+                           end_date=end_date,
+                           keyword=keyword)
 
 @app.route('/<string:category>/detail/<string:app_name>')
 def read(category, app_name):
     start_date = request.args.get('start-date', '2021-10-21')
     end_date = request.args.get('end-date', '2021-12-15')
+    keyword = request.args.get('keyword', '')
     app = app_name
     category = category
     rows = []
@@ -116,7 +150,11 @@ def read(category, app_name):
     search_result = []
     for row in rows:
         if start_date <= row[2][:10] <= end_date:
-            search_result.append(row)
+            if keyword != '':
+                if keyword in row[3]:
+                    search_result.append(row)
+            else:
+                search_result.append(row)
     rows = search_result
 
     # クラスタリング
@@ -129,7 +167,14 @@ def read(category, app_name):
             count_dict[key] = 1
     clusters = [[key, value] for key, value in count_dict.items()]
     for cluster in clusters:
-        title = next(row[4] for row in rows if row[5] == cluster[0])
+        text = ""
+        for row in rows:
+            if row[5] == cluster[0]:
+                text += row[4]
+                text += "。"
+        title = create_class_title(text)
+        if title == "": # 名刺が存在しない場合は文章がタイトル
+            title = next(row[4] for row in rows if row[5] == cluster[0])
         cluster.append(title)
     clusters = sorted(clusters, reverse=True, key=lambda x: x[1])
     top_review = clusters[:10]
@@ -151,4 +196,5 @@ def read(category, app_name):
                            graphs=graphs, 
                            top_review=top_review, 
                            start_date=start_date, 
-                           end_date=end_date)
+                           end_date=end_date,
+                           keyword=keyword)

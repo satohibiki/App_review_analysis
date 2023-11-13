@@ -33,14 +33,18 @@
 
 <div class="search" id="search">
     <form>
-        <div class="date-input">
-            <label for="start-date">開始日:</label>
+        <div class="search-input">
+            <label for="start-date">開始日</label>
             <input type="date" name="start-date" id="start-date" value="{{ start_date }}">
         </div>
-        <div class="date-input"> ~ </div>
-        <div class="date-input">
-            <label for="end-date">終了日:</label>
+        <div class="search-input"> ~ </div>
+        <div class="search-input">
+            <label for="end-date">終了日</label>
             <input type="date" name="end-date" id="end-date" value="{{ end_date }}">
+        </div>
+        <div class="search-input">
+            <label for="keyword">キーワード</label>
+            <input type="text" name="keyword" id="keyword" value="{{ keyword }}">
         </div>
         <input type="submit" value="検索">
     </form>
@@ -51,7 +55,7 @@
 </div>
 
 <div class="length">
-    {{ start_date }} ~ {{ end_date }}
+    {{ start_date }} ~ {{ end_date }} キーワード: {{ keyword }}
 </div>
 
 <div class="length">総レビュー数: {{ rows|length }}件</div>
