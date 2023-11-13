@@ -26,6 +26,12 @@ h1 {
   background-color: #3498db;
   color: #fff;
   text-decoration: none;
+
+  /* ホバーエフェクト */
+  &:hover {
+    background-color: #FFFFFF;
+    color: #007BFF;
+  }
 }
 
 .top a {
@@ -131,7 +137,8 @@ input[type="submit"] {
 }
 
 .title:hover {
-  background-color: #2980b9;
+  background-color: #FFFFFF;
+  color: #000;
 }
 
 .box {
