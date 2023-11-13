@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.141592653-p4.1.0-230214-2.6 (utf8.euc) (TeX Live 2023) (preloaded format=platex 2023.11.7)  13 NOV 2023 17:07
+This is e-pTeX, Version 3.141592653-p4.1.0-230214-2.6 (utf8.euc) (TeX Live 2023) (preloaded format=platex 2023.11.7)  13 NOV 2023 17:35
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -849,15 +849,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 40--43
 
 ]) [33] (./thesis.aux)
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 2875E1B5D51D076E51473DE266D224D6;1850.
+(rerunfilecheck)             Checksum: 8794581C8D476D528117CD3358536FAA;1862.
  ) 
 Here is how much of TeX's memory you used:
  13880 strings out of 476693
  212115 string characters out of 5805373
- 2055209 words of memory out of 5000000
+ 2054209 words of memory out of 5000000
  34083 multiletter control sequences out of 15000+600000
  562489 words of font info for 124 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
  72i,18n,76p,604b,2108s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on thesis.dvi (40 pages, 140876 bytes).
+Output written on thesis.dvi (40 pages, 141460 bytes).

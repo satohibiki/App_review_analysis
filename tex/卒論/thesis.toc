@@ -41,7 +41,7 @@
 \contentsline {section}{\numberline {4.8}画面出力・可視化}{26}{section.4.8}%
 \contentsline {chapter}{\numberline {第5章}結果・評価}{29}{chapter.5}%
 \contentsline {section}{\numberline {5.1}RQ1:レビューの抽出性能の調査}{29}{section.5.1}%
-\contentsline {section}{\numberline {5.2}RQ2:抽出文を用いた分類器の性能調査}{29}{section.5.2}%
+\contentsline {section}{\numberline {5.2}RQ2:抽出文を用いたクラスタリングの性能調査}{29}{section.5.2}%
 \contentsline {section}{\numberline {5.3}RQ3:可視化ツールの有用性}{29}{section.5.3}%
 \contentsline {chapter}{\numberline {第6章}結論}{30}{chapter.6}%
 \contentsline {chapter}{謝辞}{31}{chapter*.4}%
