@@ -1,0 +1,66 @@
+This is upBibTeX, Version 0.99d-j0.36-u1.29 (utf8.euc) (TeX Live 2023)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: thesis.aux
+The style file: jplain.bst
+Database file #1: thesis.bib
+Warning--entry type for "twitter" isn't style-file defined
+--line 11 of file thesis.bib
+Warning--entry type for "google-play-store" isn't style-file defined
+--line 20 of file thesis.bib
+Warning--entry type for "about-google-play" isn't style-file defined
+--line 38 of file thesis.bib
+Warning--entry type for "purnima-kochikar" isn't style-file defined
+--line 44 of file thesis.bib
+Warning--entry type for "aboutx" isn't style-file defined
+--line 52 of file thesis.bib
+Warning--entry type for "google-play-scraper" isn't style-file defined
+--line 87 of file thesis.bib
+Warning--entry type for "tohoku" isn't style-file defined
+--line 100 of file thesis.bib
+Warning--entry type for "masking" isn't style-file defined
+--line 109 of file thesis.bib
+Warning--to sort, need author or key in about-google-play
+Warning--empty journal in kawatsura
+You've used 17 entries,
+            2620 wiz_defined-function locations,
+            675 strings with 7147 characters,
+and the built_in function-call counts, 6164 in all, are:
+= -- 520
+> -- 193
+< -- 6
++ -- 81
+- -- 64
+* -- 259
+:= -- 833
+add.period$ -- 54
+call.type$ -- 17
+change.case$ -- 83
+chr.to.int$ -- 0
+cite$ -- 19
+duplicate$ -- 331
+empty$ -- 599
+format.name$ -- 96
+if$ -- 1449
+int.to.chr$ -- 0
+int.to.str$ -- 17
+missing$ -- 8
+newline$ -- 90
+num.names$ -- 32
+pop$ -- 203
+preamble$ -- 1
+purify$ -- 66
+quote$ -- 0
+skip$ -- 334
+stack$ -- 0
+substring$ -- 261
+swap$ -- 76
+text.length$ -- 6
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 68
+warning$ -- 2
+while$ -- 44
+width$ -- 19
+write$ -- 180
+is.kanji.str$ -- 153
+(There were 10 warnings)

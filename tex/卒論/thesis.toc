@@ -1,0 +1,48 @@
+\contentsline {chapter}{\numberline {第1章}序論}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}背景}{1}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Google Playストア}{1}{subsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.1.2}X}{1}{subsection.1.1.2}%
+\contentsline {subsection}{\numberline {1.1.3}アプリのユーザーレビュー}{2}{subsection.1.1.3}%
+\contentsline {section}{\numberline {1.2}本研究の目的}{2}{section.1.2}%
+\contentsline {section}{\numberline {1.3}本論文の構成}{2}{section.1.3}%
+\contentsline {chapter}{\numberline {第2章}関連研究}{4}{chapter.2}%
+\contentsline {section}{\numberline {2.1}アプリレビューのマイニング}{4}{section.2.1}%
+\contentsline {section}{\numberline {2.2}ツイートとアプリレビューの関連性}{4}{section.2.2}%
+\contentsline {chapter}{\numberline {第3章}基盤技術}{7}{chapter.3}%
+\contentsline {section}{\numberline {3.1}機械学習}{7}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}機械学習とは}{7}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}教師あり学習}{7}{subsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.1.3}教師なし学習}{8}{subsection.3.1.3}%
+\contentsline {subsection}{\numberline {3.1.4}強化学習}{8}{subsection.3.1.4}%
+\contentsline {section}{\numberline {3.2}自然言語処理}{8}{section.3.2}%
+\contentsline {section}{\numberline {3.3}BERT}{9}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}BERTとは}{9}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}学習方法}{9}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}事前学習}{9}{subsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.3.4}ファインチューニング}{10}{subsection.3.3.4}%
+\contentsline {section}{\numberline {3.4}Chinese Whispers}{10}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Chinese Whispersとは}{10}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}グラフの構築}{10}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}クラスタリングの開始}{10}{subsection.3.4.3}%
+\contentsline {subsection}{\numberline {3.4.4}グラフの反復処理とクラスタの更新}{10}{subsection.3.4.4}%
+\contentsline {subsection}{\numberline {3.4.5}クラスタリングの収束}{11}{subsection.3.4.5}%
+\contentsline {chapter}{\numberline {第4章}実装}{12}{chapter.4}%
+\contentsline {section}{\numberline {4.1}実装の概要}{12}{section.4.1}%
+\contentsline {section}{\numberline {4.2}対象アプリとレビュー}{12}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Google Playストアのスクレイピング}{13}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Xのスクレイピング}{15}{section.4.4}%
+\contentsline {section}{\numberline {4.5}前処理}{18}{section.4.5}%
+\contentsline {section}{\numberline {4.6}有用な箇所の自動抽出}{21}{section.4.6}%
+\contentsline {subsection}{\numberline {4.6.1}概要}{21}{subsection.4.6.1}%
+\contentsline {subsection}{\numberline {4.6.2}データセット}{21}{subsection.4.6.2}%
+\contentsline {subsection}{\numberline {4.6.3}モデルのfine-tuning}{24}{subsection.4.6.3}%
+\contentsline {subsection}{\numberline {4.6.4}自動抽出}{24}{subsection.4.6.4}%
+\contentsline {section}{\numberline {4.7}クラスタリング}{24}{section.4.7}%
+\contentsline {section}{\numberline {4.8}画面出力・可視化}{26}{section.4.8}%
+\contentsline {chapter}{\numberline {第5章}結果・評価}{29}{chapter.5}%
+\contentsline {section}{\numberline {5.1}RQ1:レビューの抽出性能の調査}{29}{section.5.1}%
+\contentsline {section}{\numberline {5.2}RQ2:抽出文を用いたクラスタリングの性能調査}{29}{section.5.2}%
+\contentsline {section}{\numberline {5.3}RQ3:可視化ツールの有用性}{29}{section.5.3}%
+\contentsline {chapter}{\numberline {第6章}結論}{30}{chapter.6}%
+\contentsline {chapter}{謝辞}{31}{chapter*.4}%
+\contentsline {chapter}{参考文献}{32}{chapter*.5}%

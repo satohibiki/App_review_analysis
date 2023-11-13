@@ -1,0 +1,18 @@
+\addvspace {10\jsc@mpt }
+\addvspace {10\jsc@mpt }
+\contentsline {table}{\numberline {2.1}{\ignorespaces Definition of Five Review Categories（\cite {sur-miner} p.763, Table I）}}{5}{table.2.1}%
+\contentsline {table}{\numberline {2.2}{\ignorespaces Topic analysis from LDA（\cite {tweetapp} p.20, Table IV）}}{6}{table.2.2}%
+\addvspace {10\jsc@mpt }
+\addvspace {10\jsc@mpt }
+\contentsline {table}{\numberline {4.1}{\ignorespaces 本研究の対象アプリ一覧}}{14}{table.4.1}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces 収集したGoogle Playストアのレビュー数（\cite {kawatsura} p.16, 表 4.2）}}{15}{table.4.2}%
+\contentsline {table}{\numberline {4.3}{\ignorespaces 収集したGoogle Playストアのレビュー数(2023/10/1～12/15)}}{16}{table.4.3}%
+\contentsline {table}{\numberline {4.4}{\ignorespaces 収集したTwitterのツイート数（\cite {kawatsura} p.18, 表 4.3）}}{17}{table.4.4}%
+\contentsline {table}{\numberline {4.5}{\ignorespaces プランとできること}}{17}{table.4.5}%
+\contentsline {table}{\numberline {4.6}{\ignorespaces 収集したXのポスト数}}{18}{table.4.6}%
+\contentsline {table}{\numberline {4.7}{\ignorespaces Google Playストアレビューの前処理結果(buzzvideo)}}{20}{table.4.7}%
+\contentsline {table}{\numberline {4.8}{\ignorespaces ツイートの前処理結果(BuzzVideo)}}{20}{table.4.8}%
+\contentsline {table}{\numberline {4.9}{\ignorespaces Google Playストアレビューの自動抽出結果(google\_fit)}}{25}{table.4.9}%
+\contentsline {table}{\numberline {4.10}{\ignorespaces 抽出した文章とクラスタ番号(google\_fit)}}{27}{table.4.10}%
+\addvspace {10\jsc@mpt }
+\addvspace {10\jsc@mpt }

@@ -1,0 +1,110 @@
+\chapter{関連研究}
+\label{chap:kanrenkenkyuu}
+
+
+
+
+%ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
+\section{アプリレビューのマイニング}
+近年, アプリレビューをマイニングするための自動化技術(トピック分類やキーワード抽出など)に関する研究が進んでいる. これらの技術によって, 開発者がアプリレビューを理解・分析するために必要とする労力を軽減することに繋がっている. 
+INFAR\cite{infar}はレビューから洞察を発見し, レビュー文を事前に定義されたトピックに分類したのちに要約を生成する手法である. 定義されるトピックの粒度はクラッシュやGUIなど粗いものとなっている. 
+また, SUR-Miner\cite{sur-miner}はレビューを表\ref{tb:categories}に示した5つのカテゴリに分類し, 依存関係解析やPart-of-Speechパターンなどの技術を使用して, アプリレビューからいくつかの側面を抽出する. そして最後に概要を可視化する. この概要に関しては多くの開発者から有用性があると判断されている. 
+他にも, Casper\cite{caspar}というレビューからアプリの問題に関してユーザが報告したミニストーリー(ユーザーアクションと関連するアプリの動作という2種類のイベント)を抽出し, 合成するための手法が提案されている. 
+
+\begin{table}[htbp]
+  \small
+  \caption{Definition of Five Review Categories（\cite{sur-miner} p.763, Table I）}
+  \label{tb:categories}
+  \begin{center}
+    \begin{tabularx}{\linewidth}{l|l|X}
+      \hline
+      Category&Definition&Examples\\\hline\hline
+      Praise&
+      \begin{tabular}{l}
+        Expressing emotions \\without specific reasons
+      \end{tabular}&
+      \begin{tabular}{X}
+        Excellent!\\I love it!\\Amazing!
+      \end{tabular}\\\hline
+      Aspect Evaluation&
+      \begin{tabular}{l}
+        Expressing opinions \\for specific aspects
+      \end{tabular}&
+      \begin{tabular}{X}
+        The UI is convenient.\\I like the prediction text.
+      \end{tabular}\\\hline
+      Bug Report&
+      \begin{tabular}{l}
+        Reporting bugs, \\glitches or problems
+      \end{tabular}&
+      \begin{tabular}{X}
+        It always force closes \\when I click the “.com” button.
+      \end{tabular}\\\hline
+      Feature Request&
+      \begin{tabular}{l}
+        Suggestions or \\new feature requests
+      \end{tabular}&
+      \begin{tabular}{X}
+        It would be better \\if I could give opinion on it. \\It's a pity it doesn't support \\Chinese.\\I wish there was a “deny” button.
+      \end{tabular}\\\hline
+      Others&
+      \begin{tabular}{l}
+        Other categories that \\are defined in [31]
+      \end{tabular}&
+      \begin{tabular}{X}
+        I've been playing \\it for three years
+      \end{tabular}\\\hline
+    \end{tabularx}
+  \end{center}
+\end{table}
+
+
+
+%ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+\section{ツイートとアプリレビューの関連性}
+Gouriら\cite{tweetapp}はTwitterからのユーザフィードバックをタイミングと内容の2つの観点から評価し, App Storeのレビューと比較した. 
+ツイートとアプリレビューをテキスト分析して, LDAを用いて分類した. その結果, 426件のツイートと2,383件のレビュー(バグレポートと機能リクエスト)のタイミング分析では, 約15\%が最初にTwitterに表示されることが示された. 
+また, 15\%のツイートのうち, 72\%はモバイルアプリの機能または動作の側面に関連しているものであった. 一方で, App Storeのレビューはモバイルアプリの機能または動作の側面に関連しているものが全体の80\%であった. 
+さらに, 表\ref{tb:topic}に示されているように, ツイートにはアプリに関連する重大な問題や深刻な問題を示すトピックがつぶやかれている事例を少なくとも6つ確認することができる. App Storeのトピックもタイミングや回数などの詳細が追加されているものの, 同様の情報を示している. 
+
+\begin{table}[htbp]
+  \caption{Topic analysis from LDA（\cite{tweetapp} p.20, Table IV）}
+  \label{tb:topic}
+  \begin{center}
+    \begin{tabularx}{\linewidth}{|l|l|X|X|}
+      \hline
+      App&Topic\#&Topics on Twitter&Topics in App Store reviews\\\hline
+      Dropbox&
+      \begin{tabular}{l}
+        1\\2
+      \end{tabular}&
+      \begin{tabular}{X}
+        unable, file, sync, ac- \\cess, try \\connect, fix, mac, open, \\crash
+      \end{tabular}&
+      \begin{tabular}{X}
+        file, upload, unable, \\sync, horrible, time \\crash, every, time, try, \\three
+      \end{tabular}\\\hline
+      Google cast&
+      \begin{tabular}{l}
+        1\\2
+      \end{tabular}&
+      \begin{tabular}{X}
+        googlecast, work, bring, \\resolve, session \\reboot, router, tv, add, \\screen
+      \end{tabular}&
+      \begin{tabular}{X}
+        problem, fine, tv, con- \\nect, work \\googlecast, sometimes, \\screen, work, win
+      \end{tabular}\\\hline
+      LinkedIn&
+      \begin{tabular}{l}
+        1\\2
+      \end{tabular}&
+      \begin{tabular}{X}
+        wish, meet, announce, \\connect, use \\use, prospects, connect, \\download, wish
+      \end{tabular}&
+      \begin{tabular}{X}
+        option, add, thanks, vi- \\brate, please \\say, make, account, \\launch, fight
+      \end{tabular}\\\hline
+    \end{tabularx}
+  \end{center}
+\end{table}
