@@ -171,6 +171,7 @@ def read(category, app_name):
         for row in rows:
             if row[5] == cluster[0]:
                 text += row[4]
+                text += "。"
         title = create_class_title(text)
         if title == "": # 名刺が存在しない場合は文章がタイトル
             title = next(row[4] for row in rows if row[5] == cluster[0])
