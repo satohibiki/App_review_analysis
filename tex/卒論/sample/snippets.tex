@@ -1,0 +1,33 @@
+\chapter{よく使うLaTex記法}
+よく使われる図や表の挿入方法について記載する．
+
+\section{図の挿入}
+図はfigure環境を使って挿入する．
+jpg, pngの挿入も可能だが，pdfで挿入するのがモダンらしい．
+captionに図のタイトル，labelに本文中から参照するための識別子を付けることができる．
+図\ref{fig:takada}は$\backslash$ref\{fig:takada\}のようにして参照することができる．
+figure環境のオプションhtpbの意味や図の大きさ，細かい配置方法については各自調べてみて欲しい．
+
+\begin{minipage}{\textwidth}
+  \lstinputlisting[caption={図の挿入}, label={code:figure}, language={tex}]{sample/snippets/figure.tex}
+\end{minipage}
+
+\input{sample/snippets/figure.tex}
+
+
+\section{表の挿入}
+表はtable環境を使って挿入する．
+縦の罫線はtabularで|を使って指定する．
+横の継戦は$\backslash$hlineを使って指定する．
+
+\begin{minipage}{\textwidth}
+  \lstinputlisting[caption={表の挿入}, label={code:table}, language={tex}]{sample/snippets/table.tex}
+\end{minipage}
+
+\input{sample/snippets/table.tex}
+
+
+\section{コードの挿入}
+コードの挿入はtexファイルに直接記述することができる．
+もちろん，ファイルを指定して挿入することもできる．
+詳しい利用法はsample/usage.texを参照．

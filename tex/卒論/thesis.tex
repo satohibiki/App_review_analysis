@@ -1,0 +1,109 @@
+\documentclass[report, a4paper, 12pt]{jsbook}
+
+% しおり機能とコメント機能 (必ず, graphicx系より先に書く事)
+\usepackage[dvipdfmx]{hyperref}
+\usepackage{pxjahyper}
+
+\usepackage[dvipdfmx]{color}
+\usepackage[dvipdfmx]{xcolor}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{enumerate}
+\usepackage{cover}
+\usepackage{abstract}
+\usepackage{thesis}
+\usepackage{here}
+\usepackage{url}
+\usepackage[toc,page]{appendix}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage{booktabs}
+
+% Usage用
+%\usepackage{minted}
+\usepackage{listings, jlisting}
+\lstset{%listings の表示設定
+  breaklines = true,%自動で折り返す。
+  tabsize = 2,%tabsize
+  frame=shadowbox,%枠を上下左右に表示する
+  basicstyle = \footnotesize\ttfamily,%\footnotesize,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  lineskip=-0.5zw,
+  showstringspaces=false,%文字列中のスペースをちゃんと" "と表示。(デフォルトは文字列中のスペースは可視設定)
+  numbers=left,%行番号を左に
+  framexleftmargin=6truemm,%行番号をフレーム内に
+  numberstyle=\scriptsize,%行番号のサイズ
+  stepnumber=1,%1行おきに行番号を
+  numbersep=1zw,%ソースと行番号の間隔
+  language = C
+}%言語設定
+
+\renewcommand{\thelstnumber}{\arabic{lstnumber}:}
+
+\studentid{62008972}
+\studentname{佐藤響}
+\studentruby{さとうひびき}
+
+%makecover用設定
+\covername{佐\ 藤\ \ 響}
+\coveryear{令\ 和\ 5\ 年\ 度}
+\covertitle{GoogleストアとXにおける\mbox{}\\ユーザレビューを用いた\mbox{}\\開発者支援ツール}
+
+%makeabstract用設定
+\absttitle{GoogleストアとXにおける\mbox{}\\ユーザレビューを用いた開発者支援ツール}
+\abstcontent{\input{abstractContents.tex}}
+
+%maketitle用設定
+\title{GoogleストアとXにおける\mbox{}\\ユーザレビューを用いた開発者支援ツール}
+\author{佐藤響}
+\date{}
+
+\begin{document}
+\makecover    % 表紙ページ生成
+\makeabstract % 論文要旨ページ生成
+\maketitle    % 内表紙ページ生成
+\maketoc      % 目次ページ生成
+
+%\layout
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 論文本体
+% ここに論文の本体のtexファイルを \input{ファイルパス} で入れる. %
+% ex. \input{sample/usage.tex}                                   %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{contents/jyoron.tex}
+\input{contents/kanrenkenkyuu.tex}
+\input{contents/kibangijyutu.tex}
+\input{contents/zisso.tex}
+\input{contents/kekkahyouka.tex}
+\input{contents/result.tex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 論文本体おわり                                                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 謝辞. 感謝の気持ちを書く. \acknowledge以下に直接書くか,        %
+%   \input で\acknowledge を記述したファイルを読み込む           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{acknowledge.tex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 謝辞おわり                                                     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 参考文献                                                       %
+% \bibliographystyle に選択した参考文献表示方法を入れる          %
+% 参考文献内容は, bibtexで管理するのが楽. thesis.bibに書こう.    %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{jplain}
+\bibliography{thesis}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 参考文献おわり                                                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \input{appendix.tex}
+
+
+\end{document}
+

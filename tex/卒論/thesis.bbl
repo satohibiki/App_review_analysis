@@ -1,0 +1,90 @@
+\begin{thebibliography}{10}
+
+\bibitem{about-google-play}
+``android の「google play ストア」では何ができる？ アプリのインストール方法や楽しみ方を知ろう''.
+\newblock \url{https://www.android.com/intl/ja_jp/articles/120/}, 2023.
+\newblock Accessed: Nov 8, 2023.
+
+\bibitem{chinese-whispers}
+Chris Biemann.
+\newblock Chinese whispers: An efficient graph clustering algorithm and its application to natural language processing problems.
+\newblock In {\em Proceedings of the Association for Computational Linguistics}, 2006.
+
+\bibitem{purnima-kochikar}
+Google~Developers Blog.
+\newblock Celebrating 10 years of google play. together.
+\newblock \url{https://android-developers.googleblog.com/2022/03/celebrating-10-years-of-google-play.html}, mar 2022.
+\newblock Accessed: Nov 8, 2023.
+
+\bibitem{tweetapp}
+Gouri Deshpande and Jon Rokne.
+\newblock User feedback from tweets vs app store reviews: An exploratory study of frequency, timing and content.
+\newblock In {\em 5th International Workshop on Artificial Intelligence for Requirements Engineering}, pp. 15--21, 2018.
+
+\bibitem{bert}
+Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova.
+\newblock Bert: Pre-training of deep bidirectional transformers for language understanding.
+\newblock {\em arXiv}, pp. 4171--4186, 2019(2018).
+
+\bibitem{infar}
+Cuiyun Gao, Jichuan Zeng, David Lo, Chin-Yew Lin, Michael~R. Lyu, and Irwin King.
+\newblock Infar: Insight extraction from app reviews.
+\newblock In {\em Proceedings of the 2018 ACM Joint Meeting on European Software Engineering Conference and Symposium on the Foundations of Software Engineering}, pp. 904--907, Lake Buena Vista, FL, USA, November 2018. ACM.
+
+\bibitem{masking}
+GitHub.
+\newblock cl-tohoku/bert-base-japanese-whole-word-masking.
+\newblock \url{https://huggingface.co/cl-tohoku/bert-base-japanese-whole-word-masking}.
+
+\bibitem{tohoku}
+GitHub.
+\newblock cl-tohoku/bert-japanese.
+\newblock \url{https://github.com/cl-tohoku/bert-japanese}.
+
+\bibitem{google-play-scraper}
+{Google Play Scraper Contributors}.
+\newblock google-play-scraper, 2023.
+\newblock Accessed: Nov 10, 2023.
+
+\bibitem{sur-miner}
+Xiaodong Gu and Sunghun Kim.
+\newblock What parts of your apps are loved by users?
+\newblock In {\em 30th IEEE/ACM International Conference on Automated Software Engineering, ASE 2015}, pp. 760--770, Lincoln, NE, USA, November 9-13 2015.
+
+\bibitem{caspar}
+Hui Guo and Munindar~P. Singh.
+\newblock Caspar: Extracting and synthesizing user stories of problems from app reviews.
+\newblock In {\em Proceedings of the 42nd International Conference on Software Engineering (ICSE '20)}, pp. 628--640, June 27 - July 19 2020.
+
+\bibitem{google-play-store}
+Google Inc.
+\newblock ``google play''.
+\newblock \url{http://play.google.com/}.
+
+\bibitem{twitter}
+Twitter Inc.
+\newblock ``twitter''.
+\newblock \url{https://twitter.com/}.
+
+\bibitem{aboutx}
+Time.
+\newblock Why elon musk wanted twitter in numbers.
+\newblock \url{https://time.com/6171871/why-elon-musk-wanted-twitter-in-numbers/}, 2022.
+\newblock Accessed: Nov 8, 2023.
+
+\bibitem{tweepy}
+{Tweepy Developers}.
+\newblock Tweepy.
+\newblock \url{https://www.tweepy.org/}, 2023.
+
+\bibitem{sira}
+Yawen Wang, Junjie Wang, Hongyu Zhang, Xuran Ming, Lin Shi, and Qing Wang.
+\newblock Where is your app frustrating users?
+\newblock In {\em 44th International Conference on Software Engineering}, pp. 2427--2439, 2022.
+
+\bibitem{kawatsura}
+Kawatsura Yoshiki.
+\newblock モバイルアプリケーションストアとtwitterにおけるユーザレビューの比較調査.
+\newblock 2022(2021).
+
+\end{thebibliography}

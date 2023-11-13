@@ -1,0 +1,84 @@
+%% マクロの定義を利用する.
+\RequirePackage{cover}
+\RequirePackage{abstract}
+% 全体的な名前のマクロ
+\let\@studentid\@empty
+\newcommand{\studentid}[1]{
+  \gdef\@studentid{#1}
+  \coverstudentid{#1}
+  \abststudentid{#1}
+}
+\let\@studentname\@empty
+\newcommand{\studentname}[1]{
+  \gdef\@studentname{#1}
+  \covername{#1}
+  \abstname{#1}
+  \author{#1}
+}
+\let\@studentruby\@empty
+\newcommand{\studentruby}[1]{
+  \gdef\@studentruby{#1}
+  \abstruby{#1}
+}
+
+%%ページの設定
+
+% ホントはgeometryで全部設定したかった
+\usepackage[truedimen]{geometry}
+%\geometry{top=35truemm, bottom=30truemm}
+% ページの余白の調整. 危険なのでいじらないこと
+\setlength{\oddsidemargin}{0truecm}
+\setlength{\evensidemargin}{0truecm}
+\setlength{\textheight}{22truecm}
+\setlength{\textwidth}{16truecm}
+\setlength{\topmargin}{0truecm}
+\setlength{\topskip}{1.5truecm}
+\setlength{\footskip}{2.0truecm}
+% 文章の余白の設定. いじっていい.
+\setlength{\baselineskip}{21pt} 
+\setlength{\parindent}{11pt}
+\setlength{\itemsep}{1.5zh}
+
+% ヘッダ, フッタ の設定
+\RequirePackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{\small{\leftmark}}
+\rhead{\small{\thepage}}
+\lfoot{}
+\cfoot{}
+\rfoot{\small{\underline{\leftmark}}}
+\renewcommand{\chaptermark}[1]{\markboth{第\ \thechapter\ 章~#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection #1}{}}
+%% chapterページを強制的にplainにする小手先テク.
+%% こうしないと, 右上にページ番号が出る...
+% \makeatletter
+\let\ps@plainhead\ps@plainfoot
+% \makeatother
+
+% 章の初めのページの設定
+\RequirePackage{titlesec}
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\huge\bfseries\mcfamily}
+  {{\vspace{-1.6zh}}\chaptertitlename\,\thechapter\,章}{20pt}{}
+\titleformat{name=\chapter, numberless}[display]
+  {\normalfont\sffamily\huge\bfseries\mcfamily}
+  {{\vspace{-4.3zh}}}{20pt}{}
+\titleformat{\section}
+  {\normalfont\sffamily\Large\bfseries\mcfamily}
+  {\thesection}{1em}{}
+
+%便利なマクロ
+\newcommand{\maketoc}{
+ \pagenumbering{roman}
+ \tableofcontents
+ \listoffigures
+ \listoftables
+ \clearpage
+ \pagenumbering{arabic}
+}
+\newcommand{\acknowledge}[1][謝辞]{
+  \chapter*{#1}
+  \addcontentsline{toc}{chapter}{#1}
+}
+
+
