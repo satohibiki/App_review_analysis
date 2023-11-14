@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.141592653-p4.1.0-230214-2.6 (utf8.euc) (TeX Live 2023) (preloaded format=platex 2023.11.7)  13 NOV 2023 17:35
+This is e-pTeX, Version 3.141592653-p4.1.0-230214-2.6 (utf8.euc) (TeX Live 2023) (preloaded format=platex 2023.11.7)  14 NOV 2023 10:20
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -860,4 +860,4 @@ Here is how much of TeX's memory you used:
  934 hyphenation exceptions out of 8191
  72i,18n,76p,604b,2108s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on thesis.dvi (40 pages, 141460 bytes).
+Output written on thesis.dvi (40 pages, 141404 bytes).
