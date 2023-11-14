@@ -3,10 +3,9 @@
 
 %ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
-\section{実装の概要}
-本研究では, 膨大の数あるGooglePlayとXに投稿されたアプリレビューをスクレイピングして取得し, レビュー文に含まれるバグレポートやアプリに対する要望を示す箇所を自動抽出, その結果を利用しクラスタリング, 最後にwebブラウザ上に可視化する手法を提案する. 
-\begin{description}
-\item[実装環境]\mbox{}
+\section{実装環境}
+本研究での実装環境は下記である. 
+
 \begin{itemize}
  \item オペレーティングシステム
     \begin{itemize}
@@ -17,46 +16,6 @@
       \item Python 3.11.6
     \end{itemize}
 \end{itemize}
-\end{description}
-
-
-\begin{figure}[hbtp]
- \centering
- \includegraphics[width=\linewidth]
-      {contents/images/zisso_nagare.png}
- \caption{実装した提案手法の流れ\label{chap:nagare}}
-\end{figure}
-
-
-
-%ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-
-\section{対象アプリとレビュー}
-本研究では川面による先行研究\cite{kawatsura}のデータセットを使用するため対象アプリは先行研究のアプリに合わせている. 
-今回使用するレビューのデータセットは先行研究によって作成された13個のアプリレビューのデータセットに加え, 本研究で新たに収集したアプリレビューのデータセットを使用する. 対象アプリを先行研究に合わせた理由としては, 現在, Xのポスト取得数に制限がある影響で十分な数のツイートが用意できなかったことが原因である. Xのポスト取得数の制限に関しては4.4で詳しく述べる. 
-対象となっているアプリを表\ref{tb:taisyouapuri}に示す. 
-\begin{table}[htbp]
-  \caption{本研究の対象アプリ一覧}
-  \label{tb:taisyouapuri}
-  \begin{center}
-  \begin{tabularx}{\linewidth}{X|l|X}
-    \hline
-    \mbox{アプリ名}\mbox{（一部略称）}&\mbox{Google Playストアの}\mbox{パッケージID}&\mbox{Twitterの}\mbox{検索キーワード}\\\hline\hline
-    にゃんトーク&com.akvelon.meowtalk&にゃんトーク\\\hline
-    スマートニュース&jp.gocro.smartnews.android&スマートニュース\\\hline
-    PayPay&jp.ne.paypay.android.app&paypay\\\hline
-    Coke ON&com.coke.cokeon&coke on\\\hline
-    Google Fit&com.google.android.apps.fitness&google fit\\\hline
-    Simeji&com.adamrocker.android.input.simeji&simeji\\\hline
-    Lemon8&com.bd.nproject&lemon8\\\hline
-    楽天ペイ&jp.co.rakuten.pay&楽天ペイ\\\hline
-    majica&com.donki.majica&majica\\\hline
-    LINE MUSIC&jp.linecorp.linemusic.android&line music\\\hline
-    BuzzVideo&com.ss.android.article.topbuzzvideo&buzzvideo\\\hline
-    ファミペイ&jp.co.family.familymart\verb|_|app&ファミペイ\\\hline
-    CapCut&com.lemon.lvoverseas&capcut\\\hline
-  \end{tabularx}\end{center}
-\end{table}
 
 %ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
@@ -100,6 +59,7 @@
     合計&7,912
   \end{tabular}\end{center}
 \end{table}
+
 この先行研究のデータに加え, 本研究では2023年10月1日~12月15日のレビューを新たに取得する. 新たに取得されたGoogle Playストアの各アプリのレビュー数は表\ref{tb:rawreviewnum2023}の通りである. 
 \begin{table}[htbp]
   \caption{収集したGoogle Playストアのレビュー数(2023/10/1〜12/15)}
@@ -166,7 +126,6 @@ Google PlayストアのレビューをスクレイピングするためにPython
 
 この先行研究に加え, 本研究では新たに2023年10月1日~12月15日のポストを取得する. Xのポスト取得に関してはTwitter APIを使用してスクレイピングを行う. Twitter APIのプランに関してはFree, Basic, Pro, Enterpriseの4つのプランが用意されておりそれぞれ料金や使用できる機能などが異なる. 大規模なサービスやビジネス向けのEnterpriseプラン以外の3つのプランの違いの一部を表\ref{tb:xplan}に示す. 
 表\ref{tb:xplan}よりポストを取得するためにはBasicプラン以上に加入する必要がある. Basicプランに加入した場合でも合計で30,000件しか取得されないため本研究では先行研究のデータセットを追加で使用することとした. Xの利用規約によると, Xが提供するインターフェイスを介して行うスクレイピング以外は禁止としている. そのため, seleniumなどを使用したスクレイピングは断念し, 過去の論文のデータを使用することとした. 
-
 
 \begin{table}[htbp]
   \caption{プランとできること}
@@ -282,25 +241,8 @@ Twitter APIを使用してポストを取得するためにPythonのプログラ
 %ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
 \section{有用な箇所の自動抽出}
-\subsection{概要}
-膨大な数あるレビュー文から開発に有用なレビューを絞り込み, かつ有用なレビュー文の中からバグの報告やアプリに対する要望に関して記述している部分を自動抽出する. 自動抽出のために日本語のデータで事前学習済みの言語表現モデルである日本語BERTに対して質問応答形式のfune-tuningを行うことで自動抽出器を生成する. 
-抽出を行う文章の特徴をモデルに理解させるために質問文にその文章がGooglePlayストアのレビューなのかXの文章なのかという「カテゴリー」の情報と「アプリ名」という2つの情報を加える. 図\ref{chap:fine-tuning}に質問応答形式によるfine-tuningのモデルを示す. 
-\begin{figure}[hbtp]
-  \centering
-  \includegraphics[scale=0.3]
-       {contents/images/fine-tuning.png}
-  \caption{ファインチューニング\label{chap:fine-tuning}}
- \end{figure}
-
-また, 図\ref{chap:answer}に質問文とその答えの例を示す. 質問文にアプリの欠陥やアプリに対する要望を尋ねる文章を与え, その答えとして欠陥や要望を示す箇所を返すようにしている. 
-\begin{figure}[hbtp]
-  \centering
-  \includegraphics[scale=0.4]
-       {contents/images/answer.png}
-  \caption{有用な箇所の抽出例\label{chap:answer}}
- \end{figure}
 \subsection{データセット}
-データセットとして, Google PlayストアとXのツイートからそれぞれ5,000件ずつ合計で10,000件のデータをランダムに抽出し手作業で有用な箇所を抽出した. データセットの作成は情報工学科の学部4年生2人がそれぞれ手作業で行い, お互いの抽出した箇所が異なっていたものは議論することにより決定した. 
+モデルのfine-tuningに使用されるデータセットとして, Google PlayストアとXのツイートからそれぞれ5,000件ずつ合計で10,000件のデータをランダムに抽出し手作業で有用な箇所を抽出した. データセットの作成は情報工学科の学部4年生2人がそれぞれ手作業で行い, お互いの抽出した箇所が異なっていたものは議論することにより決定した. 
 データセットには前処理したデータを利用したcsvファイルを使用する. このcsvファイルにはid,アプリ名,投稿日時,本文, 手動で抽出した結果の5つの情報が入っている. idは前処理したデータを識別するために与えられ, Google Playストアのレビュー文はg\_{index}, twitterのツイートのidはt\_{index}とする. 
 10,000件のデータセットのうち, 6,000件を訓練データ, 2,000件を検証用データ, 2,000件をテストデータとする. 質問応答形式のfine-tuningを行うために, csv形式であるデータセットをソースコード\ref{json}に示すようにjson形式に変換する. 
 
@@ -368,7 +310,7 @@ Twitter APIを使用してポストを取得するためにPythonのプログラ
 \end{itemize}
 
 \subsection{モデルのfine-tuning}
-用意したデータセットを用いてモデルをfine-tuningする. 本研究では事前学習済みモデルを提供するフレームワークであるHuging FaceのTransformersを通して利用できる東北大学のモデル\cite{tohoku}を使用する. このモデルは日本語のWikipediaのデータを用いて学習されている\cite{tohoku}. 
+用意したデータセットを用いて事前学習済みモデルをfine-tuningする. 本研究では事前学習済みモデルとしてHuging FaceのTransformersを通して利用できる東北大学のモデル\cite{tohoku}を使用する. このモデルは日本語のWikipediaのデータを用いて学習されている\cite{tohoku}. 
 この東北大学が公開している日本語BERTのうち, whole word maskingを適用して学習させているモデル\cite{masking}を用いる. whole word maskingとは事前学習時に単語ごとでマスクするかどうかを決め, マスクする単語に対応するサブワードを全てマスクする方式である. モデルのパラメータは以下に示す通りである. 
 \begin{itemize}
   \item 学習率: 3e-5
@@ -379,7 +321,7 @@ Twitter APIを使用してポストを取得するためにPythonのプログラ
 実装にはTransformersに含まれるスクリプトであるrun\_squad.pyを用いる. 
 
 \subsection{自動抽出}
-fine-tuningを行ったモデルを使用して自動抽出を行う. 前処理したGooglePlayストアのデータ14,051件と, twitterのデータ4,634,319件のデータから有用な箇所を自動抽出する. これにより開発に有用なレビューのみを選択でき, その文章の中に含まれるバグの報告やアプリに対する要望に関して記述している部分を抽出できる. 
+fine-tuningを行ったモデルを使用して自動抽出を行う. 前処理したGooglePlayストアのデータ14,051件と, twitterのデータ4,634,319件のデータから有用な箇所を自動抽出する. 
 
 結果は表\ref{tb:googleqa}に示すようにcsv形式で保存する. 
 
@@ -408,22 +350,7 @@ fine-tuningを行ったモデルを使用して自動抽出を行う. 前処理�
 %ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
 \section{クラスタリング}
-抽出した文章のクラスタリングには既存研究のクラスタリング手法\cite{sira}を参考にして実行する. この手法は以下の3つの手順である. 
-\begin{enumerate}
-  \item Universal Sentence Encoder (USE)を用いて, 問題のある特徴語句を512次元のベクトルに変換
-  \item 重み付き無向グラフを構成し, 各問題機能をノードとし, 2つの問題機能のUSEベクトル間のコサイン類似度スコア(比率)をノード間の重みとする. 比率は入力ハイパーパラメータであり, 問題のある機能間の意味的相関を測定. ハイパーチューニングした閾値は0.5とした
-  \item このグラフに対して, Chinese Whispers (CW)を実行し, 問題のある特徴量をクラスタリング
-\end{enumerate}
-
-既存研究では英語の文章をベクトルに変換するためにUniversal Sentence Encoder (USE)を使用しているが, 今回は対象が日本語の文章であるため, Sentence-BERTの日本語モデルを使用する. Sentence-BERTとは, 事前学習されたBERTモデルとSiamese Networkを使い, 高品質な文ベクトルを作る手法である. このモデルを使用することで, 高品質な文ベクトルが作成できる. 
-したがって本研究でのクラスタリング手法は下記である. 
-\begin{enumerate}
-  \item Sentence-BERTの日本語モデルを用いて, 抽出した文章をベクトルに変換
-  \item 重み付き無向グラフを構成し, 各問題機能をノードとし, 2つの抽出した文章間のベクトル間のコサイン類似度スコア(比率)をノード間の重みとする. 比率は入力ハイパーパラメータであり, 抽出した文章間の意味的相関を測定. 検証した結果, 閾値は0.8とした
-  \item このグラフに対して, Chinese Whispers (CW)を実行し, 問題のある特徴量をクラスタリング
-\end{enumerate}
-
-これにより, 抽出した文章をその文章が示す意味に応じてクラスタリングすることができる. それぞれの文章にクラスタの番号(以下 : クラスタ番号)が振られ, クラスタ番号が同じものが同じクラスタとなり番号が近いものは意味的相関が近いことを表す. 
+抽出した文章をその文章が示す意味に応じてクラスタリングする. クラスタリングした結果, それぞれの文章にクラスタの番号(以下 : クラスタ番号)が振られ, クラスタ番号が同じものが同じクラスタとなり番号が近いものは意味的相関が近いことを表す. 
 
 結果はcsvファイルに保存される. 表\ref{tb:clustering}に示されるように抽出した文章にクラスタ番号が振られる. 
 
@@ -469,12 +396,87 @@ fine-tuningを行ったモデルを使用して自動抽出を行う. 前処理�
 %ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
 \section{画面出力・可視化}
-クラスタリングした結果をwebブラウザ上で可視化する. webアプリケーションの実装に使用した言語, フレームワークは以下となっている. 
+\subsection{実装環境}
+webアプリケーションの実装に使用した言語, フレームワークは以下となっている. 
 \begin{itemize}
     \item フロントエンド: HTML/CSS, JavaScript
     \item バックエンド: Python
     \item フレームワーク: Flask
 \end{itemize}
 
-アコーディオンメニューを使用して抽出した文章の一覧をクラスタごとに表示する. また, 抽出した文章をクリックすると投稿日時や元のレビュー文がモーダルウィンドウで表示する. 
-さらにレビューが投稿された期間やレビュー文のキーワードで絞り込み検索することが可能となっている. そして, 日ごとのレビュー数を表す折れ線グラフとクラスタに含まれるレビュー数の上位10個を表す棒グラフを作成した. この2つのグラフは検索結果に応じて動的に変化するようになっている. 
+\subsection{概要}
+分類した結果の含まれたcsvファイルの情報をバックエンド側で処理し, リストを作成する. そのリストをフロントエンド側に渡し処理することでレビューの情報をwebブラウザ上に表示することができる. 
+
+\subsection{画面構成}
+画面は大きく分けて一覧画面とアプリごとの詳細画面の2つである. 
+
+一覧画面では全てのアプリに対する日ごとのレビュー数を表す折れ線グラフを表示する. 
+このグラフをGoogle Playストアのレビューとツイートの2つ作成する. 
+
+アプリごとの詳細画面では, アコーディオンメニューを使用して抽出した文章の一覧をクラスタごとに表示する. また, 抽出した文章をクリックすると投稿日時や元のレビュー文がモーダルウィンドウで表示する. 
+そして, 日ごとのレビュー数を表す折れ線グラフとクラスタに含まれるレビュー数の上位10個を表す棒グラフの2つのグラフを表示する. 
+
+\subsection{検索のロジック}
+検索項目である期間とキーワードを指定するとその情報がバックエンド側に渡され, 処理することでリストを更新する. 更新されたリストの情報をフロント側に渡すことで検索結果が反映される. 
+ツイートのリストを検索結果に応じて更新するソースコード\ref{search}を示す. 
+
+\begin{lstlisting}[caption=view.py, label=search]
+  path = f'../クラスタリング/twitter_{app_name}.csv'
+  is_file = os.path.isfile(path)
+  if is_file:
+      with open(path, 'r', encoding='utf-8-sig') as twitter_csv_file:
+          twitter_csv_reader = csv.reader(twitter_csv_file)
+          twitter_rows = list(twitter_csv_reader)
+          twitter_rows = sorted(twitter_rows, reverse=False, key=lambda x: x[2]) # 日付で並び替え
+  # 検索結果のリスト作成
+  search_result = []
+  for row in twitter_rows:
+      if start_date <= row[2][:10] <= end_date:
+          if keyword != '':
+              if keyword in row[3]:
+                  search_result.append(row)
+          else:
+              search_result.append(row)
+  twitter_rows = search_result
+\end{lstlisting}
+
+\subsection{グラフの作成}
+グラフの作成にはplotly.js\cite{plotly}を用いる. plotly.sjとはグラフ生成ライブラリであり, 3Dグラフや統計グラフなど40を超えるグラフタイプが同梱されている\cite{plotly}.
+plotly.jsで作成されたグラフにはオプションとしてズーム機能やグラフのダウンロード機能が付随している. 
+日付ごとのレビュー数に関するグラフを表示するソースコード\ref{graph}を示す. 設定したタグをDOMのターゲットにしてplotly.jsに書き換えてもらう. graphsはバックエンド側で作成された日付とその日のレビュー数に関する二次元リストであり, 横軸に日付, 縦軸にレビュー数を取るグラフである. 
+dataのtypeでグラフタイプを指定でき, layoutでタイトルや表の大きさを指定できる. 
+
+\begin{lstlisting}[caption=detail.html, label=graph]
+  <div class="graph-title">日付ごとのレビュー数の推移</div>
+  <div id="scatter"></div>
+
+  <script>
+      // 横軸: 日付
+      var labels = JSON.parse('{{ graphs | map(attribute=0) | list | tojson | safe }}');
+      // ラベル用日付
+      var displayLabels = [];
+      for (var i = 0; i < labels.length; i += 5) {
+          displayLabels.push(labels[i]);
+      }
+      var values = JSON.parse('{{ graphs | map(attribute=1) | list | tojson | safe }}');
+
+      var data = [{
+          x: labels,
+          y: values,
+          type: 'scatter',
+      }];
+
+      var layout = {
+          title: '日付ごとのレビュー数の推移',
+          height: 600,
+          width: 1200,
+          xaxis: {
+              tickvals: displayLabels,  // 配列の5つおきの目盛り位置を指定
+          }
+      };
+
+      Plotly.newPlot('scatter', data, layout);
+  </script>
+\end{lstlisting}
+
+

@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.141592653-p4.1.0-230214-2.6 (utf8.euc) (TeX Live 2023) (preloaded format=platex 2023.11.7)  14 NOV 2023 11:26
+This is e-pTeX, Version 3.141592653-p4.1.0-230214-2.6 (utf8.euc) (TeX Live 2023) (preloaded format=platex 2023.11.7)  14 NOV 2023 15:36
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -763,101 +763,129 @@ Overfull \hbox (12.0pt too wide) in paragraph at lines 108--108
 第3章
 [7
 
-] [8] [9] [10]) (./contents/zisso.tex [11]
+] [8] [9] [10]) (./contents/teian.tex [11]
 第4章
-LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 13.
-LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 13.
-LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 13.
-LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 13.
 File: contents/images/zisso_nagare.png Graphic file (type bmp)
 <contents/images/zisso_nagare.png>
 
-Underfull \hbox (badness 10000) in paragraph at lines 58--58
+Underfull \hbox (badness 10000) in paragraph at lines 51--51
 []|[]
  []
 
 
-LaTeX Warning: \verb may be unreliable inside tabularx on input line 58.
+LaTeX Warning: \verb may be unreliable inside tabularx on input line 51.
 
 [12
 
-] [13] [14] [15] [16] [17] [18]
-File: contents/images/preprocessing.png Graphic file (type bmp)
-<contents/images/preprocessing.png>
+]
 File: contents/images/fine-tuning.png Graphic file (type bmp)
 <contents/images/fine-tuning.png>
- [19] [20]
+ [13]
 File: contents/images/answer.png Graphic file (type bmp)
 <contents/images/answer.png>
- [21]
-Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 307.
-LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 6.72699pt on input line 308.
- [22] [23]
-
-LaTeX Warning: Float too large for page by 16.3662pt on input line 407.
-
-[24] [25] [26] [27]) (./contents/kekkahyouka.tex [28]
+ [14] [15]) (./contents/zisso.tex [16]
 第5章
-) (./contents/result.tex [29
-
-]
-第6章
-) (./acknowledge.tex [30
-
-]) (./thesis.bbl [31
-
-]
-LaTeX Font Info:    Font shape `JT1/gt/m/it' in size <10> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 11.
+LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 12.
 LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 11.
-LaTeX Font Info:    Font shape `JY1/gt/m/it' in size <10> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 11.
+(Font)              scaled to size 9.60999pt on input line 12.
+LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 12.
 LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 11.
+(Font)              scaled to size 9.60999pt on input line 12.
+[17
 
-Underfull \hbox (badness 7362) in paragraph at lines 14--18
+] [18] [19] [20] [21]
+File: contents/images/preprocessing.png Graphic file (type bmp)
+<contents/images/preprocessing.png>
+ [22] [23]
+Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 249.
+LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
+(Font)              scaled to size 6.72699pt on input line 250.
+ [24] [25]
+
+LaTeX Warning: Float too large for page by 16.3662pt on input line 349.
+
+[26] [27] [28] [29]
+LaTeX Font Info:    Font shape `JT1/gt/bx/n' in size <8> not available
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 426.
+LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
+(Font)              scaled to size 7.68799pt on input line 426.
+LaTeX Font Info:    Font shape `JY1/gt/bx/n' in size <8> not available
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 426.
+LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
+(Font)              scaled to size 7.68799pt on input line 426.
+LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <8> not available
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 426.
+LaTeX Font Info:    Font shape `JT1/gt/m/it' in size <8> not available
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 454.
+LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
+(Font)              scaled to size 7.68799pt on input line 454.
+LaTeX Font Info:    Font shape `JY1/gt/m/it' in size <8> not available
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 454.
+LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
+(Font)              scaled to size 7.68799pt on input line 454.
+ [30]) (./contents/kekkahyouka.tex [31]
+第6章
+) (./contents/result.tex [32
+
+]
+第7章
+) (./acknowledge.tex [33
+
+]) (./thesis.bbl [34
+
+]
+Underfull \hbox (badness 5008) in paragraph at lines 4--6
+[]\OT1/cmr/m/n/10 Plotly javascript graph-ing li-brary in javascript.  []$\OT1/cmtt/m/n/10 https : / / plotly . com /
+ []
+
+LaTeX Font Info:    Font shape `JT1/gt/m/it' in size <10> not available
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 15.
+LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
+(Font)              scaled to size 9.60999pt on input line 15.
+LaTeX Font Info:    Font shape `JY1/gt/m/it' in size <10> not available
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 15.
+LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
+(Font)              scaled to size 9.60999pt on input line 15.
+
+Underfull \hbox (badness 7362) in paragraph at lines 18--22
 []\OT1/cmr/m/n/10 Google De-vel-op-ers Blog.  Cel-e-brat-ing 10 years of google play. to-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 14--18
+Underfull \hbox (badness 10000) in paragraph at lines 18--22
 \OT1/cmr/m/n/10 gether.  []$\OT1/cmtt/m/n/10 https : / / android-[]developers . googleblog . com / 2022 / 03 /
  []
 
 
-Underfull \hbox (badness 1442) in paragraph at lines 14--18
+Underfull \hbox (badness 1442) in paragraph at lines 18--22
 \OT1/cmtt/m/n/10 celebrating-[]10-[]years-[]of-[]google-[]play . html$[]\OT1/cmr/m/n/10 , mar 2022.  Ac-cessed: Nov
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 35--38
+Underfull \hbox (badness 10000) in paragraph at lines 39--42
 []\OT1/cmr/m/n/10 GitHub.  cl-tohoku/bert-base-japanese-whole-word-masking.  []$\OT1/cmtt/m/n/10 https :
  []
 
+[35
 
-Underfull \hbox (badness 10000) in paragraph at lines 40--43
+]
+Underfull \hbox (badness 10000) in paragraph at lines 44--47
 []\OT1/cmr/m/n/10 GitHub.  cl-tohoku/bert-japanese.  []$\OT1/cmtt/m/n/10 https : / / github . com / cl-[]tohoku /
  []
 
-[32
-
-]) [33] (./thesis.aux)
+) [36] (./thesis.aux)
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 8794581C8D476D528117CD3358536FAA;1862.
+(rerunfilecheck)             Checksum: 5C2E7628883165C95C621798DE0854B3;2276.
  ) 
 Here is how much of TeX's memory you used:
- 13880 strings out of 476693
- 212115 string characters out of 5805373
- 2054209 words of memory out of 5000000
- 34083 multiletter control sequences out of 15000+600000
- 562489 words of font info for 124 fonts, out of 8000000 for 9000
+ 14005 strings out of 476693
+ 213518 string characters out of 5805373
+ 2098209 words of memory out of 5000000
+ 34204 multiletter control sequences out of 15000+600000
+ 562657 words of font info for 125 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
- 72i,18n,76p,604b,2108s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 72i,18n,76p,604b,2081s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on thesis.dvi (40 pages, 141404 bytes).
+Output written on thesis.dvi (43 pages, 168260 bytes).

@@ -1,5 +1,9 @@
 \begin{thebibliography}{10}
 
+\bibitem{plotly}
+Plotly javascript graphing library in javascript.
+\newblock \url{https://plotly.com/javascript/}.
+
 \bibitem{about-google-play}
 ``android の「google play ストア」では何ができる？ アプリのインストール方法や楽しみ方を知ろう''.
 \newblock \url{https://www.android.com/intl/ja_jp/articles/120/}, 2023.

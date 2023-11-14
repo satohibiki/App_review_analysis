@@ -19,48 +19,51 @@ Warning--entry type for "tohoku" isn't style-file defined
 --line 100 of file thesis.bib
 Warning--entry type for "masking" isn't style-file defined
 --line 109 of file thesis.bib
+Warning--entry type for "plotly" isn't style-file defined
+--line 141 of file thesis.bib
 Warning--to sort, need author or key in about-google-play
+Warning--to sort, need author or key in plotly
 Warning--empty journal in kawatsura
-You've used 17 entries,
+You've used 18 entries,
             2620 wiz_defined-function locations,
-            675 strings with 7147 characters,
-and the built_in function-call counts, 6164 in all, are:
-= -- 520
-> -- 193
+            678 strings with 7237 characters,
+and the built_in function-call counts, 6364 in all, are:
+= -- 535
+> -- 194
 < -- 6
-+ -- 81
++ -- 82
 - -- 64
-* -- 259
-:= -- 833
-add.period$ -- 54
-call.type$ -- 17
-change.case$ -- 83
+* -- 264
+:= -- 851
+add.period$ -- 56
+call.type$ -- 18
+change.case$ -- 86
 chr.to.int$ -- 0
-cite$ -- 19
-duplicate$ -- 331
-empty$ -- 599
+cite$ -- 21
+duplicate$ -- 344
+empty$ -- 628
 format.name$ -- 96
-if$ -- 1449
+if$ -- 1500
 int.to.chr$ -- 0
-int.to.str$ -- 17
+int.to.str$ -- 18
 missing$ -- 8
-newline$ -- 90
+newline$ -- 94
 num.names$ -- 32
-pop$ -- 203
+pop$ -- 216
 preamble$ -- 1
-purify$ -- 66
+purify$ -- 68
 quote$ -- 0
-skip$ -- 334
+skip$ -- 348
 stack$ -- 0
-substring$ -- 261
-swap$ -- 76
+substring$ -- 266
+swap$ -- 77
 text.length$ -- 6
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 68
-warning$ -- 2
+type$ -- 72
+warning$ -- 3
 while$ -- 44
-width$ -- 19
-write$ -- 180
-is.kanji.str$ -- 153
-(There were 10 warnings)
+width$ -- 20
+write$ -- 187
+is.kanji.str$ -- 159
+(There were 12 warnings)
