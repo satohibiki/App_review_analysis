@@ -121,7 +121,6 @@ def doc_distance(compare_vectors, sentence_vector):
 
 def clustering(input_csv_file, category, app_name): # 指定されたアプリでのクラスタリング
     sentences = create_review_list(input_csv_file, app_name)
-    model = SentenceBertJapanese("sonoisa/sentence-bert-base-ja-mean-tokens")
     sentence_vectors = model.encode(sentences)
     domain_docs = {f'{app_name}': sentences}
     threshold = 0.8
@@ -173,6 +172,9 @@ def main():
              'ファミペイ', 
              '楽天ペイ',
              'buzzvideo']
+    
+    # モデルの準備
+    model = SentenceBertJapanese("sonoisa/sentence-bert-base-ja-mean-tokens")
 
     for app_name in app_names:
         category = 'google'
