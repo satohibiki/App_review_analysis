@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.141592653-p4.1.0-230214-2.6 (utf8.euc) (TeX Live 2023) (preloaded format=platex 2023.11.7)  14 NOV 2023 15:36
+This is e-pTeX, Version 3.141592653-p4.1.0-230214-2.6 (utf8.euc) (TeX Live 2023) (preloaded format=platex 2023.11.7)  15 NOV 2023 16:03
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -768,19 +768,18 @@ Overfull \hbox (12.0pt too wide) in paragraph at lines 108--108
 File: contents/images/zisso_nagare.png Graphic file (type bmp)
 <contents/images/zisso_nagare.png>
 
-Underfull \hbox (badness 10000) in paragraph at lines 51--51
+Underfull \hbox (badness 10000) in paragraph at lines 50--50
 []|[]
  []
 
 
-LaTeX Warning: \verb may be unreliable inside tabularx on input line 51.
+LaTeX Warning: \verb may be unreliable inside tabularx on input line 50.
 
 [12
 
-]
+] [13]
 File: contents/images/fine-tuning.png Graphic file (type bmp)
 <contents/images/fine-tuning.png>
- [13]
 File: contents/images/answer.png Graphic file (type bmp)
 <contents/images/answer.png>
  [14] [15]) (./contents/zisso.tex [16]
@@ -799,41 +798,42 @@ LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
 File: contents/images/preprocessing.png Graphic file (type bmp)
 <contents/images/preprocessing.png>
  [22] [23]
-Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 249.
+Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 248.
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 6.72699pt on input line 250.
+(Font)              scaled to size 6.72699pt on input line 249.
  [24] [25]
 
-LaTeX Warning: Float too large for page by 16.3662pt on input line 349.
+LaTeX Warning: Float too large for page by 16.3662pt on input line 348.
 
-[26] [27] [28] [29]
+[26] [27]
 LaTeX Font Info:    Font shape `JT1/gt/bx/n' in size <8> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 426.
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 364.
 LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
-(Font)              scaled to size 7.68799pt on input line 426.
+(Font)              scaled to size 7.68799pt on input line 364.
 LaTeX Font Info:    Font shape `JY1/gt/bx/n' in size <8> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 426.
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 364.
 LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 7.68799pt on input line 426.
+(Font)              scaled to size 7.68799pt on input line 364.
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <8> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 426.
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 364.
+ [28] [29] [30]
 LaTeX Font Info:    Font shape `JT1/gt/m/it' in size <8> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 454.
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 499.
 LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
-(Font)              scaled to size 7.68799pt on input line 454.
+(Font)              scaled to size 7.68799pt on input line 499.
 LaTeX Font Info:    Font shape `JY1/gt/m/it' in size <8> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 454.
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 499.
 LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 7.68799pt on input line 454.
- [30]) (./contents/kekkahyouka.tex [31]
+(Font)              scaled to size 7.68799pt on input line 499.
+ [31]) (./contents/kekkahyouka.tex [32]
 第6章
-) (./contents/result.tex [32
+) (./contents/result.tex [33
 
 ]
 第7章
-) (./acknowledge.tex [33
+) (./acknowledge.tex [34
 
-]) (./thesis.bbl [34
+]) (./thesis.bbl [35
 
 ]
 Underfull \hbox (badness 5008) in paragraph at lines 4--6
@@ -841,51 +841,56 @@ Underfull \hbox (badness 5008) in paragraph at lines 4--6
  []
 
 LaTeX Font Info:    Font shape `JT1/gt/m/it' in size <10> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 15.
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 14.
 LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 15.
+(Font)              scaled to size 9.60999pt on input line 14.
 LaTeX Font Info:    Font shape `JY1/gt/m/it' in size <10> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 15.
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 14.
 LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 15.
+(Font)              scaled to size 9.60999pt on input line 14.
 
-Underfull \hbox (badness 7362) in paragraph at lines 18--22
-[]\OT1/cmr/m/n/10 Google De-vel-op-ers Blog.  Cel-e-brat-ing 10 years of google play. to-
+Underfull \hbox (badness 6725) in paragraph at lines 17--20
+[]\OT1/cmr/m/n/10 Google De-vel-op-ers Blog.  ``cel-e-brat-ing 10 years of google play. to-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 18--22
-\OT1/cmr/m/n/10 gether.  []$\OT1/cmtt/m/n/10 https : / / android-[]developers . googleblog . com / 2022 / 03 /
+Underfull \hbox (badness 10000) in paragraph at lines 17--20
+\OT1/cmr/m/n/10 gether.''.  []$\OT1/cmtt/m/n/10 https : / / android-[]developers . googleblog . com / 2022 / 03 /
  []
 
 
-Underfull \hbox (badness 1442) in paragraph at lines 18--22
-\OT1/cmtt/m/n/10 celebrating-[]10-[]years-[]of-[]google-[]play . html$[]\OT1/cmr/m/n/10 , mar 2022.  Ac-cessed: Nov
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 39--42
+Underfull \hbox (badness 10000) in paragraph at lines 46--49
 []\OT1/cmr/m/n/10 GitHub.  cl-tohoku/bert-base-japanese-whole-word-masking.  []$\OT1/cmtt/m/n/10 https :
  []
 
-[35
+[36
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 44--47
+Underfull \hbox (badness 10000) in paragraph at lines 51--54
 []\OT1/cmr/m/n/10 GitHub.  cl-tohoku/bert-japanese.  []$\OT1/cmtt/m/n/10 https : / / github . com / cl-[]tohoku /
  []
 
-) [36] (./thesis.aux)
+
+Underfull \hbox (badness 2529) in paragraph at lines 81--84
+[]\OT1/cmr/m/n/10 John Si-mons and Lon Tweeten.  ``these charts show why twit-ter may
+ []
+
+
+Underfull \hbox (badness 5939) in paragraph at lines 81--84
+\OT1/cmr/m/n/10 have ap-pealed to elon musk | time''.  []$\OT1/cmtt/m/n/10 https : / / time . com / 6171871 /
+ []
+
+) [37] (./thesis.aux)
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 5C2E7628883165C95C621798DE0854B3;2276.
+(rerunfilecheck)             Checksum: 8E8231DDA35C316BBAF185AC82FBC089;2211.
  ) 
 Here is how much of TeX's memory you used:
- 14005 strings out of 476693
- 213518 string characters out of 5805373
- 2098209 words of memory out of 5000000
- 34204 multiletter control sequences out of 15000+600000
+ 14127 strings out of 476693
+ 215116 string characters out of 5805373
+ 2118209 words of memory out of 5000000
+ 34326 multiletter control sequences out of 15000+600000
  562657 words of font info for 125 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
  72i,18n,76p,604b,2081s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on thesis.dvi (43 pages, 168260 bytes).
+Output written on thesis.dvi (44 pages, 183152 bytes).

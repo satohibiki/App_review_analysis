@@ -78,7 +78,6 @@
     楽天ペイ&\\\hline
     majica&\\\hline
     LINE MUSIC&\\\hline
-    BuzzVideo&\\\hline
     ファミマのアプリ&\\\hline
     CapCut&\\\hline\hline
     合計&
@@ -91,6 +90,7 @@ Google PlayストアのレビューをスクレイピングするためにPython
 %ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
 \section{Xのスクレイピング}
+\label{sec:x}
 本研究で取得するツイート情報は先行研究に合わせて下記とする. 
 \begin{itemize}
  \item id : ツイートID
@@ -169,7 +169,6 @@ Twitter APIを使用してポストを取得するためにPythonのプログラ
     楽天ペイ&\\\hline
     majica&\\\hline
     LINE MUSIC&\\\hline
-    BuzzVideo&\\\hline
     ファミマのアプリ&\\\hline
     CapCut&\\\hline\hline
     合計&
@@ -347,11 +346,57 @@ fine-tuningを行ったモデルを使用して自動抽出を行う. 前処理�
     g\_982&coke\_on&2021-11-22 11:58:45&ただ自分のスマホのストレージが小さく、データ容量が大きいため今回一先ず削除いたします&自分のスマホのストレージが小さく、データ容量が大きい\\\hline
   \end{tabularx}\end{center}
 \end{table}
+
 %ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
 \section{クラスタリング}
-抽出した文章をその文章が示す意味に応じてクラスタリングする. クラスタリングした結果, それぞれの文章にクラスタの番号(以下 : クラスタ番号)が振られ, クラスタ番号が同じものが同じクラスタとなり番号が近いものは意味的相関が近いことを表す. 
+抽出した文章をその文章が示す意味に応じてクラスタリングする. クラスタリングするために日本語Sentence-BERTクラスを定義する. ソースコード\ref{sentence-bert}に日本語Sentence-bertクラスを示す. 
+\_mean\_pooling関数でモデルの出力とAttention Maskを用いて, 文の埋め込みを生成するための平均プーリングを行い, encode関数で文のリストから各文章の埋め込みを求める. 
+すなわち, 日本語のBERT用に転移学習したBERTを用いて各トークンの埋め込みを求め, 平均を取ることにより文全体の埋め込みを求めている. 
 
+\begin{lstlisting}[caption=clustering.py,label=sentence-bert]
+  class SentenceBertJapanese:
+    def __init__(self, model_name_or_path, device=None):
+        self.tokenizer = BertJapaneseTokenizer.from_pretrained(model_name_or_path)
+        self.model = BertModel.from_pretrained(model_name_or_path)
+        self.model.eval()
+
+        if device is None:
+            device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.device = torch.device(device)
+        self.model.to(device)
+
+    def _mean_pooling(self, model_output, attention_mask):
+        token_embeddings = model_output[0] #First element of model_output contains all token embeddings
+        input_mask_expanded = attention_mask.unsqueeze(-1).expand(token_embeddings.size()).float()
+        return torch.sum(token_embeddings * input_mask_expanded, 1) / torch.clamp(input_mask_expanded.sum(1), min=1e-9)
+
+    @torch.no_grad()
+    def encode(self, sentences, batch_size=8):
+        all_embeddings = []
+        iterator = range(0, len(sentences), batch_size)
+        for batch_idx in iterator:
+            batch = sentences[batch_idx:batch_idx + batch_size]
+
+            encoded_input = self.tokenizer.batch_encode_plus(batch, padding="longest", 
+                                           truncation=True, return_tensors="pt").to(self.device)
+            model_output = self.model(**encoded_input)
+            sentence_embeddings = self._mean_pooling(model_output, encoded_input["attention_mask"]).to('cpu')
+
+            all_embeddings.extend(sentence_embeddings)
+
+        # return torch.stack(all_embeddings).numpy()
+        return torch.stack(all_embeddings)
+\end{lstlisting}
+
+ソースコード\ref{model}に示されるようにSentenceBertJapaneseクラスを用いて, 引数に日本語モデル名を与えることによりインスタンスが生成され, モデルの読み込みが完了する. このモデルを使用して抽出された文章をベクトルに変換する. 
+
+\begin{lstlisting}[caption=clustering.py,label=model]
+  model = SentenceBertJapanese("sonoisa/sentence-bert-base-ja-mean-tokens")
+\end{lstlisting}
+
+次に, それぞれの抽出した文章をノード, ノードのベクトル間のコサイン類似度をエッジとする無向グラフを作成する. 作成されたグラフからChinese Whispersによりクラスタリングが実行される. 
+クラスタリングした結果, それぞれの文章にクラスタの番号(以下 : クラスタ番号)が振られ, クラスタ番号が同じものが同じクラスタとなり番号が近いものは意味的相関が近いことを表す. コサイン類似度の閾値を決めることによりどの程度の類似文を同じクラスタと定義するのかが決定される. 本研究では検証を重ねた結果, 閾値は0.8とした. 
 結果はcsvファイルに保存される. 表\ref{tb:clustering}に示されるように抽出した文章にクラスタ番号が振られる. 
 
 \begin{table}[htbp]

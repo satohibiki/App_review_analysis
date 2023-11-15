@@ -29,11 +29,10 @@
 \contentsline {chapter}{\numberline {第4章}提案}{12}{chapter.4}%
 \contentsline {section}{\numberline {4.1}概要}{12}{section.4.1}%
 \contentsline {section}{\numberline {4.2}対象アプリとレビュー}{12}{section.4.2}%
-\contentsline {section}{\numberline {4.3}スクレイピング}{13}{section.4.3}%
-\contentsline {section}{\numberline {4.4}前処理}{13}{section.4.4}%
-\contentsline {section}{\numberline {4.5}自動抽出}{13}{section.4.5}%
-\contentsline {section}{\numberline {4.6}クラスタリング}{14}{section.4.6}%
-\contentsline {section}{\numberline {4.7}画面出力・可視化}{16}{section.4.7}%
+\contentsline {section}{\numberline {4.3}事前準備}{12}{section.4.3}%
+\contentsline {section}{\numberline {4.4}自動抽出}{13}{section.4.4}%
+\contentsline {section}{\numberline {4.5}クラスタリング}{14}{section.4.5}%
+\contentsline {section}{\numberline {4.6}画面出力・可視化}{16}{section.4.6}%
 \contentsline {chapter}{\numberline {第5章}実装}{17}{chapter.5}%
 \contentsline {section}{\numberline {5.1}実装環境}{17}{section.5.1}%
 \contentsline {section}{\numberline {5.2}Google Playストアのスクレイピング}{17}{section.5.2}%
@@ -43,17 +42,17 @@
 \contentsline {subsection}{\numberline {5.5.1}データセット}{24}{subsection.5.5.1}%
 \contentsline {subsection}{\numberline {5.5.2}モデルのfine-tuning}{26}{subsection.5.5.2}%
 \contentsline {subsection}{\numberline {5.5.3}自動抽出}{26}{subsection.5.5.3}%
-\contentsline {section}{\numberline {5.6}クラスタリング}{28}{section.5.6}%
-\contentsline {section}{\numberline {5.7}画面出力・可視化}{28}{section.5.7}%
-\contentsline {subsection}{\numberline {5.7.1}実装環境}{28}{subsection.5.7.1}%
-\contentsline {subsection}{\numberline {5.7.2}概要}{28}{subsection.5.7.2}%
-\contentsline {subsection}{\numberline {5.7.3}画面構成}{28}{subsection.5.7.3}%
-\contentsline {subsection}{\numberline {5.7.4}検索のロジック}{30}{subsection.5.7.4}%
-\contentsline {subsection}{\numberline {5.7.5}グラフの作成}{30}{subsection.5.7.5}%
-\contentsline {chapter}{\numberline {第6章}結果・評価}{32}{chapter.6}%
-\contentsline {section}{\numberline {6.1}RQ1:レビューの抽出性能の調査}{32}{section.6.1}%
-\contentsline {section}{\numberline {6.2}RQ2:抽出文を用いたクラスタリングの性能調査}{32}{section.6.2}%
-\contentsline {section}{\numberline {6.3}RQ3:可視化ツールの有用性}{32}{section.6.3}%
-\contentsline {chapter}{\numberline {第7章}結論}{33}{chapter.7}%
-\contentsline {chapter}{謝辞}{34}{chapter*.4}%
-\contentsline {chapter}{参考文献}{35}{chapter*.5}%
+\contentsline {section}{\numberline {5.6}クラスタリング}{26}{section.5.6}%
+\contentsline {section}{\numberline {5.7}画面出力・可視化}{29}{section.5.7}%
+\contentsline {subsection}{\numberline {5.7.1}実装環境}{29}{subsection.5.7.1}%
+\contentsline {subsection}{\numberline {5.7.2}概要}{29}{subsection.5.7.2}%
+\contentsline {subsection}{\numberline {5.7.3}画面構成}{29}{subsection.5.7.3}%
+\contentsline {subsection}{\numberline {5.7.4}検索のロジック}{31}{subsection.5.7.4}%
+\contentsline {subsection}{\numberline {5.7.5}グラフの作成}{31}{subsection.5.7.5}%
+\contentsline {chapter}{\numberline {第6章}結果・評価}{33}{chapter.6}%
+\contentsline {section}{\numberline {6.1}RQ1:レビューの抽出性能の調査}{33}{section.6.1}%
+\contentsline {section}{\numberline {6.2}RQ2:抽出文を用いたクラスタリングの性能調査}{33}{section.6.2}%
+\contentsline {section}{\numberline {6.3}RQ3:可視化ツールの有用性}{33}{section.6.3}%
+\contentsline {chapter}{\numberline {第7章}結論}{34}{chapter.7}%
+\contentsline {chapter}{謝辞}{35}{chapter*.4}%
+\contentsline {chapter}{参考文献}{36}{chapter*.5}%
