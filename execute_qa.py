@@ -3,11 +3,11 @@ import torch
 import csv
 from tqdm import tqdm
 
-def exerute_answer(context, question):
-    # モデルとトークナイザーの準備
-    model = AutoModelForQuestionAnswering.from_pretrained('output/')  
-    tokenizer = BertJapaneseTokenizer.from_pretrained('cl-tohoku/bert-base-japanese-whole-word-masking') 
+# モデルとトークナイザーの準備
+model = AutoModelForQuestionAnswering.from_pretrained('output/')  
+tokenizer = BertJapaneseTokenizer.from_pretrained('cl-tohoku/bert-base-japanese-whole-word-masking') 
 
+def exerute_answer(context, question):
     # 推論の実行
     inputs = tokenizer.encode_plus(question, context, add_special_tokens=True, return_tensors="pt")
     input_ids = inputs["input_ids"].tolist()[0]
@@ -17,12 +17,21 @@ def exerute_answer(context, question):
     answer = tokenizer.convert_tokens_to_string(tokenizer.convert_ids_to_tokens(input_ids[answer_start:answer_end]))
     answer = answer.replace(" ", "")
 
+    del inputs, output
+    torch.cuda.empty_cache()
+
     return answer
 
 def create_answer_twitter(app_name):
-    output = [["id", "app_name", "datetime", "context", "prediction"]]
-    with open('データセット/twitter_all_データセット.csv', 'r', encoding='utf-8-sig') as csv_file:
+    output = ["id", "app_name", "datetime", "context", "prediction"]
+    # paypayの推論
+    # paypay_index = 1
+    # with open(f'データセット/paypay/paypay_{paypay_index}.csv', 'r', encoding='utf-8-sig') as csv_file, open(f"抽出結果/twitter_{app_name}_{paypay_index}.csv", 'w', encoding='utf-8', newline='') as output_file:
+    # paypay以外の推論
+    with open('データセット/twitter_all_データセット.csv', 'r', encoding='utf-8-sig') as csv_file, open(f"抽出結果/twitter_{app_name}.csv", 'w', encoding='utf-8', newline='') as output_file:
         csv_reader = csv.reader(csv_file)
+        csv_writer = csv.writer(output_file)
+        csv_writer.writerow(output)
         rows = list(csv_reader)
 
         for row in tqdm(rows, total=len(rows), desc=f"Processing Rows {app_name}"):
@@ -35,16 +44,14 @@ def create_answer_twitter(app_name):
                     if "[CLS]" in prediction:
                         prediction = prediction.replace(f"[CLS]この文はTwitterのツイートです。{app_name}アプリの欠陥や{app_name}アプリに対する要望が書かれているのはどこですか?[SEP]", '')
                     row.append(prediction)
-                    output.append(row)
-    # 結果をCSVファイルに書き込む
-    with open(f"抽出結果/twitter_{app_name}.csv", 'w', encoding='utf-8', newline='') as output_file:
-        csv_writer = csv.writer(output_file)
-        csv_writer.writerows(output)
+                    csv_writer.writerow(row)
 
 def create_answer_google(app_name):
-    output = [["id", "app_name", "datetime", "context", "prediction"]]
-    with open('データセット/google_all_データセット.csv', 'r', encoding='utf-8-sig') as csv_file:
+    output = ["id", "app_name", "datetime", "context", "prediction"]
+    with open('データセット/google_all_データセット.csv', 'r', encoding='utf-8-sig') as csv_file, open(f"抽出結果/google_{app_name}.csv", 'w', encoding='utf-8', newline='') as output_file:
         csv_reader = csv.reader(csv_file)
+        csv_writer = csv.writer(output_file)
+        csv_writer.writerow(output)
         rows = list(csv_reader)
 
         for row in tqdm(rows, total=len(rows), desc=f"Processing Rows {app_name}"):
@@ -58,11 +65,7 @@ def create_answer_google(app_name):
                         prediction = prediction.replace(f"[CLS]この文章はGooglePlayストアのレビューです。{app_name}アプリの欠陥や{app_name}アプリに対する要望が書かれているのはどこですか?[SEP]", '')
                         # print(prediction)
                     row.append(prediction)
-                    output.append(row)
-    # 結果をCSVファイルに書き込む
-    with open(f"抽出結果/google_{app_name}.csv", 'w', encoding='utf-8', newline='') as output_file:
-        csv_writer = csv.writer(output_file)
-        csv_writer.writerows(output)
+                    csv_writer.writerow(row)
 
 def main():
     app_names = ['capcut', 
@@ -79,6 +82,11 @@ def main():
              '楽天ペイ',
              'buzzvideo']
 
+    # 指定して実行
+    # create_answer_twitter(app_names[10])
+    # create_answer_google(app_names[0])
+
+    # 全て実行
     for app_name in app_names:
         create_answer_twitter(app_name)
         create_answer_google(app_name)
