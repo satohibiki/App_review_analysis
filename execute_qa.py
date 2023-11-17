@@ -83,13 +83,13 @@ def main():
              'buzzvideo']
 
     # 指定して実行
-    create_answer_twitter(app_names[10])
+    # create_answer_twitter(app_names[10])
     # create_answer_google(app_names[0])
 
     # 全て実行
-    # for app_name in app_names:
-    #     create_answer_twitter(app_name)
-    #     create_answer_google(app_name)
+    for app_name in app_names:
+        create_answer_twitter(app_name)
+        create_answer_google(app_name)
 
 if __name__ == "__main__":
     main()
