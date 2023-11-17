@@ -1,2 +1,0 @@
-latexmk -pvc thesis.tex
-
