@@ -1,0 +1,70 @@
+This is upBibTeX, Version 0.99d-j0.36-u1.29 (utf8.euc) (TeX Live 2023)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: thesis.aux
+The style file: jplain.bst
+Database file #1: thesis.bib
+Warning--entry type for "twitter" isn't style-file defined
+--line 11 of file thesis.bib
+Warning--entry type for "google-play-store" isn't style-file defined
+--line 17 of file thesis.bib
+Warning--entry type for "about-google-play" isn't style-file defined
+--line 30 of file thesis.bib
+Warning--entry type for "purnima-kochikar" isn't style-file defined
+--line 36 of file thesis.bib
+Warning--entry type for "aboutx" isn't style-file defined
+--line 43 of file thesis.bib
+Warning--entry type for "google-play-scraper" isn't style-file defined
+--line 78 of file thesis.bib
+Warning--entry type for "tohoku" isn't style-file defined
+--line 91 of file thesis.bib
+Warning--entry type for "masking" isn't style-file defined
+--line 97 of file thesis.bib
+Warning--entry type for "kawatsura" isn't style-file defined
+--line 124 of file thesis.bib
+Warning--entry type for "plotly" isn't style-file defined
+--line 130 of file thesis.bib
+Warning--to sort, need author or key in about-google-play
+Warning--to sort, need author or key in plotly
+You've used 19 entries,
+            2620 wiz_defined-function locations,
+            683 strings with 7461 characters,
+and the built_in function-call counts, 7028 in all, are:
+= -- 595
+> -- 211
+< -- 8
++ -- 89
+- -- 70
+* -- 297
+:= -- 919
+add.period$ -- 54
+call.type$ -- 19
+change.case$ -- 92
+chr.to.int$ -- 0
+cite$ -- 21
+duplicate$ -- 381
+empty$ -- 694
+format.name$ -- 105
+if$ -- 1674
+int.to.chr$ -- 0
+int.to.str$ -- 19
+missing$ -- 8
+newline$ -- 94
+num.names$ -- 34
+pop$ -- 231
+preamble$ -- 1
+purify$ -- 73
+quote$ -- 0
+skip$ -- 395
+stack$ -- 0
+substring$ -- 327
+swap$ -- 98
+text.length$ -- 8
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 76
+warning$ -- 2
+while$ -- 50
+width$ -- 21
+write$ -- 190
+is.kanji.str$ -- 172
+(There were 12 warnings)
