@@ -23,13 +23,15 @@ def exerute_answer(context, question):
     return answer
 
 def create_answer_twitter(app_name):
+    output = ["id", "app_name", "datetime", "context", "prediction"]
     # paypayの推論
-    paypay_index = 1
-    with open(f'データセット/paypay/paypay_{paypay_index}.csv', 'r', encoding='utf-8-sig') as csv_file, open(f"抽出結果/twitter_{app_name}_{paypay_index}.csv", 'a', encoding='utf-8', newline='') as output_file:
+    # paypay_index = 1
+    # with open(f'データセット/paypay/paypay_{paypay_index}.csv', 'r', encoding='utf-8-sig') as csv_file, open(f"抽出結果/twitter_{app_name}_{paypay_index}.csv", 'w', encoding='utf-8', newline='') as output_file:
     # paypay以外の推論
-    # with open('データセット/twitter_all_データセット.csv', 'r', encoding='utf-8-sig') as csv_file, open(f"抽出結果/twitter_{app_name}.csv", 'a', encoding='utf-8', newline='') as output_file:
+    with open('データセット/twitter_all_データセット.csv', 'r', encoding='utf-8-sig') as csv_file, open(f"抽出結果/twitter_{app_name}.csv", 'w', encoding='utf-8', newline='') as output_file:
         csv_reader = csv.reader(csv_file)
         csv_writer = csv.writer(output_file)
+        csv_writer.writerow(output)
         rows = list(csv_reader)
 
         for row in tqdm(rows, total=len(rows), desc=f"Processing Rows {app_name}"):
@@ -45,9 +47,11 @@ def create_answer_twitter(app_name):
                     csv_writer.writerow(row)
 
 def create_answer_google(app_name):
+    output = ["id", "app_name", "datetime", "context", "prediction"]
     with open('データセット/google_all_データセット.csv', 'r', encoding='utf-8-sig') as csv_file, open(f"抽出結果/google_{app_name}.csv", 'w', encoding='utf-8', newline='') as output_file:
         csv_reader = csv.reader(csv_file)
         csv_writer = csv.writer(output_file)
+        csv_writer.writerow(output)
         rows = list(csv_reader)
 
         for row in tqdm(rows, total=len(rows), desc=f"Processing Rows {app_name}"):
@@ -61,7 +65,7 @@ def create_answer_google(app_name):
                         prediction = prediction.replace(f"[CLS]この文章はGooglePlayストアのレビューです。{app_name}アプリの欠陥や{app_name}アプリに対する要望が書かれているのはどこですか?[SEP]", '')
                         # print(prediction)
                     row.append(prediction)
-                    csv_writer.writerows(row)
+                    csv_writer.writerow(row)
 
 def main():
     app_names = ['capcut', 
@@ -79,8 +83,8 @@ def main():
              'buzzvideo']
 
     # 指定して実行
-    create_answer_twitter(app_names[6])
-   # create_answer_google(app_names[0])
+    create_answer_twitter(app_names[10])
+    # create_answer_google(app_names[0])
 
     # 全て実行
     # for app_name in app_names:

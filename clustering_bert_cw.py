@@ -8,6 +8,7 @@ import networkx as nx
 from chinese_whispers import chinese_whispers
 import spacy
 from sentence_transformers import util
+from tqdm import tqdm
 
 
 class SentenceBertJapanese:
@@ -42,6 +43,9 @@ class SentenceBertJapanese:
 
         # return torch.stack(all_embeddings).numpy()
         return torch.stack(all_embeddings)
+
+# モデルの準備
+model = SentenceBertJapanese("sonoisa/sentence-bert-base-ja-mean-tokens")
 
 def time_check(id, time, start_time, end_time):
     if "g" in id:
@@ -172,21 +176,21 @@ def main():
              'ファミペイ', 
              '楽天ペイ',
              'buzzvideo']
-    
-    # モデルの準備
-    model = SentenceBertJapanese("sonoisa/sentence-bert-base-ja-mean-tokens")
 
-    for app_name in app_names:
+    # 個別に実行
+    # category = 'twitter'
+    # app_name = 'ファミペイ'
+    # input_csv_file = f'抽出結果/{category}_{app_name}.csv'
+    # clustering(input_csv_file, category, app_name)
+
+    # まとめて実行
+    for app_name in tqdm(app_names, total=len(app_names), desc=f"Processing Rows"):
         category = 'google'
         input_csv_file = f'抽出結果/{category}_{app_name}.csv'
-        # start_time =  datetime.datetime(2021, 10, 1, 0, 0, 0)
-        # end_time =  datetime.datetime(2022, 1, 1, 0, 0, 0)
         clustering(input_csv_file, category, app_name)
 
         category = 'twitter'
         input_csv_file = f'抽出結果/{category}_{app_name}.csv'
-        # start_time =  datetime.datetime(2021, 10, 1, 0, 0, 0)
-        # end_time =  datetime.datetime(2022, 1, 1, 0, 0, 0)
         clustering(input_csv_file, category, app_name)
 
 
