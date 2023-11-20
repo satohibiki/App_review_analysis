@@ -16,6 +16,7 @@ twitter/Twitter_data(23_10_01~23_10_31)
 データセット/*.json
 データセット/paypay
 クラスタリング/
+クラスタタイトル/
 抽出結果/
 cached_dev_bert-base-japanese-whole-word-masking_384
 cached_train_bert-base-japanese-whole-word-masking_384

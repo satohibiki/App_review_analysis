@@ -10,6 +10,36 @@ import spacy
 from sentence_transformers import util
 from tqdm import tqdm
 
+import collections
+
+from pysummarization.nlpbase.auto_abstractor import AutoAbstractor
+from pysummarization.abstractabledoc.top_n_rank_abstractor import TopNRankAbstractor
+from pysummarization.nlp_base import NlpBase
+from pysummarization.similarityfilter.tfidf_cosine import TfIdfCosine
+from pysummarization.tokenizabledoc.mecab_tokenizer import MeCabTokenizer
+
+from keybert import KeyBERT
+
+import MeCab
+mecab = MeCab.Tagger("mecabrc")
+
+
+from janome.tokenizer import Tokenizer
+import ginza
+import nltk
+import spacy
+import pke
+pke.lang.stopwords['ja_ginza'] = 'japanese'
+#spacyに設定されているstopwordを使う
+from  spacy.lang.ja import stop_words
+spacy_model = spacy.load("ja_ginza")  # GiNZAモデルの読み込み
+stopwords = list(stop_words.STOP_WORDS)
+nltk.corpus.stopwords.words_org = nltk.corpus.stopwords.words
+nltk.corpus.stopwords.words = lambda lang : stopwords if lang == 'japanese' else nltk.corpus.stopwords.words_org(lang)
+
+# 警告非表示
+import warnings
+warnings.filterwarnings("ignore", category=Warning, module="pke.base")
 
 class SentenceBertJapanese:
     def __init__(self, model_name_or_path, device=None):
@@ -46,6 +76,92 @@ class SentenceBertJapanese:
 
 # モデルの準備
 model = SentenceBertJapanese("sonoisa/sentence-bert-base-ja-mean-tokens")
+
+# クラス名の決定
+
+# pkeのキーフレーズ抽出器を作成
+extractor = pke.unsupervised.MultipartiteRank()
+# Janomeトークナイザーを使用
+tokenizer = Tokenizer()
+# pkeのキーフレーズ抽出器でクラス名決定
+def pke(text):
+    # キーフレーズ抽出器にテキストとトークンを設定
+    extractor.load_document(input=text, language='en', normalization=None, spacy_model= spacy_model)
+    extractor.candidate_selection(pos={'NOUN', 'PROPN', 'ADJ', 'NUM', 'VERB'})
+    extractor.candidate_weighting(threshold=0.74, method='average', alpha=1.1)
+
+    # キーフレーズの抽出
+    keyphrases = extractor.get_n_best(n=2)
+
+    title = ""
+    for keyphrase in keyphrases:
+        title += str(keyphrase[0])
+        title += " "
+    return title
+
+
+# 名刺のみを抽出
+def ma_parse(sentence, fileter="名詞"):
+  node = mecab.parseToNode(sentence)
+  while node:
+    if node.feature.startswith(fileter):
+      yield node.surface
+    node = node.next
+# 頻出名詞3つでクラス名を決定
+def create_class_title(text):
+    # 名刺のみを抽出
+    words = [word for word in ma_parse(text)]
+    c = collections.Counter(words)
+    try:
+        top_word = c.most_common()[0][0] + " " + c.most_common()[1][0] + " " + c.most_common()[2][0]
+    except IndexError:
+        top_word = ""
+    return top_word
+
+
+# keybertモデルの準備
+keybertmodel = KeyBERT('distilbert-base-nli-mean-tokens')
+# keybertでクラス名を決定
+def keybert(text):
+    words = MeCab.Tagger("-Owakati").parse(text)
+    title = keybertmodel.extract_keywords(words, top_n = 3, keyphrase_ngram_range=(1, 1))
+    return title
+
+
+# 文章の要約でクラス名を決定
+def summarization(text):
+    similarity_limit = 0.1
+    # 自動要約のオブジェクト
+    auto_abstractor = AutoAbstractor()
+    # トークナイザー設定（MeCab使用）
+    auto_abstractor.tokenizable_doc = MeCabTokenizer()
+    # 区切り文字設定
+    auto_abstractor.delimiter_list = ["。", "\n"]
+    # 抽象化&フィルタリングオブジェクト
+    abstractable_doc = TopNRankAbstractor()
+    # 文書要約
+    result_dict1 = auto_abstractor.summarize(text, abstractable_doc)
+    
+    # NLPオブジェクト
+    nlp_base = NlpBase()
+    # トークナイザー設定（MeCab使用）
+    nlp_base.tokenizable_doc = MeCabTokenizer()
+    # 類似性フィルター
+    similarity_filter = TfIdfCosine()
+    # NLPオブジェクト設定
+    similarity_filter.nlp_base = nlp_base
+    # 類似性limit：limit超える文は切り捨て
+    similarity_filter.similarity_limit = similarity_limit
+    # 文書要約（similarity_filter機能追加）
+    result_dict2 = auto_abstractor.summarize(text, abstractable_doc, similarity_filter)
+    
+    summarize_text = ""
+    for sentence in result_dict2["summarize_result"]:
+        summarize_text += sentence
+    summarize_text = summarize_text.replace("。", " ")
+
+    return summarize_text
+
 
 def time_check(id, time, start_time, end_time):
     if "g" in id:
@@ -156,10 +272,31 @@ def clustering(input_csv_file, category, app_name): # 指定されたアプリ�
 
     with open(f"クラスタリング/{category}_{app_name}.csv", 'w', encoding='utf-8', newline='') as output_file:
         csv_writer = csv.writer(output_file)
+        all_clusters = []
         for index in range(len(clusters)):
             for cluster in clusters:
                 if index == cluster[5]:
-                    csv_writer.writerow(cluster)
+                    all_clusters.append(cluster)
+        csv_writer.writerows(all_clusters)
+
+    with open(f"クラスタタイトル/{category}_{app_name}.csv", 'w', encoding='utf-8', newline='') as output_file:
+        csv_writer = csv.writer(output_file)
+        all_clusters = []                
+        for index in range(len(clusters)):
+            index += 1
+            text = ""
+            text_index = 0
+            for cluster in clusters:    
+                if index == cluster[5] and text_index <= 5:
+                    text += cluster[4]
+                    text_index += 1
+            # クラス名の決定
+            title = pke(text)
+            # title = create_class_title(text)
+            # title = keybert(text)
+            # title = summarization(text)
+            all_clusters.append([index, title])
+        csv_writer.writerows(all_clusters)
 
 
 def main():
@@ -179,7 +316,7 @@ def main():
 
     # 個別に実行
     # category = 'twitter'
-    # app_name = 'ファミペイ'
+    # app_name = 'lemon8'
     # input_csv_file = f'抽出結果/{category}_{app_name}.csv'
     # clustering(input_csv_file, category, app_name)
 
