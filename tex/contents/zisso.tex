@@ -20,7 +20,7 @@
 %ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
 \section{Google Playストアのスクレイピング}
-本研究で取得するレビュー情報は先行研究に合わせて下記とする. 
+本研究で取得するレビュー情報は先行研究\cite{kawatsura}に合わせて下記とする. 
 
 \begin{itemize}
  \item reviewId : レビューID
@@ -35,9 +35,9 @@
  \item repliedAt : 開発者からの返信日時
 \end{itemize}
 
-先行研究では投稿日時が2021年10月21日〜2021年12月15日までの8週間のレビューを収集している. 用意されたGoogle Playストアの各アプリのレビュー数は表\ref{tb:rawreviewnum}の通りである. 
+先行研究では投稿日時が2021年10月21日〜2021年12月15日までの8週間のレビューを収集している. 収集されたGoogle Playストアの各アプリのレビュー数は表\ref{tb:rawreviewnum}の通りである. 
 \begin{table}[htbp]
-  \caption{収集したGoogle Playストアのレビュー数（\cite{kawatsura} p.16, 表 4.2）}
+  \caption{収集したGoogle Playストアのレビュー数(2021/10/21〜12/15)（\cite{kawatsura} p.16, 表 4.2）}
   \label{tb:rawreviewnum}
   \begin{center}
   \begin{tabular}{l|l}
@@ -60,7 +60,7 @@
   \end{tabular}\end{center}
 \end{table}
 
-この先行研究のデータに加え, 本研究では2023年10月1日~12月15日のレビューを新たに取得する. 新たに取得されたGoogle Playストアの各アプリのレビュー数は表\ref{tb:rawreviewnum2023}の通りである. 
+この先行研究のデータに加え, 本研究では2023年10月1日〜12月15日のレビューを新たに取得する. 新たに取得されたGoogle Playストアの各アプリのレビュー数は表\ref{tb:rawreviewnum2023}の通りである. 
 \begin{table}[htbp]
   \caption{収集したGoogle Playストアのレビュー数(2023/10/1〜12/15)}
   \label{tb:rawreviewnum2023}
@@ -91,17 +91,17 @@ Google PlayストアのレビューをスクレイピングするためにPython
 
 \section{Xのスクレイピング}
 \label{sec:x}
-本研究で取得するツイート情報は先行研究に合わせて下記とする. 
+本研究で取得するツイート情報は先行研究\cite{kawatsura}に合わせて下記とする. 
 \begin{itemize}
  \item id : ツイートID
  \item content : ツイート内容
  \item at : ツイート日時
 \end{itemize}
 
-まず, 先行研究で収集したツイート数を表\ref{tb:rawtweetnum}に示す. 
+先行研究では投稿日時が2021年10月21日〜2021年12月15日までの8週間のツイートを収集している. 収集されたTwitterの各アプリのツイート数を表\ref{tb:rawtweetnum}に示す. 
 
 \begin{table}[htbp]
-  \caption{収集したTwitterのツイート数（\cite{kawatsura} p.18, 表 4.3）}
+  \caption{収集したTwitterのツイート数(2021/10/21〜12/15)（\cite{kawatsura} p.18, 表 4.3）}
   \label{tb:rawtweetnum}
   \begin{center}
   \begin{tabular}{l|l}
@@ -124,8 +124,8 @@ Google PlayストアのレビューをスクレイピングするためにPython
   \end{tabular}\end{center}
 \end{table}
 
-この先行研究に加え, 本研究では新たに2023年10月1日~12月15日のポストを取得する. Xのポスト取得に関してはTwitter APIを使用してスクレイピングを行う. Twitter APIのプランに関してはFree, Basic, Pro, Enterpriseの4つのプランが用意されておりそれぞれ料金や使用できる機能などが異なる. 大規模なサービスやビジネス向けのEnterpriseプラン以外の3つのプランの違いの一部を表\ref{tb:xplan}に示す. 
-表\ref{tb:xplan}よりポストを取得するためにはBasicプラン以上に加入する必要がある. Basicプランに加入した場合でも合計で30,000件しか取得されないため本研究では先行研究のデータセットを追加で使用することとした. Xの利用規約によると, Xが提供するインターフェイスを介して行うスクレイピング以外は禁止としている. そのため, seleniumなどを使用したスクレイピングは断念し, 過去の論文のデータを使用することとした. 
+この先行研究に加え, 本研究では新たに2023年10月〜12月のポストを取得する. Xのポスト取得に関してはTwitter APIを使用してスクレイピングを行う. Twitter APIのプランに関してはFree, Basic, Pro, Enterpriseの4つのプランが用意されておりそれぞれ料金や使用できる機能などが異なる. 大規模なサービスやビジネス向けのEnterpriseプラン以外の3つのプランの違いの一部を表\ref{tb:xplan}に示す. 
+表\ref{tb:xplan}よりポストを取得するためにはBasicプラン以上に加入する必要がある. Basicプランに加入した場合でも合計で30,000件しか取得されないため本研究では先行研究のデータセットを追加で使用することとした. Xの利用規約によると, Xが提供するインターフェイスを介して行うスクレイピング以外は禁止としている. そのため, seleniumなどを使用したスクレイピングはせずに, 先行研究のデータを使用することとした. 
 
 \begin{table}[htbp]
   \caption{プランとできること}
@@ -141,7 +141,7 @@ Google PlayストアのレビューをスクレイピングするためにPython
 \end{table}
 
 Twitter APIを使用してポストを取得するためにPythonのプログラムである(\verb|get_tweet.py|)を作成した. このプログラムではTwitter APIにアクセスするためのライブラリであるTweepy\cite{tweepy}を使用した. まずAPIキーなどの4つの認証情報をセットする. 次にClientクラスのsearch\_resent\_tweetメソッドを使用してツイートを取得する. 
-このメソッドは最大過去7日間まで遡ってツイートを取得できる. search\_all\_tweetsメソッドでは全てのツイートを取得できるが, ``Academic Research''という学術用の用途でAPI承認されたユーザーしか使用できないため本研究では使用しなかった. 
+このメソッドは最大で過去7日間まで遡ってツイートを取得できる. search\_all\_tweetsメソッドでは全てのツイートを取得できるが, ``Academic Research''という学術用の用途でAPI承認されたユーザーしか使用できないため本研究では使用しなかった. 
 先行研究と同じ情報を取得するために, 本研究では引数として以下のものを与えた. 
 \begin{itemize}
  \item max\_resul : 検索結果の最大数. 10〜100の数値で, デフォルトは10
@@ -153,7 +153,7 @@ Twitter APIを使用してポストを取得するためにPythonのプログラ
 新たに取得したXのポスト数を表\ref{tb:rawtweetnum2023}に示す
 
 \begin{table}[htbp]
-  \caption{収集したXのポスト数}
+  \caption{収集したXのポスト数(2023年10月〜2023年12月)}
   \label{tb:rawtweetnum2023}
   \begin{center}
   \begin{tabular}{l|l}
@@ -178,7 +178,7 @@ Twitter APIを使用してポストを取得するためにPythonのプログラ
 %ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
 \section{前処理}
-機械学習によるレビューに含まれる有用な箇所の自動抽出の精度を上げるために, GooglePlayストアとXから取得したデータに対して前処理を行うプログラム(\verb|preprocessing_google.py|, \verb|preprocessing_twitter.py|)を作成した. この処理では以下に示す処理を行う. この処理は一般的な自然言語処理の手法を参考としている. 
+機械学習によるレビューに含まれる有用な箇所の自動抽出における精度を上げるために, GooglePlayストアとXから取得したデータに対して前処理を行うプログラム(\verb|preprocessing_google.py|, \verb|preprocessing_twitter.py|)を作成した. この処理では以下に示す処理を行う. この処理は一般的な自然言語処理の手法を参考としている. 
 \begin{itemize}
   \item 英語を全て小文字に揃える. 
   \item 以下の文字列を削除. 
@@ -191,7 +191,7 @@ Twitter APIを使用してポストを取得するためにPythonのプログラ
       \item 絵文字
       \item 日本語を含まないレビュー
     \end{itemize}
-  \item レビューやツイートには, 異なるバグの報告や新しい機能の要望に関する文が2文以上からなるものがある. そのため, 「。」「.」「！」「!」「？」「!」「\verb|\n|」「\verb|\r\n|」でそれぞれの文に分割する. 
+  \item レビューやツイートには, 異なる欠陥の報告やアプリに対する要望に関する文が2文以上からなるものがある. そのため, 「。」「.」「！」「!」「？」「!」「\verb|\n|」「\verb|\r\n|」でそれぞれの文に分割する. 
 \end{itemize}
 以下の図\ref{chap:preprocessing}がレビューを前処理した例である. 2つの文で構成されているため「。」で区切り分割している. また絵文字は削除されている. 
 
@@ -241,8 +241,8 @@ Twitter APIを使用してポストを取得するためにPythonのプログラ
 
 \section{有用な箇所の自動抽出}
 \subsection{データセット}
-モデルのfine-tuningに使用されるデータセットとして, Google PlayストアとXのツイートからそれぞれ5,000件ずつ合計で10,000件のデータをランダムに抽出し手作業で有用な箇所を抽出した. データセットの作成は情報工学科の学部4年生2人がそれぞれ手作業で行い, お互いの抽出した箇所が異なっていたものは議論することにより決定した. 
-データセットには前処理したデータを利用したcsvファイルを使用する. このcsvファイルにはid,アプリ名,投稿日時,本文, 手動で抽出した結果の5つの情報が入っている. idは前処理したデータを識別するために与えられ, Google Playストアのレビュー文はg\_{index}, twitterのツイートのidはt\_{index}とする. 
+モデルのfine-tuningに使用されるデータセットとして, Google PlayストアとXのツイートからそれぞれ5,000件ずつ合計で10,000件のデータをランダムに抽出し手作業で有用な箇所を抽出した. データセットの作成は情報工学科の学部4年生2人がそれぞれ手作業で行い, お互いの抽出した箇所が異なっていたものは議論することにより統一した. 
+データセットには前処理したデータが格納されたcsvファイルを利用して, 抽出したオブジェクトを含めた新たなcsvファイルを作成する. 作成されたcsvファイルにはid,アプリ名,投稿日時,本文, 抽出したオブジェクトの5つのデータが入っている. idは前処理したデータを識別するために与えられ, Google Playストアのレビュー文はg\_(index), twitterのツイートのidはt\_(index)とする.  indexには各データに応じた番号が振られている. 
 10,000件のデータセットのうち, 6,000件を訓練データ, 2,000件を検証用データ, 2,000件をテストデータとする. 質問応答形式のfine-tuningを行うために, csv形式であるデータセットをソースコード\ref{json}に示すようにjson形式に変換する. 
 
 \begin{lstlisting}[caption=データセット.json,label=json]
@@ -292,7 +292,8 @@ Twitter APIを使用してポストを取得するためにPythonのプログラ
   } 
 \end{lstlisting}
 
-このjsonファイルは下記の構成になっている. 
+このjsonファイルは下記の要素によって構成になっている. 
+
 \begin{itemize}
   \item version: バージョンを表す. 今回は答えられない質問を含むSQuAD 2.0と同じバージョンのため, v2.0とする
   \item title: contextのタイトル
@@ -320,7 +321,7 @@ Twitter APIを使用してポストを取得するためにPythonのプログラ
 実装にはTransformersに含まれるスクリプトであるrun\_squad.pyを用いる. 
 
 \subsection{自動抽出}
-fine-tuningを行ったモデルを使用して自動抽出を行う. 前処理したGooglePlayストアのデータ14,051件と, twitterのデータ4,634,319件のデータから有用な箇所を自動抽出する. 
+fine-tuningを行ったモデルを使用して自動抽出を行う. 前処理したGooglePlayストアのデータと, twitterのデータから有用な箇所を自動抽出する. 
 
 結果は表\ref{tb:googleqa}に示すようにcsv形式で保存する. 
 
@@ -350,52 +351,59 @@ fine-tuningを行ったモデルを使用して自動抽出を行う. 前処理�
 %ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
 \section{クラスタリング}
-抽出した文章をその文章が示す意味に応じてクラスタリングする. クラスタリングするために日本語Sentence-BERTクラスを定義する. ソースコード\ref{sentence-bert}に日本語Sentence-bertクラスを示す. 
-\_mean\_pooling関数でモデルの出力とAttention Maskを用いて, 文の埋め込みを生成するための平均プーリングを行い, encode関数で文のリストから各文章の埋め込みを求める. 
-すなわち, 日本語のBERT用に転移学習したBERTを用いて各トークンの埋め込みを求め, 平均を取ることにより文全体の埋め込みを求めている. 
+\subsection{ベクトルの生成}
+抽出した文章をその文章が示す意味に応じてクラスタリングする. クラスタリングするために日本語Sentence-BERTクラスを定義する. 日本語Sentence-BERTクラス(SentenceBertJapanese)の各関数の概要を示す. 
+\begin{itemize}
+  \item \_\_init\_\_関数 : モデルとトークナイザーの初期化を行う. 
+  \item \_mean\_pooling関数 : モデルの出力とAttention Maskを用いて, 文の埋め込みを生成するための平均プーリングを行う
+  \item encode関数 : 文のリストから各文章の埋め込みを求める. 
+\end{itemize}
 
-\begin{lstlisting}[caption=clustering.py,label=sentence-bert]
-  class SentenceBertJapanese:
-    def __init__(self, model_name_or_path, device=None):
-        self.tokenizer = BertJapaneseTokenizer.from_pretrained(model_name_or_path)
-        self.model = BertModel.from_pretrained(model_name_or_path)
-        self.model.eval()
+このように, 日本語のBERT用に転移学習したBERTを用いて各トークンの埋め込みを求め, 平均を取ることにより文全体の埋め込みを求めている. 
 
-        if device is None:
-            device = "cuda" if torch.cuda.is_available() else "cpu"
-        self.device = torch.device(device)
-        self.model.to(device)
+% \begin{lstlisting}[caption=clustering.py,label=sentence-bert]
+%   class SentenceBertJapanese:
+%     def __init__(self, model_name_or_path, device=None):
+%         self.tokenizer = BertJapaneseTokenizer.from_pretrained(model_name_or_path)
+%         self.model = BertModel.from_pretrained(model_name_or_path)
+%         self.model.eval()
 
-    def _mean_pooling(self, model_output, attention_mask):
-        token_embeddings = model_output[0] #First element of model_output contains all token embeddings
-        input_mask_expanded = attention_mask.unsqueeze(-1).expand(token_embeddings.size()).float()
-        return torch.sum(token_embeddings * input_mask_expanded, 1) / torch.clamp(input_mask_expanded.sum(1), min=1e-9)
+%         if device is None:
+%             device = "cuda" if torch.cuda.is_available() else "cpu"
+%         self.device = torch.device(device)
+%         self.model.to(device)
 
-    @torch.no_grad()
-    def encode(self, sentences, batch_size=8):
-        all_embeddings = []
-        iterator = range(0, len(sentences), batch_size)
-        for batch_idx in iterator:
-            batch = sentences[batch_idx:batch_idx + batch_size]
+%     def _mean_pooling(self, model_output, attention_mask):
+%         token_embeddings = model_output[0] #First element of model_output contains all token embeddings
+%         input_mask_expanded = attention_mask.unsqueeze(-1).expand(token_embeddings.size()).float()
+%         return torch.sum(token_embeddings * input_mask_expanded, 1) / torch.clamp(input_mask_expanded.sum(1), min=1e-9)
 
-            encoded_input = self.tokenizer.batch_encode_plus(batch, padding="longest", 
-                                           truncation=True, return_tensors="pt").to(self.device)
-            model_output = self.model(**encoded_input)
-            sentence_embeddings = self._mean_pooling(model_output, encoded_input["attention_mask"]).to('cpu')
+%     @torch.no_grad()
+%     def encode(self, sentences, batch_size=8):
+%         all_embeddings = []
+%         iterator = range(0, len(sentences), batch_size)
+%         for batch_idx in iterator:
+%             batch = sentences[batch_idx:batch_idx + batch_size]
 
-            all_embeddings.extend(sentence_embeddings)
+%             encoded_input = self.tokenizer.batch_encode_plus(batch, padding="longest", 
+%                                            truncation=True, return_tensors="pt").to(self.device)
+%             model_output = self.model(**encoded_input)
+%             sentence_embeddings = self._mean_pooling(model_output, encoded_input["attention_mask"]).to('cpu')
 
-        # return torch.stack(all_embeddings).numpy()
-        return torch.stack(all_embeddings)
-\end{lstlisting}
+%             all_embeddings.extend(sentence_embeddings)
 
-ソースコード\ref{model}に示されるようにSentenceBertJapaneseクラスを用いて, 引数に日本語モデル名を与えることによりインスタンスが生成され, モデルの読み込みが完了する. このモデルを使用して抽出された文章をベクトルに変換する. 
+%         # return torch.stack(all_embeddings).numpy()
+%         return torch.stack(all_embeddings)
+% \end{lstlisting}
 
-\begin{lstlisting}[caption=clustering.py,label=model]
-  model = SentenceBertJapanese("sonoisa/sentence-bert-base-ja-mean-tokens")
-\end{lstlisting}
+SentenceBertJapaneseクラスの引数に日本語モデル名を与えることによりインスタンスが生成され, モデルの読み込みが完了する. このインスタンスを使用して抽出されたオブジェクトをベクトルに変換する. 
 
-次に, それぞれの抽出した文章をノード, ノードのベクトル間のコサイン類似度をエッジとする無向グラフを作成する. 作成されたグラフからChinese Whispersによりクラスタリングが実行される. 
+% \begin{lstlisting}[caption=clustering.py,label=model]
+%   model = SentenceBertJapanese("sonoisa/sentence-bert-base-ja-mean-tokens")
+% \end{lstlisting}
+
+\subsection{グラフクラスタリング}
+次に, それぞれの抽出したオブジェクトをノード, ノードのベクトル間のコサイン類似度をエッジとする無向グラフを作成する. 作成されたグラフからChinese Whispersによりグラフクラスタリングが実行される. 
 クラスタリングした結果, それぞれの文章にクラスタの番号(以下 : クラスタ番号)が振られ, クラスタ番号が同じものが同じクラスタとなり番号が近いものは意味的相関が近いことを表す. コサイン類似度の閾値を決めることによりどの程度の類似文を同じクラスタと定義するのかが決定される. 本研究では検証を重ねた結果, 閾値は0.8とした. 
 結果はcsvファイルに保存される. 表\ref{tb:clustering}に示されるように抽出した文章にクラスタ番号が振られる. 
 
@@ -437,11 +445,15 @@ fine-tuningを行ったモデルを使用して自動抽出を行う. 前処理�
   \end{tabularx}\end{center}
 \end{table}
 
+\subsection{クラスタのタイトル}
+クラスタのタイトルの決定には, MultipartieRankを使用したキーワード抽出を利用する. 実装にはpke(python keyphrase extraction)というキーワード抽出ライブラリを使用する. 
+抽出するための手法や対象となる言語, 抽出する品詞を指定することができる. 
+
 
 %ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
 \section{画面出力・可視化}
-\subsection{実装環境}
+\subsection{使用した言語・フレームワーク}
 webアプリケーションの実装に使用した言語, フレームワークは以下となっている. 
 \begin{itemize}
     \item フロントエンド: HTML/CSS, JavaScript
@@ -466,24 +478,51 @@ webアプリケーションの実装に使用した言語, フレームワーク
 ツイートのリストを検索結果に応じて更新するソースコード\ref{search}を示す. 
 
 \begin{lstlisting}[caption=view.py, label=search]
-  path = f'../クラスタリング/twitter_{app_name}.csv'
-  is_file = os.path.isfile(path)
-  if is_file:
-      with open(path, 'r', encoding='utf-8-sig') as twitter_csv_file:
-          twitter_csv_reader = csv.reader(twitter_csv_file)
-          twitter_rows = list(twitter_csv_reader)
-          twitter_rows = sorted(twitter_rows, reverse=False, key=lambda x: x[2]) # 日付で並び替え
+  # ファイル読み込み, 日付でソートしたリスト作成
+  with open('該当アプリのcsvファイルの相対パス', 'r', encoding='utf-8-sig') as csv_file:
+      csv_reader = csv.reader(csv_file)
+      rows = list(csv_reader)
+      rows = sorted(rows, reverse=False, key=lambda x:x[2])
+
   # 検索結果のリスト作成
   search_result = []
-  for row in twitter_rows:
+  for row in rows:
       if start_date <= row[2][:10] <= end_date:
           if keyword != '':
               if keyword in row[3]:
                   search_result.append(row)
           else:
               search_result.append(row)
-  twitter_rows = search_result
+  rows = search_result
 \end{lstlisting}
+
+% アルゴリズム
+% \begin{figure}[!t]
+%   \begin{algorithm}[H]
+%       \caption{Search}
+%       \label{search}
+%       \begin{algorithmic}[1]
+%         \STATE $path \leftarrow$ '../クラスタリング/twitter\_\{app\_name\}.csv'
+%         \STATE Open $twitter\_csv\_file$ with encoding 'utf-8-sig'
+%         \STATE $twitter\_csv\_reader \leftarrow$ CSV reader for $twitter\_csv\_file$
+%         \STATE $twitter\_rows \leftarrow$ Convert $twitter\_csv\_reader$ to a list
+%         \STATE Sort $twitter\_rows$ in ascending order by the date (element at index 2)
+%         \STATE $search\_result \leftarrow$ Empty list
+%         \FOR{$row$ in $twitter\_rows$}
+%           \IF{$start\_date \leq row[2][:10] \leq end\_date$}
+%             \IF{$keyword \neq ''$}
+%               \IF{$keyword$ is in $row[3]$}
+%                 \STATE Append $row$ to $search\_result$
+%               \ENDIF
+%             \ELSE
+%               \STATE Append $row$ to $search\_result$
+%             \ENDIF
+%           \ENDIF
+%         \ENDFOR
+%         \STATE $twitter\_rows \leftarrow search\_result$
+%       \end{algorithmic}
+%   \end{algorithm}
+% \end{figure}
 
 \subsection{グラフの作成}
 グラフの作成にはplotly.js\cite{plotly}を用いる. plotly.sjとはグラフ生成ライブラリであり, 3Dグラフや統計グラフなど40を超えるグラフタイプが同梱されている\cite{plotly}.
