@@ -118,11 +118,11 @@ def read(category, app_name):
     # 対象カテゴリーのレビューのリストを作成
     path = f'../クラスタリング/{category}_{app}.csv'
     path2 = f'../クラスタタイトル/{category}_{app}.csv'
-    with open(path, 'r', encoding='utf-8-sig') as csv_file, open(path2, 'r', encoding='utf-8-sig') as csv_file2:
-       csv_reader = csv.reader(csv_file)
-       csv_reader2 = csv.reader(csv_file2)
-       rows = list(csv_reader)
-       title_rows = list(csv_reader2)
+    with open(path, 'r', encoding='utf-8-sig') as clustering_csv_file, open(path2, 'r', encoding='utf-8-sig') as title_csv_file:
+       cluster_csv_reader = csv.reader(clustering_csv_file)
+       title_csv_reader = csv.reader(title_csv_file)
+       rows = list(cluster_csv_reader)
+       title_rows = list(title_csv_reader)
        rows = sorted(rows, reverse=False, key=lambda x: x[2]) # 日付で並び替え
     
     # 検索結果のリスト作成
@@ -146,7 +146,7 @@ def read(category, app_name):
             count_dict[key] = 1
     clusters = [[key, value] for key, value in count_dict.items()]
     for cluster in clusters:
-        title = next(row[1] for row in title_rows if row[0] == cluster[0])
+        title = next(title_row[1] for title_row in title_rows if title_row[0] == cluster[0])
         if title == "": # タイトルが存在しない場合は文章がタイトル
             title = next(row[4] for row in rows if row[5] == cluster[0])
         cluster.append(title)
