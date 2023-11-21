@@ -116,6 +116,10 @@
 
 <div class="graph-title">レビュー一覧</div>
 
+<div class="paginate">
+    {{ pagination.links }}
+</div>
+
 <ul class="accordion-area">
     {% for cluster in clusters %}
         {% set title = "" %}
