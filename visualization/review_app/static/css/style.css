@@ -67,6 +67,25 @@ h1 {
   margin-right: 20px;
 }
 
+.search-button {
+  display: flex;
+  justify-content: center;
+}
+
+.reset a {
+  display: inline-block;
+  margin: 10px;
+  padding: 10px 40px;
+  background-color: #3498db;
+  color: #fff;
+  text-decoration: none;
+
+  &:hover {
+    background-color: #FFFFFF;
+    color: #007BFF;
+  }
+}
+
 form label {
   display: block;
   margin: 5px 0;
@@ -93,9 +112,14 @@ input[type="submit"] {
   background-color: #3498db;
   color: #fff;
   border: none;
-  padding: 10px 80px;
+  padding: 10px 50px;
   cursor: pointer;
-  margin: 10px auto;
+  margin: 10px;
+
+  &:hover {
+    background-color: #FFFFFF;
+    color: #007BFF;
+  }
 }
 
 .graph-title {
