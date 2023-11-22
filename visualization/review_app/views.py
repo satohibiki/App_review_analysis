@@ -4,6 +4,7 @@ import csv
 import os
 from datetime import datetime as dt
 from datetime import timedelta
+from flask_paginate import Pagination, get_page_parameter
 
 app_names = ['capcut', 
          'coke_on', 
@@ -24,6 +25,19 @@ def date_range(start, stop, step = timedelta(1)):
     current = dt.strptime(start, "%Y-%m-%d")
     stop = dt.strptime(stop, "%Y-%m-%d")
     current = current.date()
+    stop = stop.date()
+    while current <= stop:
+        yield current
+        current += step
+
+def detail_date_range(start, stop, category, step = timedelta(1)):
+    if category=="google":
+        start = dt.strptime(start, '%Y-%m-%d %H:%M:%S')
+        stop = dt.strptime(stop, '%Y-%m-%d %H:%M:%S')
+    else:
+        start = dt.strptime(start, "%Y-%m-%dT%H:%M:%S.%fZ")
+        stop = dt.strptime(stop, "%Y-%m-%dT%H:%M:%S.%fZ")
+    current = start.date()
     stop = stop.date()
     while current <= stop:
         yield current
@@ -118,12 +132,12 @@ def read(category, app_name):
     # 対象カテゴリーのレビューのリストを作成
     path = f'../クラスタリング/{category}_{app}.csv'
     path2 = f'../クラスタタイトル/{category}_{app}.csv'
-    with open(path, 'r', encoding='utf-8-sig') as csv_file, open(path2, 'r', encoding='utf-8-sig') as csv_file2:
-       csv_reader = csv.reader(csv_file)
-       csv_reader2 = csv.reader(csv_file2)
-       rows = list(csv_reader)
-       title_rows = list(csv_reader2)
-       rows = sorted(rows, reverse=False, key=lambda x: x[2]) # 日付で並び替え
+    with open(path, 'r', encoding='utf-8-sig') as clustering_csv_file, open(path2, 'r', encoding='utf-8-sig') as title_csv_file:
+        cluster_csv_reader = csv.reader(clustering_csv_file)
+        title_csv_reader = csv.reader(title_csv_file)
+        rows = list(cluster_csv_reader)
+        title_rows = list(title_csv_reader)
+        rows = sorted(rows, reverse=False, key=lambda x: x[2]) # 日付で並び替え
     
     # 検索結果のリスト作成
     search_result = []
@@ -136,9 +150,21 @@ def read(category, app_name):
                 search_result.append(row)
     rows = search_result
 
+    # ページネーション
+    ## 現在のページ番号を取得
+    page = int(request.args.get(get_page_parameter(), 1))
+    ## ページごとの表示件数
+    per_page = 1000
+    ## ページネーションオブジェクトを作成
+    pagination = Pagination(page=page, per_page=per_page, total=len(rows))
+    # 表示するデータを取得
+    start = (page - 1) * per_page
+    end = start + per_page
+    displayed_rows = rows[start:end]
+
     # クラスタリング
     count_dict = {}
-    for item in rows:
+    for item in displayed_rows:
         key = item[5]
         if key in count_dict:
             count_dict[key] += 1
@@ -146,7 +172,7 @@ def read(category, app_name):
             count_dict[key] = 1
     clusters = [[key, value] for key, value in count_dict.items()]
     for cluster in clusters:
-        title = next(row[1] for row in title_rows if row[0] == cluster[0])
+        title = next(title_row[1] for title_row in title_rows if title_row[0] == cluster[0])
         if title == "": # タイトルが存在しない場合は文章がタイトル
             title = next(row[4] for row in rows if row[5] == cluster[0])
         cluster.append(title)
@@ -154,16 +180,16 @@ def read(category, app_name):
     top_review = clusters[:10]
 
     # 日付ごとのレビュー数のリストを作成
-    for date in date_range(start_date, end_date):
+    for date in detail_date_range(displayed_rows[0][2], displayed_rows[-1][2], category):
         if category=="google":
-            count = sum(1 for row in rows if dt.strptime(row[2], '%Y-%m-%d %H:%M:%S').date() == date)
+            count = sum(1 for row in displayed_rows if dt.strptime(row[2], '%Y-%m-%d %H:%M:%S').date() == date)
         else:
-            count = sum(1 for row in rows if dt.strptime(row[2], "%Y-%m-%dT%H:%M:%S.%fZ").date() == date)
+            count = sum(1 for row in displayed_rows if dt.strptime(row[2], "%Y-%m-%dT%H:%M:%S.%fZ").date() == date)
         graphs.append([date.strftime('%Y/%m/%d'), count])
 
     return render_template("detail.html", 
                            app_names=app_names, 
-                           rows=rows, 
+                           rows=displayed_rows, 
                            app=app, 
                            category=category, 
                            clusters=clusters, 
@@ -171,4 +197,5 @@ def read(category, app_name):
                            top_review=top_review, 
                            start_date=start_date, 
                            end_date=end_date,
-                           keyword=keyword)
+                           keyword=keyword,
+                           pagination=pagination)

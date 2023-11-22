@@ -3,14 +3,14 @@ import torch
 import csv
 from tqdm import tqdm
 
+# モデルとトークナイザーの準備
+model = AutoModelForQuestionAnswering.from_pretrained('output/')  
+tokenizer = BertJapaneseTokenizer.from_pretrained('cl-tohoku/bert-base-japanese-whole-word-masking')
+
 def exerute_answer(context, question):
     # 入力テキスト, 質問
     context = context
-    question = question
-
-    # モデルとトークナイザーの準備
-    model = AutoModelForQuestionAnswering.from_pretrained('output/')  
-    tokenizer = BertJapaneseTokenizer.from_pretrained('cl-tohoku/bert-base-japanese-whole-word-masking') 
+    question = question 
 
     # 推論の実行
     inputs = tokenizer.encode_plus(question, context, add_special_tokens=True, return_tensors="pt")
@@ -20,6 +20,9 @@ def exerute_answer(context, question):
     answer_end = torch.argmax(output.end_logits) + 1 
     answer = tokenizer.convert_tokens_to_string(tokenizer.convert_ids_to_tokens(input_ids[answer_start:answer_end]))
     answer = answer.replace(" ", "")
+
+    del inputs, output
+    torch.cuda.empty_cache()
 
     return answer
 
@@ -40,7 +43,7 @@ def compare_answer():
         csv_reader = csv.reader(csv_file)
         rows = list(csv_reader)
 
-        for row in tqdm(rows[1:521], total=520, desc="Processing Rows"):
+        for row in tqdm(rows[1:], total=len(rows[1:]), desc="Processing Rows"):
             context = row[2]
             question = row[3]
 
@@ -56,13 +59,13 @@ def compare_answer():
             true_data.append(row[4])
 
     # 結果をCSVファイルに書き込む
-    with open("テスト結果.csv", 'w', encoding='utf-8', newline='') as output_file:
+    with open("抽出結果/テスト結果.csv", 'w', encoding='utf-8', newline='') as output_file:
         csv_writer = csv.writer(output_file)
         csv_writer.writerow(["元のレビュー文", "予測した答え", "正解"])
         for (review, question, prediction, true) in zip(reviews, questions, predictions_data, true_data):
             line = []
             correct_prediction = prediction.replace(f'[CLS]{question}[SEP]', '')
-            print(correct_prediction)
+            # print(correct_prediction)
             line.append(review)
             line.append(correct_prediction)
             line.append(true)
