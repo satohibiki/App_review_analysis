@@ -403,7 +403,10 @@ SentenceBertJapaneseクラスの引数に日本語モデル名を与えること
 % \end{lstlisting}
 
 \subsection{グラフクラスタリング}
-次に, それぞれの抽出したオブジェクトをノード, ノードのベクトル間のコサイン類似度をエッジとする無向グラフを作成する. 作成されたグラフからChinese Whispersによりグラフクラスタリングが実行される. 
+次に, それぞれの抽出したオブジェクトをノード, ノードのベクトル間のコサイン類似度をエッジとする無向グラフを作成する. グラフの作成にはcreate\_graph関数を使用する. 引数には文書埋め込み, 閾値, 生成されたオブジェクトのベクトルを渡す. 
+
+作成されたグラフからChinese Whispersによりグラフクラスタリングが実行される. chinese\_whispers関数の引数に作成したグラフ, エッジの重み付けを決定する方法, Chinese Whisperアルゴリズムの反復回数を与える. 本研究ではエッジの重み付けを決定する方法はデフォルトのtopにし, エッジの最大トークンが重みとして使用される. また, 反復回数は20とした. 
+
 クラスタリングした結果, それぞれの文章にクラスタの番号(以下 : クラスタ番号)が振られ, クラスタ番号が同じものが同じクラスタとなり番号が近いものは意味的相関が近いことを表す. コサイン類似度の閾値を決めることによりどの程度の類似文を同じクラスタと定義するのかが決定される. 本研究では検証を重ねた結果, 閾値は0.8とした. 
 結果はcsvファイルに保存される. 表\ref{tb:clustering}に示されるように抽出した文章にクラスタ番号が振られる. 
 
@@ -434,21 +437,45 @@ SentenceBertJapaneseクラスの引数に日本語モデル名を与えること
     カウントされなくなる&283\\\hline
     何もカウントしなくなった&283\\\hline
     カウント出来ていない&283\\\hline
-    カウントされず&283\\\hline
-    記録ができませんと&283\\\hline
-    計測しなくなった&283\\\hline
-    カウントされなくなった&283\\\hline
-    カウントしない&283\\\hline
-    全くカウントされていない&283\\\hline
-    カウントしなくなりました&283\\\hline
-    データが反映されなくなった&283\\\hline
+    % カウントされず&283\\\hline
+    % 記録ができませんと&283\\\hline
+    % 計測しなくなった&283\\\hline
+    % カウントされなくなった&283\\\hline
+    % カウントしない&283\\\hline
+    % 全くカウントされていない&283\\\hline
+    % カウントしなくなりました&283\\\hline
+    % データが反映されなくなった&283\\\hline
   \end{tabularx}\end{center}
 \end{table}
 
-\subsection{クラスタのタイトル}
-クラスタのタイトルの決定には, MultipartieRankを使用したキーワード抽出を利用する. 実装にはpke(python keyphrase extraction)というキーワード抽出ライブラリを使用する. 
-抽出するための手法や対象となる言語, 抽出する品詞を指定することができる. 
+\subsection{クラスタ名称}
+KeyBERTのキーワード抽出によるクラスタ名称を決定するための実装を説明する. まずクラスタの各オブジェクトを結合して1つの大きな文書を生成する. この文書の特徴を表すキーワードを抽出しクラスタの名称とする. キーワード抽出の対象となる品詞は名詞, 固有名詞, 数詞, 形容詞, 動詞である. 
+そのため, 文書をトークンに分割し, 名詞, 固有名詞, 数詞, 形容詞, 動詞のトークンのみを取得して, 空白で結合した新たな文書を生成する. 
+まず, KeyBERTモデルのインスタンスを生成する. 作成されたKeyBERTモデルのメソッドであるextract\_keywordを用いてキーワードの抽出を行う. 引数で抽出対象となる文書, 抽出するキーワードの数, キーワードの長さを指定することができる. 
+作成したkeybert関数はソースコード\ref{keybert}に示す. 
 
+\begin{lstlisting}[caption=clustering.py, label=keybert]
+  # spaCyの初期化（日本語モデルを使用）
+  nlp = spacy.load('ja_ginza')
+
+  # 日本語BERTモデルの読み込み
+  keybertmodel = SentenceTransformer('cl-tohoku/bert-base-japanese')
+  keybert_model = KeyBERT(model=keybertmodel)
+
+  def keybert(text):
+    # spaCyを使用して名詞, 固有名詞, 動詞, 形容詞, 数詞を抽出
+    doc = nlp(text)
+    tokens = [token.text for token in doc if token.pos_ == 'NOUN' or token.pos_ == 'PROPN' or token.pos_ == 'ADJ' or token.pos_ == 'NUM' or token.pos_ == 'VERB']
+    # 名詞のリストをKeyBERTに渡してキーワード抽出
+    tokens_text = ' '.join(tokens)
+    keywords = keybert_model.extract_keywords(tokens_text, top_n = 3, keyphrase_ngram_range=(1, 1), stop_words=None)
+    title = ""
+    for title_word in keywords:
+        title = title + "【" + title_word[0] + "】 "
+    return title
+\end{lstlisting}
+
+クラスタの名称が決定したあとは, クラスタ番号とクラスタ名称の組み合わせを格納したcsvファイルを作成する. 
 
 %ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
