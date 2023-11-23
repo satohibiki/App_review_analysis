@@ -22,7 +22,7 @@ client = tweepy.Client(
 end_time =  datetime.datetime.now().replace(microsecond=0) + datetime.timedelta(hours=-9, seconds=-30)
 
 def get_tweet(end_time, keyword):
-    for num in range(10):
+    for num in range(9):
         # ツイートの取得V2
         tweets = client.search_recent_tweets(query=keyword,  # 検索ワード
                                              end_time=end_time,
@@ -31,9 +31,9 @@ def get_tweet(end_time, keyword):
                                              )
 
         # ツイートを検索してCSVファイルに保存
-        with open(f'Twitter_data_(23_11_01~23_11_30)/{keyword}.csv', 'a', newline='', encoding='utf-8') as csvfile:
+        with open(f'Twitter_data(23_11_01~23_11_30)/{keyword}.csv', 'a', newline='', encoding='utf-8') as csvfile:
             csv_writer = csv.writer(csvfile)
-            csv_writer.writerow(['at', 'id', 'content'])
+            # csv_writer.writerow(['at', 'id', 'content'])
 
             for tweet in tweets.data:
                 created_at = tweet.created_at
@@ -46,17 +46,17 @@ def get_tweet(end_time, keyword):
 def main():
     # 検索するキーワードを指定
     keywords = [
-        'にゃんトーク'
-        'スマートニュース'
-        'paypay'
-        'coke on'
-        'google fit'
-        'simeji'
-        'lemon8'
-        '楽天ペイ'
-        'majica'
-        'line music'
-        'ファミペイ'
+        'にゃんトーク',
+        'スマートニュース',
+        'paypay',
+        'coke on',
+        'google fit',
+        'simeji',
+        'lemon8',
+        '楽天ペイ',
+        'majica',
+        'line music',
+        'ファミペイ',
         'capcut'
     ]
 
