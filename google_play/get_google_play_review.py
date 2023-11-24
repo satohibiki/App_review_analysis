@@ -1,25 +1,10 @@
 from google_play_scraper import app, reviews, Sort
 import csv
-import emoji
-import re
 import datetime
 from tqdm import tqdm
 
-# アプリのパッケージ名
-app_packages = ['com.akvelon.meowtalk', 
-               'jp.gocro.smartnews.android', 
-               'jp.ne.paypay.android.app', 
-               'com.coke.cokeon', 
-               'com.google.android.apps.fitness', 
-               'com.adamrocker.android.input.simeji',
-               'com.bd.nproject',
-               'jp.co.rakuten.pay',
-               'com.donki.majica',
-               'jp.linecorp.linemusic.android',
-               'jp.co.family.familymart_app',
-               'com.lemon.lvoverseas']   # 対象のアプリのパッケージ名を指定
 
-for app_package in tqdm(app_packages, total=len(app_packages), desc="Processing Rows"):
+def get_review(app_package):
     # アプリの情報を取得
     app_info = app(app_package)
 
@@ -33,11 +18,11 @@ for app_package in tqdm(app_packages, total=len(app_packages), desc="Processing 
     result, _ = reviews(app_package, lang='ja', count=1000, sort=Sort.NEWEST)
 
     # 対象期間を指定
-    start_time =  datetime.datetime(2023, 10, 1, 0, 0, 0)
-    end_time =  datetime.datetime(2023, 10, 31, 23, 59, 59)
+    start_time =  datetime.datetime(2023, 11, 1, 0, 0, 0)
+    end_time =  datetime.datetime(2023, 11, 30, 23, 59, 59)
 
     # CSVファイルに書き込む
-    with open(f'production_data/{app_name}.csv', 'w', newline='', encoding='utf-8') as csvfile:
+    with open(f'google_data(23_11_01~23_11_30)/{app_name}.csv', 'w', newline='', encoding='utf-8') as csvfile:
         fieldnames = ['reviewId', 
                       'userName', 
                       'userImage', 
@@ -55,9 +40,7 @@ for app_package in tqdm(app_packages, total=len(app_packages), desc="Processing 
             review_id = review['reviewId']
             user_name = review['userName']
             user_image = review['userImage']
-            content = review['content']
-            # content = re.sub(r'https?://[\w/:%#\$&\?\(\)~\.=\+\-]+', '', content) # URLの削除
-            # content = emoji.replace_emoji(content) # 絵文字の削除        
+            content = review['content']        
             score = review['score']
             thumbs_up_count = review['thumbsUpCount']
             version = review['reviewCreatedVersion']
@@ -80,4 +63,27 @@ for app_package in tqdm(app_packages, total=len(app_packages), desc="Processing 
                     'repliedAt': replied_at
                 })
 
-print('レビューデータをCSVファイルに保存しました。')
+def main():
+    # アプリのパッケージ名
+    app_packages = [
+        'com.akvelon.meowtalk', 
+        'jp.gocro.smartnews.android', 
+        'jp.ne.paypay.android.app', 
+        'com.coke.cokeon', 
+        'com.google.android.apps.fitness', 
+        'com.adamrocker.android.input.simeji',
+        'com.bd.nproject',
+        'jp.co.rakuten.pay',
+        'com.donki.majica',
+        'jp.linecorp.linemusic.android',
+        'jp.co.family.familymart_app',
+        'com.lemon.lvoverseas'
+    ]
+    
+    for app_package in tqdm(app_packages, total=len(app_packages), desc="Processing Rows"):
+        get_review(app_package)
+    
+    print('レビューデータをCSVファイルに保存しました。')
+
+if __name__ == '__main__':
+    main()
