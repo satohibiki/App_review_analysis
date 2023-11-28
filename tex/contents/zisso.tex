@@ -19,7 +19,8 @@
 
 %ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
-\section{Google Playストアのスクレイピング}
+\section{スクレイピング}
+\subsection{Google Playストアのスクレイピング}
 本研究で取得するレビュー情報は先行研究\cite{kawatsura}に合わせて下記とする. 
 
 \begin{itemize}
@@ -89,7 +90,7 @@ Google PlayストアのレビューをスクレイピングするためにPython
 
 %ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
-\section{Xのスクレイピング}
+\subsection{Twitterのスクレイピング}
 \label{sec:x}
 本研究で取得するツイート情報は先行研究\cite{kawatsura}に合わせて下記とする. 
 \begin{itemize}
@@ -124,8 +125,8 @@ Google PlayストアのレビューをスクレイピングするためにPython
   \end{tabular}\end{center}
 \end{table}
 
-この先行研究に加え, 本研究では新たに2023年10月〜12月のポストを取得する. Xのポスト取得に関してはTwitter APIを使用してスクレイピングを行う. Twitter APIのプランに関してはFree, Basic, Pro, Enterpriseの4つのプランが用意されておりそれぞれ料金や使用できる機能などが異なる. 大規模なサービスやビジネス向けのEnterpriseプラン以外の3つのプランの違いの一部を表\ref{tb:xplan}に示す. 
-表\ref{tb:xplan}よりポストを取得するためにはBasicプラン以上に加入する必要がある. Basicプランに加入した場合でも合計で30,000件しか取得されないため本研究では先行研究のデータセットを追加で使用することとした. Xの利用規約によると, Xが提供するインターフェイスを介して行うスクレイピング以外は禁止としている. そのため, seleniumなどを使用したスクレイピングはせずに, 先行研究のデータを使用することとした. 
+この先行研究に加え, 本研究では新たに2023年10月〜12月のツイートを取得する. Twitterのツイート取得に関してはTwitter APIを使用してスクレイピングを行う. Twitter APIのプランに関してはFree, Basic, Pro, Enterpriseの4つのプランが用意されておりそれぞれ料金や使用できる機能などが異なる. 大規模なサービスやビジネス向けのEnterpriseプラン以外の3つのプランの違いの一部を表\ref{tb:xplan}に示す. 
+表\ref{tb:xplan}よりツイートを取得するためにはBasicプラン以上に加入する必要がある. Basicプランに加入した場合でも合計で30,000件しか取得されないため本研究では先行研究のデータセットを追加で使用することとした. Twitterの利用規約によると, Twitterが提供するインターフェイスを介して行うスクレイピング以外は禁止としている. そのため, seleniumなどを使用したスクレイピングはせずに, 先行研究のデータを使用することとした. 
 
 \begin{table}[htbp]
   \caption{プランとできること}
@@ -135,12 +136,12 @@ Google PlayストアのレビューをスクレイピングするためにPython
     \hline
     &Free&Basic&Pro \\\hline\hline
     料金&無料&月額100ドル&月額5,000ドル \\\hline
-    月間ポスト数の上限&1,500&3,000&300,000 \\\hline
-    月間ポスト取得数&0&10,000&1,000,000 \\\hline
+    月間ツイート数の上限&1,500&3,000&300,000 \\\hline
+    月間ツイート取得数&0&10,000&1,000,000 \\\hline
   \end{tabular}\end{center}
 \end{table}
 
-Twitter APIを使用してポストを取得するためにPythonのプログラムである(\verb|get_tweet.py|)を作成した. このプログラムではTwitter APIにアクセスするためのライブラリであるTweepy\cite{tweepy}を使用した. まずAPIキーなどの4つの認証情報をセットする. 次にClientクラスのsearch\_resent\_tweetメソッドを使用してツイートを取得する. 
+Twitter APIを使用してツイートを取得するためにPythonのプログラムである(\verb|get_tweet.py|)を作成した. このプログラムではTwitter APIにアクセスするためのライブラリであるTweepy\cite{tweepy}を使用した. まずAPIキーなどの4つの認証情報をセットする. 次にClientクラスのsearch\_resent\_tweetメソッドを使用してツイートを取得する. 
 このメソッドは最大で過去7日間まで遡ってツイートを取得できる. search\_all\_tweetsメソッドでは全てのツイートを取得できるが, ``Academic Research''という学術用の用途でAPI承認されたユーザーしか使用できないため本研究では使用しなかった. 
 先行研究と同じ情報を取得するために, 本研究では引数として以下のものを与えた. 
 \begin{itemize}
@@ -150,10 +151,10 @@ Twitter APIを使用してポストを取得するためにPythonのプログラ
  \item end\_time: 期間の終わりを指定できる(UTCタイムスタンプ)
 \end{itemize}
 
-新たに取得したXのポスト数を表\ref{tb:rawtweetnum2023}に示す
+新たに取得したTwitterのツイート数を表\ref{tb:rawtweetnum2023}に示す
 
 \begin{table}[htbp]
-  \caption{収集したXのポスト数(2023年10月〜2023年12月)}
+  \caption{収集したTwitterのツイート数(2023年10月〜2023年12月)}
   \label{tb:rawtweetnum2023}
   \begin{center}
   \begin{tabular}{l|l}
@@ -178,7 +179,7 @@ Twitter APIを使用してポストを取得するためにPythonのプログラ
 %ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
 \section{前処理}
-機械学習によるレビューに含まれる有用な箇所の自動抽出における精度を上げるために, GooglePlayストアとXから取得したデータに対して前処理を行うプログラム(\verb|preprocessing_google.py|, \verb|preprocessing_twitter.py|)を作成した. この処理では以下に示す処理を行う. この処理は一般的な自然言語処理の手法を参考としている. 
+機械学習によるレビューに含まれる有用な箇所の自動抽出における精度を上げるために, GooglePlayストアとTwitterから取得したデータに対して前処理を行うプログラム(\verb|preprocessing_google.py|, \verb|preprocessing_twitter.py|)を作成した. この処理では以下に示す処理を行う. この処理は一般的な自然言語処理の手法を参考としている. 
 \begin{itemize}
   \item 英語を全て小文字に揃える. 
   \item 以下の文字列を削除. 
@@ -241,8 +242,8 @@ Twitter APIを使用してポストを取得するためにPythonのプログラ
 
 \section{有用な箇所の自動抽出}
 \subsection{データセット}
-モデルのfine-tuningに使用されるデータセットとして, Google PlayストアとXのツイートからそれぞれ5,000件ずつ合計で10,000件のデータをランダムに抽出し手作業で有用な箇所を抽出した. データセットの作成は情報工学科の学部4年生2人がそれぞれ手作業で行い, お互いの抽出した箇所が異なっていたものは議論することにより統一した. 
-データセットには前処理したデータが格納されたcsvファイルを利用して, 抽出したオブジェクトを含めた新たなcsvファイルを作成する. 作成されたcsvファイルにはid,アプリ名,投稿日時,本文, 抽出したオブジェクトの5つのデータが入っている. idは前処理したデータを識別するために与えられ, Google Playストアのレビュー文はg\_(index), twitterのツイートのidはt\_(index)とする.  indexには各データに応じた番号が振られている. 
+モデルのfine-tuningに使用されるデータセットとして, Google PlayストアとTwitterのツイートからそれぞれ5,000件ずつ合計で10,000件のデータをランダムに抽出し手作業で有用な箇所を抽出した. データセットの作成は情報工学科の学部4年生2人がそれぞれ手作業で行い, お互いの抽出した箇所が異なっていたものは議論することにより統一した. 
+データセットには前処理したデータが格納されたcsvファイルを利用して, 抽出したオブジェクトを含めた新たなcsvファイルを作成する. 作成されたcsvファイルにはid,アプリ名,投稿日時,本文, 抽出したオブジェクトの5つのデータが入っている. idは前処理したデータを識別するために与えられ, Google Playストアのレビュー文はg\_(index), Twitterのツイートのidはt\_(index)とする.  indexには各データに応じた番号が振られている. 
 10,000件のデータセットのうち, 6,000件を訓練データ, 2,000件を検証用データ, 2,000件をテストデータとする. 質問応答形式のfine-tuningを行うために, csv形式であるデータセットをソースコード\ref{json}に示すようにjson形式に変換する. 
 
 \begin{lstlisting}[caption=データセット.json,label=json]
@@ -321,7 +322,7 @@ Twitter APIを使用してポストを取得するためにPythonのプログラ
 実装にはTransformersに含まれるスクリプトであるrun\_squad.pyを用いる. 
 
 \subsection{自動抽出}
-fine-tuningを行ったモデルを使用して自動抽出を行う. 前処理したGooglePlayストアのデータと, twitterのデータから有用な箇所を自動抽出する. 
+fine-tuningを行ったモデルを使用して自動抽出を行う. 前処理したGooglePlayストアとTwitterのデータから有用な箇所を自動抽出する. 
 
 結果は表\ref{tb:googleqa}に示すようにcsv形式で保存する. 
 
