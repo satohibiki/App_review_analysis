@@ -14,6 +14,9 @@ import collections
 from  spacy.lang.ja import stop_words
 from keybert import KeyBERT
 from sentence_transformers import SentenceTransformer
+import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.cluster import KMeans
 
 
 class SentenceBertJapanese:
@@ -190,7 +193,7 @@ def doc_distance(compare_vectors, sentence_vector):
 
     return np.array([util.pytorch_cos_sim(sentence_vector, compare_vector) for compare_vector in compare_vectors])
 
-def clustering(input_csv_file, category, app_name): # 指定されたアプリでのクラスタリング
+def cw(input_csv_file, category, app_name): # 指定されたアプリでのクラスタリング
     sentences = create_review_list(input_csv_file, app_name)
     sentence_vectors = model.encode(sentences)
     domain_docs = {f'{app_name}': sentences}
@@ -229,6 +232,36 @@ def clustering(input_csv_file, category, app_name): # 指定されたアプリ�
                 if index == cluster[5]:
                     all_clusters.append(cluster)
         csv_writer.writerows(all_clusters)
+
+def kmeans(input_csv_file, category, app_name):
+    # CSVファイルからデータを読み込む (ファイルパスは実際のものに変更してください)
+    df = pd.read_csv(input_csv_file)
+
+    # テキストデータを取得
+    texts = df['prediction'].fillna('').tolist()
+
+    # TF-IDFベクトル化
+    vectorizer = TfidfVectorizer()
+    tfidf_matrix = vectorizer.fit_transform(texts)
+
+    # K-meansクラスタリングのモデルを初期化
+    kmeans = KMeans(n_clusters=10)
+
+    # モデルをデータに適用してクラスタリングを実行
+    kmeans.fit(tfidf_matrix)
+
+    # 各データポイントが所属するクラスタを取得
+    labels = kmeans.labels_
+
+    # 結果の表示
+    df['cluster_label'] = labels
+
+    # クラスタごとに文章をソート
+    sorted_df = df.sort_values(by=['cluster_label', 'prediction'])
+
+    # 結果を新しいCSVファイルに保存
+    output_csv_path = f'クラスタリング_kmeans/{category}_{app_name}.csv'  # 保存先のファイルパスを適切なものに変更
+    sorted_df.to_csv(output_csv_path, index=False)
 
 def create_cluster_name(category, app_name):
     with open(f"クラスタリング/{category}_{app_name}.csv", 'r', encoding='utf-8', newline='') as input_file, open(f"クラスタタイトル/{category}_{app_name}.csv", 'w', encoding='utf-8', newline='') as output_file:
@@ -271,18 +304,21 @@ def main():
     # category = 'twitter'
     # app_name = 'lemon8'
     # input_csv_file = f'抽出結果/{category}_{app_name}.csv'
-    # clustering(input_csv_file, category, app_name)
+    # cw(input_csv_file, category, app_name)
+    # kmeans(input_csv_file, category, app_name)
 
     # まとめて実行
     for app_name in tqdm(app_names, total=len(app_names), desc=f"Processing Rows"):
         category = 'google'
         input_csv_file = f'抽出結果/{category}_{app_name}.csv'
-        # clustering(input_csv_file, category, app_name)
+        cw(input_csv_file, category, app_name)
+        kmeans(input_csv_file, category, app_name)
         create_cluster_name(category, app_name)
 
         category = 'twitter'
         input_csv_file = f'抽出結果/{category}_{app_name}.csv'
-        # clustering(input_csv_file, category, app_name)
+        cw(input_csv_file, category, app_name)
+        kmeans(input_csv_file, category, app_name)
         create_cluster_name(category, app_name)
 
 
