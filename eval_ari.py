@@ -2,7 +2,7 @@ from sklearn import metrics
 from tqdm import tqdm
 import csv
 
-def ari(clustering_csv_file):
+def ari(clustering_csv_file, correct_csv_file):
     labels_true = []
     labels_pred = []
 
@@ -10,11 +10,18 @@ def ari(clustering_csv_file):
         csv_reader = csv.reader(csv_file)
         rows = list(csv_reader)
         for row in rows:
-            labels_pred.append(row[5])
-            labels_true.append(row[5])
+            if 'agg' in clustering_csv_file or 'kmeans' in clustering_csv_file:
+                labels_pred.append(row[1])
+            else:
+                labels_pred.append(row[5])
+    with open(correct_csv_file, 'r', encoding='utf-8-sig') as csv_file:
+        csv_reader = csv.reader(csv_file)
+        rows = list(csv_reader)
+        for row in rows:
+            labels_true.append(row[1])
 
     ari_score = metrics.adjusted_rand_score(labels_true, labels_pred)
-    print(f"Adjusted Rand Index (ARI): {ari_score}")
+    print(f"{clustering_csv_file} Adjusted Rand Index (ARI): {ari_score}")
 
 def main():
     app_names = ['capcut', 
@@ -33,19 +40,18 @@ def main():
 
     # 個別に実行
     category = 'google'
-    app_name = 'google_fit'
-    clustering_csv_file = f'クラスタリング/{category}_{app_name}.csv'
-    ari(clustering_csv_file)
+    app_name = 'capcut'
+    threshold = 0.8
+    correct_csv_file = f'クラスタリング_正解/{category}_{app_name}.csv'
 
-    # まとめて実行
-    # for app_name in tqdm(app_names, total=len(app_names), desc=f"Processing Rows"):
-    #     category = 'google'
-    #     clustering_csv_file = f'クラスタリング/{category}_{app_name}.csv'
-    #     ari(clustering_csv_file)
+    clustering_csv_file = f'クラスタリング/{category}_{app_name}_{threshold}.csv'
+    ari(clustering_csv_file, correct_csv_file)
 
-    #     category = 'twitter'
-    #     clustering_csv_file = f'クラスタリング/{category}_{app_name}.csv'
-    #     ari(clustering_csv_file)
+    # clustering_csv_file = f'クラスタリング_agg/{category}_{app_name}.csv'
+    # ari(clustering_csv_file, correct_csv_file)
+
+    clustering_csv_file = f'クラスタリング_kmeans/{category}_{app_name}.csv'
+    ari(clustering_csv_file, correct_csv_file)
 
 if __name__ == '__main__':
     main()
