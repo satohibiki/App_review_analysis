@@ -118,12 +118,51 @@ RIでは, 2つのクラスタリングに相関がない場合でも, 高い値�
 \end{equation}
 
 \(E(RI)\)はRIの期待値となっている. このように計算することによって, クラスタ数やサンプル数に関係なく, ランダムなクラスタリングでは0に近い値を持つことが保証されている. 
+クラスタリング性能を評価するために, GooglePlayストアのレビューから自動抽出したオブジェクト166件を手動でクラスタリングし, 正解データを作成した. 本研究ではこの正解データとのARIを算出し精度を確認することとする. 
 
-\subsection{結果}
+\subsection{閾値ごとの結果}
+本研究で実装しているグラフクラスタリングでは, 設定する閾値に応じて作成されるグラフが変わるため, クラスタリングの結果が大きく変わる. したがって, 閾値ごとのARIの結果を比較し最もARIが高くなる閾値を見つける必要がある. 
+閾値とARIの関係を以下のグラフ\ref{fig:cw_graph}に示す.
 
-\subsection{考察}
+\begin{figure}[hbtp]
+  \centering
+  \includegraphics[scale=0.8]
+    {contents/images/cw_graph.png}
+  \caption{閾値ごとのARIの結果\label{fig:cw_graph}}
+\end{figure}
+
+このグラフより, 閾値を0.8としたときのARIが最も高くなることがわかった. したがって本研究では全てのデータのクラスタリングにおいて閾値は0.8に設定して行った. 
+
+\subsection{他の手法との比較}
+本研究で実装したChinese Whispersと, 一般的に使用されているクラスタリングであるK-Meansを比較する. まず, K-Meansはクラスタ数を事前に選択する必要があるためクラスタ数をいくつに設定すると最もARIが高くなるか検証した. 
+クラスタ数とARIの関係を以下のグラフ\ref{fig:kmeans_graph}に示す.
+
+\begin{figure}[hbtp]
+  \centering
+  \includegraphics[scale=0.8]
+    {contents/images/kmeans_graph.png}
+  \caption{クラスタ数ごとのARIの結果\label{fig:kmeans_graph}}
+\end{figure}
+
+検証した結果, クラスタ数が126の時ARIは最も高い値を示した. 次にK-MeansとChinese Whispersの結果を比較した結果が以下の表\ref{tb:two_ari}である. 
+
+\begin{table}[htbp]
+  \caption{2つの手法におけるARI}
+  \label{tb:two_ari}
+  \begin{center}
+  \begin{tabularx}{\linewidth}{|X|X|}
+    \hline
+    手法&ARIの最大値\\\hline\hline
+    Chinese Whispers&0.5480604134843943\\\hline
+    K-Means&0.3942834814562324\\\hline
+  \end{tabularx}\end{center}
+\end{table}
+
+比較した結果, Chinese Whispersの方がARIが約0.15ほど高いことがわかった. 
 
 \subsection{総評}
+Chinese Whispersで作成されるグラフの閾値について検証した結果, 閾値を0.8としたときに最もARIが高い値を示すことがわかった. 
+また, K-MeansとARIの最大値を比較した結果, Chinese Whispersの方がARIが高いことから本研究のクラスタリングの精度の高さを示すことができた. 
 %ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
 % \section{RQ3:付与した各クラスタの名称は適切か}

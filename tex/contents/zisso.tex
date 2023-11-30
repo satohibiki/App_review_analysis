@@ -194,13 +194,13 @@ Twitter APIを使用してツイートを取得するためにPythonのプログ
     \end{itemize}
   \item レビューやツイートには, 異なる欠陥の報告やアプリに対する要望に関する文が2文以上からなるものがある. そのため, 「。」「.」「！」「!」「？」「!」「\verb|\n|」「\verb|\r\n|」でそれぞれの文に分割する. 
 \end{itemize}
-以下の図\ref{chap:preprocessing}がレビューを前処理した例である. 2つの文で構成されているため「。」で区切り分割している. また絵文字は削除されている. 
+以下の図\ref{fig:preprocessing}がレビューを前処理した例である. 2つの文で構成されているため「。」で区切り分割している. また絵文字は削除されている. 
 
 \begin{figure}[hbtp]
  \centering
  \includegraphics[scale=0.5]
       {contents/images/preprocessing.png}
- \caption{前処理の例\label{chap:preprocessing}}
+ \caption{前処理の例\label{fig:preprocessing}}
 \end{figure}
 
 前処理した結果をcsvファイルにて保存する. 保存する項目としては, 投稿日時(at), レビューのid(reviewId)またはツイートid(id), そして, 前処理した文章である. 図\ref{tb:googlecsv}, 図\ref{tb:twittercsv}に前処理結果後のcsvファイルの一部を示す. 
