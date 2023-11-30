@@ -7,6 +7,7 @@ output/
 tex/*
 !tex/contents/
 !*.tex
+!*.bib
 runs/
 transformers/
 twitter/preprocessing_Twitter_data(21_10_21~21_12_15)
@@ -18,6 +19,9 @@ twitter/Twitter_data(23_11_01~23_11_30)
 データセット/*.json
 データセット/paypay
 クラスタリング/
+クラスタリング_agg
+クラスタリング_kmeans
+クラスタリング_正解
 クラスタタイトル/
 抽出結果/
 cached_dev_bert-base-japanese-whole-word-masking_384
