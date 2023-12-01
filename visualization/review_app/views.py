@@ -46,7 +46,7 @@ def detail_date_range(start, stop, category, step = timedelta(1)):
 @app.route('/')
 def index():
     start_date = request.args.get('start-date', '2021-10-21')
-    end_date = request.args.get('end-date', '2021-12-15')
+    end_date = request.args.get('end-date', '2021-11-15')
     keyword = request.args.get('keyword', '')
     google_rows = []
     twitter_rows = []

@@ -19,24 +19,14 @@ body {
 }
 
 .app-title {
-  position: relative;
-  padding: 0.5em;
-  margin: 20px 5px;
-  background: #668ad8;
-  color: white;
+  color: #668ad8;
+  padding: 0.5em 0;
+  margin: 20px 15px;
+  border-top: solid 3px #668ad8;
+  border-bottom: solid 3px #668ad8;
   font-size: 20px;
   text-align: center;
   font-weight: bold;
-}
-
-.app-title::before {
-  position: absolute;
-  content: '';
-  top: 100%;
-  left: 0;
-  border: none;
-  border-bottom: solid 15px transparent;
-  border-right: solid 20px rgb(149, 158, 155);
 }
 
 h1 {
