@@ -154,7 +154,7 @@ def read(category, app_name):
     ## 現在のページ番号を取得
     page = int(request.args.get(get_page_parameter(), 1))
     ## ページごとの表示件数
-    per_page = 1000
+    per_page = 100
     ## ページネーションオブジェクトを作成
     pagination = Pagination(page=page, per_page=per_page, total=len(rows))
     # 表示するデータを取得
