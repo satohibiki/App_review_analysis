@@ -519,6 +519,14 @@ webアプリケーションの実装に使用した言語, フレームワーク
 アプリごとの詳細画面では, アコーディオンメニューを使用して抽出した文章の一覧をクラスタごとに表示する. また, 抽出した文章をクリックすると投稿日時や元のレビュー文がモーダルウィンドウで表示する. 
 そして, 日ごとのレビュー数を表す折れ線グラフとクラスタに含まれるレビュー数の上位10個を表す棒グラフの2つのグラフを表示する. 
 
+google fitのレビュー一覧の表示が図\ref{fig:review_items}である. このようにクラスタリングごとに表示することで開発者がレビューを確認しやすいようになっている. 
+\begin{figure}[hbtp]
+  \centering
+  \includegraphics[scale=0.3]
+    {contents/images/review_items.png}
+  \caption{google fitのレビュー一覧\label{fig:review_items}}
+\end{figure}
+
 \subsection{検索のロジック}
 検索項目である期間とキーワードを指定するとその情報がバックエンド側に渡され, 処理することでリストを更新する. 更新されたリストの情報をフロント側に渡すことで検索結果が反映される. 
 ツイートのリストを検索結果に応じて更新するソースコード\ref{search}を示す. 
@@ -609,4 +617,22 @@ dataのtypeでグラフタイプを指定でき, layoutでタイトルや表の�
   </script>
 \end{lstlisting}
 
+この実装により作成される一覧画面のグラフが図\ref{fig:google_graph}である. このグラフはGoogle Playストアにおける日付とレビュー数の関係を表したものである. 
 
+\begin{figure}[hbtp]
+  \centering
+  \includegraphics[scale=0.3]
+    {contents/images/google_graph.png}
+  \caption{Google Playストアにおける日付とレビュー数の関係\label{fig:google_graph}}
+\end{figure}
+
+クラスタに含まれるレビュー数の上位10個を表す棒グラフが図\ref{fig:top10}である. このグラフはgoogle fitにおけるクラスタのうちレビュー数が多いものを10個表示している. 
+
+\begin{figure}[hbtp]
+  \centering
+  \includegraphics[scale=0.3]
+    {contents/images/top10.png}
+  \caption{Google Playストアにおける日付とレビュー数の関係\label{fig:top10}}
+\end{figure}
+
+以上の2つのグラフは検索結果に応じて動的に変更されるようになっている. 
