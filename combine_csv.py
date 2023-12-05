@@ -17,11 +17,13 @@ def combine_twitter():
     for app_name in app_names:
         csv_file1 = f'twitter/Twitter_data(23_10)/{app_name}.csv'
         csv_file2 = f'twitter/Twitter_data(23_11)/{app_name}.csv'
+        # csv_file3 = f'twitter/Twitter_data(23_12)/{app_name}.csv'
 
         #csvファイルの中身を追加していくリストを用意
         data_list = []
         data_list.append(pd.read_csv(csv_file1))
         data_list.append(pd.read_csv(csv_file2))
+        # data_list.append(pd.read_csv(csv_file3))
 
         #リストを全て行方向に結合
         #axis=0:行方向に結合
@@ -59,11 +61,13 @@ def combine_google():
     for (app_name, new_app_name) in zip(app_names, new_app_names):
         csv_file1 = f'google_play/google_data(23_10)/{app_name}.csv'
         csv_file2 = f'google_play/google_data(23_11)/{app_name}.csv'
+        csv_file3 = f'google_play/google_data(23_12)/{app_name}.csv'
 
         #csvファイルの中身を追加していくリストを用意
         data_list = []
         data_list.append(pd.read_csv(csv_file1))
         data_list.append(pd.read_csv(csv_file2))
+        data_list.append(pd.read_csv(csv_file3))
 
         #リストを全て行方向に結合
         #axis=0:行方向に結合
