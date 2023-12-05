@@ -17,6 +17,7 @@ from sklearn.cluster import AgglomerativeClustering
 from sklearn import metrics
 import matplotlib.pyplot as plt
 import japanize_matplotlib
+import pathlib
 
 
 class SentenceBertJapanese:
@@ -190,7 +191,7 @@ def doc_distance(compare_vectors, sentence_vector):
 
     return np.array([util.pytorch_cos_sim(sentence_vector, compare_vector) for compare_vector in compare_vectors])
 
-def cw(input_csv_file, category, app_name): # 指定されたアプリでのクラスタリング
+def cw_check(input_csv_file, category, app_name): # 指定されたアプリでのクラスタリング
     max_ari = 0
     ari_list = []
     best_threshold = 0
@@ -254,6 +255,45 @@ def cw(input_csv_file, category, app_name): # 指定されたアプリでのク�
         cluster.insert(3, review[3])
 
     with open(f"クラスタリング/{category}_{app_name}.csv", 'w', encoding='utf-8', newline='') as output_file:
+        csv_writer = csv.writer(output_file)
+        clusters.sort(reverse=False, key=lambda x:x[5])
+        csv_writer.writerows(clusters)
+
+def cw(input_csv_file, category, app_name): # 指定されたアプリでのクラスタリング
+    clusters = []
+    reviews = []
+    sentences = create_review_list(input_csv_file, app_name)
+    if sentences == []:
+        touch_file = pathlib.Path(f"クラスタリング_23/{category}_{app_name}.csv")
+        touch_file.touch()
+        return
+    sentence_vectors = model.encode(sentences)
+    domain_docs = {f'{app_name}': sentences}
+    doc_embeddings = compute_embeddings(domain_docs)
+    threshold = 0.8
+    G = create_graph(doc_embeddings, threshold, sentence_vectors)
+    # Perform clustering of G, parameters weighting and seed can be omitted
+    chinese_whispers(G, weighting='top', iterations=20)
+    for node in G.nodes():
+        text = str(G.nodes[node]['text'])
+        label = int(G.nodes[node]['label'])
+        clusters.append([text, label])
+    
+    with open(input_csv_file, 'r', encoding='utf-8-sig') as csv_file:
+        csv_reader = csv.reader(csv_file)
+        rows = list(csv_reader)
+        for row in rows[1:]:
+            # is_time = time_check(row[0], row[2], start_time, end_time)
+            if app_name == row[1] and row[4] != '':
+                reviews.append(row)
+
+    for cluster, review in zip(clusters, reviews):
+        cluster.insert(0, review[0])
+        cluster.insert(1, review[1])
+        cluster.insert(2, review[2])
+        cluster.insert(3, review[3])
+
+    with open(f"クラスタリング_23/{category}_{app_name}.csv", 'w', encoding='utf-8', newline='') as output_file:
         csv_writer = csv.writer(output_file)
         clusters.sort(reverse=False, key=lambda x:x[5])
         csv_writer.writerows(clusters)
@@ -324,25 +364,28 @@ def agg(input_csv_file, category, app_name):
 
 
 def create_cluster_name(category, app_name):
-    with open(f"クラスタリング/{category}_{app_name}.csv", 'r', encoding='utf-8', newline='') as input_file, open(f"クラスタタイトル/{category}_{app_name}.csv", 'w', encoding='utf-8', newline='') as output_file:
+    with open(f"クラスタリング_23/{category}_{app_name}.csv", 'r', encoding='utf-8', newline='') as input_file, open(f"クラスタタイトル_23/{category}_{app_name}.csv", 'w', encoding='utf-8', newline='') as output_file:
         csv_writer = csv.writer(output_file)
         csv_reader = csv.reader(input_file)
         rows = list(csv_reader)
         all_clusters = []
-        for index in range(len(rows)):
-            index += 1
-            text = ""
-            text_index = 0
-            for row in rows:    
-                if index == int(row[5]) and text_index <= 10:
-                    text += row[4]
-                    text_index += 1
-            # クラス名の決定
-            # title = pke(text)
-            # title = common_words(text)
-            title = keybert(text)
-            all_clusters.append([index, title])
-        csv_writer.writerows(all_clusters)
+        try:
+            for index in range(len(rows)):
+                index += 1
+                text = ""
+                text_index = 0
+                for row in rows:    
+                    if index == int(row[5]) and text_index <= 10:
+                        text += row[4]
+                        text_index += 1
+                # クラス名の決定
+                # title = pke(text)
+                # title = common_words(text)
+                title = keybert(text)
+                all_clusters.append([index, title])
+            csv_writer.writerows(all_clusters)
+        except IndexError:
+            return
 
 
 def main():
@@ -360,24 +403,37 @@ def main():
              '楽天ペイ',
              'buzzvideo']
 
+    app_names23 = ['coke_on', 
+             'google_fit', 
+             'lemon8', 
+             'line_music', 
+             'majica', 
+             'paypay',  
+             'simeji', 
+             'スマートニュース', 
+             'にゃんトーク', 
+             'ファミペイ', 
+             '楽天ペイ']
+
     # 個別に実行
     category = 'google'
     app_name = 'capcut'
     input_csv_file = f'抽出結果/{category}_{app_name}.csv'
     cw(input_csv_file, category, app_name)
+    cw_check(input_csv_file, category, app_name)
     # kmeans(input_csv_file, category, app_name)
     # agg(input_csv_file, category, app_name)
-    # create_cluster_name(category, app_name)
+    create_cluster_name(category, app_name)
 
     # まとめて実行
-    # for app_name in tqdm(app_names, total=len(app_names), desc=f"Processing Rows"):
+    # for app_name in tqdm(app_names23, total=len(app_names23), desc=f"Processing Rows"):
     #     category = 'google'
-    #     input_csv_file = f'抽出結果/{category}_{app_name}.csv'
+    #     input_csv_file = f'抽出結果_23/{category}_{app_name}.csv'
     #     cw(input_csv_file, category, app_name)
     #     create_cluster_name(category, app_name)
 
     #     category = 'twitter'
-    #     input_csv_file = f'抽出結果/{category}_{app_name}.csv'
+    #     input_csv_file = f'抽出結果_23/{category}_{app_name}.csv'
     #     cw(input_csv_file, category, app_name)
     #     create_cluster_name(category, app_name)
 
