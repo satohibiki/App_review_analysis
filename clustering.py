@@ -204,7 +204,7 @@ def cw_check(input_csv_file, category, app_name): # 指定されたアプリで�
     domain_docs = {f'{app_name}': sentences}
     
     doc_embeddings = compute_embeddings(domain_docs)
-    for i in tqdm(range(0, 21), total=21, desc=f"Processing Rows"):  # 10から20までの範囲を0.05倍して0.5から1にする
+    for i in tqdm(range(0, 21), total=21, desc=f"Processing Rows"):  # 0から20までの範囲を0.05倍して0から1にする
         threshold = i / 20.0
         labels_pred = []
         clusters_pred = []
@@ -347,11 +347,46 @@ def kmeans(input_csv_file, category, app_name):
         csv_writer.writerows(output)
 
 def agg(input_csv_file, category, app_name):
+    max_ari = 0
+    ari_list = []
+    best_cluster = 0
+    labels = []
+    labels_true = create_correct_labels(category, app_name)
+
     # 文章をSentenceBertJapaneseでベクトルに変換
     sentences = create_review_list(input_csv_file, app_name)
     sentence_vectors = model.encode(sentences)
-    agglomerative = AgglomerativeClustering(n_clusters=None, distance_threshold=0.01, linkage='ward')
-    labels = agglomerative.fit_predict(sentence_vectors)
+
+    for i in tqdm(range(1,len(sentences)+1), total=len(sentences), desc=f"Processing Rows"):  # 0から10までの範囲を0.1倍して0.1から1にする
+        # threshold = i / 10.0
+        labels_pred = []
+        agglomerative = AgglomerativeClustering(affinity="euclidean",
+                                linkage="ward",
+                                # distance_threshold=0,
+                                n_clusters=i,
+                                compute_distances=True)
+        labels_pred = agglomerative.fit_predict(sentence_vectors)
+        ari_score = metrics.adjusted_rand_score(labels_true, labels_pred)
+        ari_list.append([i, ari_score])
+        if ari_score >= max_ari:
+            labels = labels_pred
+            max_ari = ari_score
+            best_cluster = i
+
+    # グラフ描写
+    x_values = [point[0] for point in ari_list]
+    y_values = [point[1] for point in ari_list]
+    plt.plot(x_values, y_values, marker='o', linestyle='-')
+    plt.title('閾値とARIの関係')
+    plt.xlabel('閾値')
+    plt.ylabel('ARI')
+    plt.grid(True)
+
+    plt.savefig('tex/contents/images/kmeans_graph.png')
+
+    print(ari_list)
+    print(f'Best ARI: {max_ari}')
+    print(f'Cluster_count: {best_cluster}')
 
     # 結果を新しいCSVファイルに保存
     output_csv_file = f'クラスタリング_agg/{category}_{app_name}.csv'
@@ -419,11 +454,11 @@ def main():
     category = 'google'
     app_name = 'capcut'
     input_csv_file = f'抽出結果/{category}_{app_name}.csv'
-    cw(input_csv_file, category, app_name)
-    cw_check(input_csv_file, category, app_name)
+    # cw(input_csv_file, category, app_name)
+    # cw_check(input_csv_file, category, app_name)
     # kmeans(input_csv_file, category, app_name)
-    # agg(input_csv_file, category, app_name)
-    create_cluster_name(category, app_name)
+    agg(input_csv_file, category, app_name)
+    # create_cluster_name(category, app_name)
 
     # まとめて実行
     # for app_name in tqdm(app_names23, total=len(app_names23), desc=f"Processing Rows"):
