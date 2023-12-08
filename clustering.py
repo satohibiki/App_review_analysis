@@ -377,12 +377,12 @@ def agg(input_csv_file, category, app_name):
     x_values = [point[0] for point in ari_list]
     y_values = [point[1] for point in ari_list]
     plt.plot(x_values, y_values, marker='o', linestyle='-')
-    plt.title('閾値とARIの関係')
-    plt.xlabel('閾値')
+    plt.title('クラスタ数とARIの関係')
+    plt.xlabel('クラスタ数')
     plt.ylabel('ARI')
     plt.grid(True)
 
-    plt.savefig('tex/contents/images/kmeans_graph.png')
+    plt.savefig('tex/contents/images/agg_graph.png')
 
     print(ari_list)
     print(f'Best ARI: {max_ari}')

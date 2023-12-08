@@ -134,17 +134,30 @@ RIでは, 2つのクラスタリングに相関がない場合でも, 高い値�
 このグラフより, 閾値を0.8としたときのARIが最も高くなることがわかった. したがって本研究では全てのデータのクラスタリングにおいて閾値は0.8に設定して行った. 
 
 \subsection{他の手法との比較}
-本研究で実装したChinese Whispersと, 一般的に使用されているクラスタリングであるK-Meansを比較する. まず, K-Meansはクラスタ数を事前に選択する必要があるためクラスタ数をいくつに設定すると最もARIが高くなるか検証した. 
-クラスタ数とARIの関係を以下のグラフ\ref{fig:kmeans_graph}に示す.
+本研究で実装したChinese Whispersと, 一般的に使用されているクラスタリングであるK-Means, 階層型クラスタリングを比較することにより本研究のクラスタリング手法の性能の高さを示す. 
+
+K-Meansは非階層型クラスタリングのアルゴリズムである. まず, 互いのデータをランダムなクラスに配置したのちにクラスごとの重心を計算する. そして, 各データに対して重心が最も近いクラスタを割り振り重心を再計算する. このステップを重心が動かなくなるまで繰り返すことによりクラスを決定する.
+
+階層型クラスタリングはデータからクラスタの階層構造を抽出する手法である. 最初は各データがそれぞれ1つのクラスタを持つ. そしてクラスタ間の距離が最も近い2つのクラスタを1つのクラスタにまとめる. これを繰り返していき, クラスタを大きくしていく. クラスタ間距離の計算方法はウォード法や群平均法, 最短距離法, 最長距離法などいくつかの方法がある. 
+
+K-Means, 階層型クラスタリングは共にクラスタ数を事前に選択する必要があるためクラスタ数をいくつに設定すると最もARIが高くなるか検証した. 
+クラスタ数とARIの関係を以下の図\ref{fig:kmeans_graph}, \ref{fig:agg_graph}に示す.
 
 \begin{figure}[hbtp]
   \centering
   \includegraphics[scale=0.8]
     {contents/images/kmeans_graph.png}
-  \caption{クラスタ数ごとのARIの結果\label{fig:kmeans_graph}}
+  \caption{K-Meansにおけるクラスタ数ごとのARIの結果\label{fig:kmeans_graph}}
 \end{figure}
 
-検証した結果, クラスタ数が126の時ARIは最も高い値を示した. 次にK-MeansとChinese Whispersの結果を比較した結果が以下の表\ref{tb:two_ari}である. 
+\begin{figure}[hbtp]
+  \centering
+  \includegraphics[scale=0.8]
+    {contents/images/agg_graph.png}
+  \caption{階層型クラスタリングにおけるクラスタ数ごとのARIの結果\label{fig:agg_graph}}
+\end{figure}
+
+検証した結果, K-Meansではクラスタ数が119, 階層型クラスタリングではクラスタ数が129の時にそれぞれARIは最も高い値を示した. 次にK-Means, 階層型クラスタリングとChinese Whispersの結果を比較した結果が以下の表\ref{tb:two_ari}である. 
 
 \begin{table}[htbp]
   \caption{2つの手法におけるARI}
@@ -153,12 +166,13 @@ RIでは, 2つのクラスタリングに相関がない場合でも, 高い値�
   \begin{tabularx}{\linewidth}{|X|X|}
     \hline
     手法&ARIの最大値\\\hline\hline
-    Chinese Whispers&0.5480604134843943\\\hline
-    K-Means&0.3942834814562324\\\hline
+    階層型クラスタリング&0.33581598364914955\\\hline
+    K-Means&0.36232268008959323\\\hline
+    Chinese Whispers&\textbf{0.5480604134843943}\\\hline
   \end{tabularx}\end{center}
 \end{table}
 
-比較した結果, Chinese Whispersの方がARIが約0.15ほど高いことがわかった. 
+比較した結果, Chinese WhispersのARIの最大値はK-Meansよりも約0.18, 階層型クラスタリングよりも約0.21ほど高いことが示された. 
 
 \subsection{総評}
 Chinese Whispersで作成されるグラフの閾値について検証した結果, 閾値を0.8としたときに最もARIが高い値を示すことがわかった. 
