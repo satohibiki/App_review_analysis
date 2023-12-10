@@ -1,168 +1,177 @@
 {% extends "base.html" %}
 
 {% block body %}
-{% if category == "twitter" %}
-    <div class="app_list">
-        <a href="/" role="button">◁ トップページへ</a>
-        <a href="/google/detail/{{ app }}" role="button">◁ GooglePlayストアへ</a>
-    </div>
-    <h1>アプリ一覧(Twitter)</h1>
-    <div class="app_list">
-        {% for app_name in app_names %}
-            <a href="/twitter/detail/{{ app_name }}" role="button">{{ app_name }}</a>
-        {% endfor %}
-    </div>
-{% endif %}
-
-{% if category == "google" %}
-    <div class="app_list">
-        <a href="/" role="button">◁ トップページへ</a>
-        <a href="/twitter/detail/{{ app }}" role="button">◁ Twitterへ</a>
-    </div>
-    <h1>アプリ一覧(GooglePlayストア)</h1>
-    <div class="app_list">
-        {% for app_name in app_names %}
-            <a href="/google/detail/{{ app_name }}" role="button">{{ app_name }}</a>
-        {% endfor %}
-    </div>
-{% endif %}
-
-<div class="appname">
-    <div id="app_name">{{ app }}</div>
-</div>
-
-<div class="search" id="search">
-    <form>
-        <div class="search-input">
-            <label for="start-date">開始日</label>
-            <input type="date" name="start-date" id="start-date" value="{{ start_date }}">
-        </div>
-        <div class="search-input"> ~ </div>
-        <div class="search-input">
-            <label for="end-date">終了日</label>
-            <input type="date" name="end-date" id="end-date" value="{{ end_date }}">
-        </div>
-        <div class="search-input">
-            <label for="keyword">キーワード</label>
-            <input type="text" name="keyword" id="keyword" value="{{ keyword }}">
-        </div>
-        <div class="search-button">
-            <input type="submit" value="検索">
-            <div class="reset">
-                <a href="/{{ category }}/detail/{{ app }}" role="button">リセット</a>
+<div class="container">
+    <div class="side">
+        {% if category == "twitter" %}
+            <div class="top">
+                <a href="/" role="button" class="btn-square">◁ トップページへ</a>
+                <a href="/google/detail/{{ app }}" role="button" class="btn-square">◁ GooglePlayストアへ</a>
             </div>
-        </div>
-    </form>
-</div>
-
-<div class="length">
-    検索結果
-</div>
-
-<div class="length">
-    {{ start_date }} ~ {{ end_date }} キーワード: {{ keyword }}
-</div>
-
-<div class="length">総レビュー数: {{ rows|length }}件</div>
-
-<div class="graph-title">日付ごとのレビュー数の推移</div>
-<div id="scatter"></div>
-
-<script>
-    // 横軸: 日付
-    var labels = JSON.parse('{{ graphs | map(attribute=0) | list | tojson | safe }}');
-    // ラベル用日付
-    var displayLabels = [];
-    for (var i = 0; i < labels.length; i += 5) {
-        displayLabels.push(labels[i]);
-    }
-    var values = JSON.parse('{{ graphs | map(attribute=1) | list | tojson | safe }}');
-
-    var data = [{
-        x: labels,
-        y: values,
-        type: 'scatter',
-    }];
-
-    var layout = {
-        title: '日付ごとのレビュー数の推移',
-        height: 600,
-        width: 1200,
-        xaxis: {
-            tickvals: displayLabels,  // 配列の5つおきの目盛り位置を指定
-        }
-    };
-
-    Plotly.newPlot('scatter', data, layout);
-</script>
-
-<div class="graph-title">種類ごとのレビュー数 TOP10</div>
-<div id="bar"></div>
-
-<script>
-    // 2次元データからラベルと値を分離
-    var labels = JSON.parse('{{ top_review | map(attribute=2) | list | tojson | safe }}');
-    var values = JSON.parse('{{ top_review | map(attribute=1) | list | tojson | safe }}');
-
-    var data = [{
-        x: labels,
-        y: values,
-        type: 'bar',
-    }];
-
-    var layout = {
-        title: '種類ごとのレビュー数',
-        height: 600,
-        width: 1300
-    };
-
-    Plotly.newPlot('bar', data, layout);
-</script>
-
-<div class="graph-title">レビュー一覧</div>
-
-<div class="paginate">
-    {{ pagination.links }}
-</div>
-
-<ul class="accordion-area">
-    {% for cluster in clusters %}
-        {% set title = "" %}
-        {% if cluster[1] != 0 %}
-            <li>
-                <section>
-                    <h3 class="title">{{ cluster[2] }} {{ cluster[1] }}件</h3>
-                    <div class="box">
-                        {% for row in rows %}
-                            {% if row[5] == cluster[0]|string %}
-                                <p><button class="openModal" data-target="modal{{ loop.index }}">{{ row[2][:4] }}年{{ row[2][5:7] }}月{{ row[2][8:10] }}日 {{ row[4] }}</button></p>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                </section>
-            </li>
+            <div class="app-title">アプリ一覧(Twitter)</div>
+            <div class="app_list">
+                {% for app_name in app_names %}
+                    <a href="/twitter/detail/{{ app_name }}" role="button" class="btn-sticky">{{ app_name }}</a>
+                {% endfor %}
+            </div>
         {% endif %}
-    {% endfor %}
-</ul>
-
-{% for row in rows %}
-    <!-- モーダルエリアここから -->
-    <section id="modal{{ loop.index }}" class="modalArea">
-        <div class="modalBg"></div>
-        <div class="modalWrapper">
-            <div class="modalContents">
-                <h1>詳細情報</h1>
-                <p>日時: {{ row[2][:4] }}年{{ row[2][5:7] }}月{{ row[2][8:10] }}日{{ row[2][11:13] }}時{{ row[2][14:16] }}分</p>
-                <p>レビュー文: {{ row[3] }}</p>
-                <p>抽出した文章: {{ row[4] }}</p>
+        
+        {% if category == "google" %}
+            <div class="top">
+                <a href="/" role="button" class="btn-square">◁ トップページへ</a>
+                <a href="/twitter/detail/{{ app }}" role="button" class="btn-square">◁ Twitterへ</a>
             </div>
-            <div class="closeModal">
-                <button data-target="modal{{ loop.index }}">×</button>
+            <div class="app-title">アプリ一覧(GooglePlayストア)</div>
+            <div class="app_list">
+                {% for app_name in app_names %}
+                    <a href="/google/detail/{{ app_name }}" role="button" class="btn-sticky">{{ app_name }}</a>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="content">
+        <h1>{{ app }}</h1>
+        
+        <div class="search" id="search">
+            <form>
+                <div class="search-input">
+                    <label for="start-date">開始日</label>
+                    <input type="date" name="start-date" id="start-date" value="{{ start_date }}">
+                </div>
+                <div class="search-input"> ~ </div>
+                <div class="search-input">
+                    <label for="end-date">終了日</label>
+                    <input type="date" name="end-date" id="end-date" value="{{ end_date }}">
+                </div>
+                <div class="search-input">
+                    <label for="keyword">キーワード</label>
+                    <input type="text" name="keyword" id="keyword" value="{{ keyword }}">
+                </div>
+                <div class="search-button">
+                    <input type="submit" value="検索">
+                    <div class="reset">
+                        <a href="/{{ category }}/detail/{{ app }}" role="button">リセット</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="result">
+            <div>検索結果</div>
+            <div>{{ start_date }} ~ {{ end_date }} キーワード: {{ keyword }}</div>
+        </div>
+
+        <div class="tabs">
+            <input id="review" type="radio" name="tab_item" checked>
+            <label class="tab_item1" for="review">レビュー一覧</label>
+            <input id="graph" type="radio" name="tab_item">
+            <label class="tab_item2" for="graph">グラフ</label>
+            <div class="tab_content" id="graph_content">
+                <h1>日付ごとのレビュー数の推移</h1>
+                <div id="scatter"></div>
+                
+                <script>
+                    // 横軸: 日付
+                    var labels = JSON.parse('{{ graphs | map(attribute=0) | list | tojson | safe }}');
+                    // ラベル用日付
+                    var displayLabels = [];
+                    for (var i = 0; i < labels.length; i += 5) {
+                        displayLabels.push(labels[i]);
+                    }
+                    var values = JSON.parse('{{ graphs | map(attribute=1) | list | tojson | safe }}');
+                
+                    var data = [{
+                        x: labels,
+                        y: values,
+                        type: 'scatter',
+                    }];
+                
+                    var layout = {
+                        title: '日付ごとのレビュー数の推移',
+                        height: 600,
+                        width: 1000,
+                        xaxis: {
+                            tickvals: displayLabels,  // 配列の5つおきの目盛り位置を指定
+                        }
+                    };
+                
+                    Plotly.newPlot('scatter', data, layout);
+                </script>
+
+                <h1>種類ごとのレビュー数 TOP10</h1>
+                <div id="bar"></div>
+
+                <script>
+                    // 2次元データからラベルと値を分離
+                    var labels = JSON.parse('{{ top_review | map(attribute=2) | list | tojson | safe }}');
+                    var values = JSON.parse('{{ top_review | map(attribute=1) | list | tojson | safe }}');
+                
+                    var data = [{
+                        x: labels,
+                        y: values,
+                        type: 'bar',
+                    }];
+                
+                    var layout = {
+                        title: '種類ごとのレビュー数',
+                        height: 600,
+                        width: 1000
+                    };
+                
+                    Plotly.newPlot('bar', data, layout);
+                </script>
+            </div>
+
+            <div class="tab_content" id="review_content">
+                <h1>レビュー一覧</h1>
+                
+                <div class="paginate">
+                    {{ pagination.links }}
+                </div>
+
+                <ul class="accordion-area">
+                    {% for cluster in clusters %}
+                        {% set title = "" %}
+                        {% if cluster[1] != 0 %}
+                            <li>
+                                <section>
+                                    <h3 class="title">{{ cluster[2] }} {{ cluster[1] }}件</h3>
+                                    <div class="box">
+                                        {% for row in rows %}
+                                            {% if row[5] == cluster[0]|string %}
+                                                <p><button class="openModal" data-target="modal{{ loop.index }}">{{ row[2][:4] }}年{{ row[2][5:7] }}月{{ row[2][8:10] }}日 {{ row[4] }}</button></p>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </section>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+
+                {% for row in rows %}
+                    <!-- モーダルエリアここから -->
+                    <section id="modal{{ loop.index }}" class="modalArea">
+                        <div class="modalBg"></div>
+                        <div class="modalWrapper">
+                            <div class="modalContents">
+                                <div class="modalTitle">詳細情報</div>
+                                <p>日時: {{ row[2][:4] }}年{{ row[2][5:7] }}月{{ row[2][8:10] }}日{{ row[2][11:13] }}時{{ row[2][14:16] }}分</p>
+                                <p>レビュー文: {{ row[3] }}</p>
+                                <p>抽出した文章: {{ row[4] }}</p>
+                            </div>
+                            <div class="closeModal">
+                                <button data-target="modal{{ loop.index }}">×</button>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- モーダルエリアここまで -->
+                {% endfor %}
             </div>
         </div>
-    </section>
-    <!-- モーダルエリアここまで -->
-{% endfor %}
+    </div>
+</div>
 
 <!-- jQueryを読み込む -->
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

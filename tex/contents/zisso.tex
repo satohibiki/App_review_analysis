@@ -203,40 +203,41 @@ Twitter APIを使用してツイートを取得するためにPythonのプログ
  \caption{前処理の例\label{fig:preprocessing}}
 \end{figure}
 
-前処理した結果をcsvファイルにて保存する. 保存する項目としては, 投稿日時(at), レビューのid(reviewId)またはツイートid(id), そして, 前処理した文章である. 図\ref{tb:googlecsv}, 図\ref{tb:twittercsv}に前処理結果後のcsvファイルの一部を示す. 
+前処理した結果をcsvファイルにて保存する. 保存する項目としては, 投稿日時(at), レビューのid(reviewId)またはツイートid(id), そして, 前処理した文章である. 
+% 図\ref{tb:googlecsv}, 図\ref{tb:twittercsv}に前処理結果後のcsvファイルの一部を示す. 
 
-\begin{table}[htbp]
-  \caption{Google Playストアレビューの前処理結果(buzzvideo)}
-  \label{tb:googlecsv}
-  \begin{center}
-  \begin{tabularx}{\linewidth}{|l|l|X|}
-    \hline
-    at&reviewId&content\\\hline\hline
-    2021-12-15 19:25:30&gp:AOqpTOHj6w ...&バズビデオを見て、感動をありがとう\\\hline
-    2021-12-15 12:28:09&gp:AOqpTOHleV ...&内容が残酷で異常な人が多い\\\hline
-    2021-12-15 11:09:50&gp:AOqpTOHG7O ...&分かりづらい\\\hline
-    2021-12-14 15:16:33&gp:AOqpTOGWvT ...&ばず29さいって人が投稿してる動画すべて虚偽動画なのでアカウント削除と動画削除して欲しい\\\hline
-    2021-12-14 15:16:33&gp:AOqpTOGWvT ...&あるだけで大迷惑です\\\hline
-    2021-12-14 15:16:33&gp:AOqpTOGWvT ...&二度と登録し直せないよう個体識別番号で縛ってください\\\hline
-    2021-12-14 15:16:33&gp:AOqpTOGWvT ...&お願いします\\\hline
-  \end{tabularx}\end{center}
-\end{table}
+% \begin{table}[htbp]
+%   \caption{Google Playストアレビューの前処理結果(buzzvideo)}
+%   \label{tb:googlecsv}
+%   \begin{center}
+%   \begin{tabularx}{\linewidth}{|l|l|X|}
+%     \hline
+%     at&reviewId&content\\\hline\hline
+%     2021-12-15 19:25:30&gp:AOqpTOHj6w ...&バズビデオを見て、感動をありがとう\\\hline
+%     2021-12-15 12:28:09&gp:AOqpTOHleV ...&内容が残酷で異常な人が多い\\\hline
+%     2021-12-15 11:09:50&gp:AOqpTOHG7O ...&分かりづらい\\\hline
+%     2021-12-14 15:16:33&gp:AOqpTOGWvT ...&ばず29さいって人が投稿してる動画すべて虚偽動画なのでアカウント削除と動画削除して欲しい\\\hline
+%     2021-12-14 15:16:33&gp:AOqpTOGWvT ...&あるだけで大迷惑です\\\hline
+%     2021-12-14 15:16:33&gp:AOqpTOGWvT ...&二度と登録し直せないよう個体識別番号で縛ってください\\\hline
+%     2021-12-14 15:16:33&gp:AOqpTOGWvT ...&お願いします\\\hline
+%   \end{tabularx}\end{center}
+% \end{table}
 
-\begin{table}[htbp]
-  \caption{ツイートの前処理結果(BuzzVideo)}
-  \label{tb:twittercsv}
-  \begin{center}
-  \begin{tabularx}{\linewidth}{|l|l|X|}
-    \hline
-    at&id&content\\\hline\hline
-    2021-12-15T23:55:11.000Z&1471267626655825922&芸能人に似てる気がするけど名前が思い出せない\\\hline
-    2021-12-15T23:53:43.000Z&1471267256659509249&驚愕男性が豆乳を飲むべき3つの理由\\\hline
-    2021-12-15T23:53:43.000Z&1471267256659509249&男だからこそ注目したい豆乳のメリットとは\\\hline
-    2021-12-15T23:53:17.000Z&1471267149746679813&感情を乗せた歌声と歌詞に聞き惚れちゃう♪壊れかけのradio\\\hline
-    2021-12-15T23:53:10.000Z&1471267120264904705&kkと眞子の酷い嘘\\\hline
-    2021-12-15T23:53:10.000Z&1471267120264904705&恐ろしい真実が明らかに\\\hline
-  \end{tabularx}\end{center}
-\end{table}
+% \begin{table}[htbp]
+%   \caption{ツイートの前処理結果(BuzzVideo)}
+%   \label{tb:twittercsv}
+%   \begin{center}
+%   \begin{tabularx}{\linewidth}{|l|l|X|}
+%     \hline
+%     at&id&content\\\hline\hline
+%     2021-12-15T23:55:11.000Z&1471267626655825922&芸能人に似てる気がするけど名前が思い出せない\\\hline
+%     2021-12-15T23:53:43.000Z&1471267256659509249&驚愕男性が豆乳を飲むべき3つの理由\\\hline
+%     2021-12-15T23:53:43.000Z&1471267256659509249&男だからこそ注目したい豆乳のメリットとは\\\hline
+%     2021-12-15T23:53:17.000Z&1471267149746679813&感情を乗せた歌声と歌詞に聞き惚れちゃう♪壊れかけのradio\\\hline
+%     2021-12-15T23:53:10.000Z&1471267120264904705&kkと眞子の酷い嘘\\\hline
+%     2021-12-15T23:53:10.000Z&1471267120264904705&恐ろしい真実が明らかに\\\hline
+%   \end{tabularx}\end{center}
+% \end{table}
 
 %ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
@@ -324,10 +325,10 @@ Twitter APIを使用してツイートを取得するためにPythonのプログ
 \subsection{自動抽出}
 fine-tuningを行ったモデルを使用して自動抽出を行う. 前処理したGooglePlayストアとTwitterのデータから有用な箇所を自動抽出する. 
 
-結果は表\ref{tb:googleqa}に示すようにcsv形式で保存する. 
+結果は表\ref{tb:googleqa}に示すようにid, アプリ名, 投稿日時, 文章, 抽出したオブジェクトをcsv形式で保存する. 
 
 \begin{table}[htbp]
-  \caption{Google Playストアレビューの自動抽出結果(google\_fit)}
+  \caption{Google Playストアレビューの自動抽出結果}
   \label{tb:googleqa}
   \small
   \begin{center}
@@ -519,6 +520,36 @@ webアプリケーションの実装に使用した言語, フレームワーク
 アプリごとの詳細画面では, アコーディオンメニューを使用して抽出した文章の一覧をクラスタごとに表示する. また, 抽出した文章をクリックすると投稿日時や元のレビュー文がモーダルウィンドウで表示する. 
 そして, 日ごとのレビュー数を表す折れ線グラフとクラスタに含まれるレビュー数の上位10個を表す棒グラフの2つのグラフを表示する. 
 
+Google Playストアにおける日付とレビュー数の関係を表した折れ線グラフが図\ref{fig:google_graph}である. このグラフは右側にあるアプリ名をタップすることによりグラフ表示のON/OFFが切り替えられるようになっている. 
+また, 検索結果に応じて日付やレビュー数が動的に変更されるようになっている. 
+
+\begin{figure}[hbtp]
+  \centering
+  \includegraphics[scale=0.3]
+    {contents/images/google_graph.png}
+  \caption{Google Playストアにおける日付とレビュー数の関係\label{fig:google_graph}}
+\end{figure}
+
+クラスタに含まれるレビュー数の上位10個を表す棒グラフが図\ref{fig:top10}である. このグラフはgoogle fitにおけるクラスタのうちレビュー数が多いものを10個表示している. 
+そして, このグラフも検索結果に応じてクラスタに含まれるレビュー数が動的に変更されるようになっている. 
+
+\begin{figure}[hbtp]
+  \centering
+  \includegraphics[scale=0.3]
+    {contents/images/top10.png}
+  \caption{Google Playストアにおける日付とレビュー数の関係\label{fig:top10}}
+\end{figure}
+
+google fitのレビュー一覧の表示が図\ref{fig:review_items}である. この一覧はクラスタに含まれるレビュー数が多いものから順に表示されており, ページネーションにより1つのページでレビュー100件ごとに表示している. 
+クラスタリングごとに表示し, 類似したレビューをまとめることで開発者がレビューを確認しやすいようになっている. 
+
+\begin{figure}[hbtp]
+  \centering
+  \includegraphics[scale=0.3]
+    {contents/images/review_items.png}
+  \caption{google fitのレビュー一覧\label{fig:review_items}}
+\end{figure}
+
 \subsection{検索のロジック}
 検索項目である期間とキーワードを指定するとその情報がバックエンド側に渡され, 処理することでリストを更新する. 更新されたリストの情報をフロント側に渡すことで検索結果が反映される. 
 ツイートのリストを検索結果に応じて更新するソースコード\ref{search}を示す. 
@@ -608,5 +639,3 @@ dataのtypeでグラフタイプを指定でき, layoutでタイトルや表の�
       Plotly.newPlot('scatter', data, layout);
   </script>
 \end{lstlisting}
-
-

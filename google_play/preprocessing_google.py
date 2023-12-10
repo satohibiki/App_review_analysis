@@ -1,4 +1,4 @@
-import demoji
+import emoji
 import csv
 import re
 import unicodedata
@@ -24,7 +24,7 @@ def clean_url(html_text):
     return cleaned_text
 
 def clean_emoji(text):
-    cleaned_text = demoji.replace(string=text, repl="")
+    cleaned_text = emoji.replace_emoji(text) # 絵文字の削除
     return cleaned_text
 
 def lower_text(text):
@@ -47,23 +47,23 @@ def normalize(text):
     normalized_text = clean_emoji(normalized_text)
     return normalized_text
 
-app_names = ['CapCut - Video Editor', 
-             'Coke ON', 
-             'Google Fit: Activity Tracking', 
-             'Lemon8 - Lifestyle Community', 
-             'LINE MUSIC 音楽はラインミュージック', 
-             'majica～電子マネー公式アプリ～', 
-             'PayPay-ペイペイ', 
-             'Simeji Japanese keyboard+Emoji', 
-             'MeowTalk Cat Translator', 
-             'SmartNews: Local Breaking News', 
-             'ファミマのアプリ「ファミペイ」', 
+app_names = ['capcut', 
+             'coke_on', 
+             'google_fit', 
+             'lemon8', 
+             'line_music', 
+             'majica', 
+             'paypay',  
+             'simeji', 
+             'スマートニュース', 
+             'にゃんトーク', 
+             'ファミペイ', 
              '楽天ペイ']
 
 for app_name in app_names:
     print(app_name)
     output=[['at', 'reviewId', 'content']]
-    with open(f'production_data(23_10)/{app_name}.csv', "r") as f:
+    with open(f'google_data(23_10_01~23_12_20)/{app_name}.csv', "r") as f:
         reader = csv.reader(f)
         for line in reader:
             line[3] = normalize(line[3])
@@ -80,6 +80,6 @@ for app_name in app_names:
                         extraction_line.append(line[3])
                         output.append(extraction_line)
 
-    with open(f'preprocessing_google_data(23_10)/{app_name}.csv', "w", errors="ignore") as f:
+    with open(f'preprocessing_google_data(23_10_01~23_12_20)/{app_name}.csv', "w", errors="ignore") as f:
         writer = csv.writer(f)
         writer.writerows(output)

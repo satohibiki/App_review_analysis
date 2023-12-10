@@ -6,7 +6,7 @@ from datetime import datetime as dt
 from datetime import timedelta
 from flask_paginate import Pagination, get_page_parameter
 
-app_names = ['capcut', 
+app_names21 = ['capcut', 
          'coke_on', 
          'google_fit', 
          'lemon8', 
@@ -19,6 +19,19 @@ app_names = ['capcut',
          'ファミペイ', 
          '楽天ペイ',
          'buzzvideo']
+
+app_names23 = ['capcut', 
+         'coke_on', 
+         'google_fit', 
+         'lemon8', 
+         'line_music', 
+         'majica', 
+         'paypay',  
+         'simeji', 
+         'スマートニュース', 
+         'にゃんトーク', 
+         'ファミペイ', 
+         '楽天ペイ']
 
 
 def date_range(start, stop, step = timedelta(1)):
@@ -43,11 +56,28 @@ def detail_date_range(start, stop, category, step = timedelta(1)):
         yield current
         current += step
 
+def detail23_date_range(start, stop, category, step = timedelta(1)):
+    if category=="google":
+        start = dt.strptime(start, '%Y-%m-%d %H:%M:%S')
+        stop = dt.strptime(stop, '%Y-%m-%d %H:%M:%S')
+    else:
+        start = dt.strptime(start, "%Y-%m-%d %H:%M:%S+00:00")
+        stop = dt.strptime(stop, "%Y-%m-%d %H:%M:%S+00:00")
+    current = start.date()
+    stop = stop.date()
+    while current <= stop:
+        yield current
+        current += step
+
 @app.route('/')
 def index():
-    start_date = request.args.get('start-date', '2021-10-21')
-    end_date = request.args.get('end-date', '2021-12-15')
+    start_date = request.args.get('start-date', '2023-10-01') #2021-10-21
+    end_date = request.args.get('end-date', '2023-12-20') #2021-12-15
     keyword = request.args.get('keyword', '')
+    if '2023' in start_date:
+        app_names = app_names23
+    else:
+        app_names = app_names21
     google_rows = []
     twitter_rows = []
     google_graphs = []
@@ -55,7 +85,10 @@ def index():
 
     for app_name in app_names:
         # GooglePlayストアのレビューのリストを作成
-        path = f'../クラスタリング/google_{app_name}.csv'
+        if '2023' in start_date:
+            path = f'../クラスタリング_23/google_{app_name}.csv'
+        else:
+            path = f'../クラスタリング/google_{app_name}.csv'
         is_file = os.path.isfile(path)
         if is_file:
             with open(path, 'r', encoding='utf-8-sig') as google_csv_file:
@@ -84,7 +117,10 @@ def index():
 
 
         # ツイートのリスト作成
-        path = f'../クラスタリング/twitter_{app_name}.csv'
+        if '2023' in start_date:
+            path = f'../クラスタリング_23/twitter_{app_name}.csv'
+        else:
+            path = f'../クラスタリング/twitter_{app_name}.csv'
         is_file = os.path.isfile(path)
         if is_file:
             with open(path, 'r', encoding='utf-8-sig') as twitter_csv_file:
@@ -106,7 +142,10 @@ def index():
         # 日付ごとのレビュー数のリストを作成
         twitter_date_list = []
         for date in date_range(start_date, end_date):
-            count = sum(1 for row in twitter_rows if dt.strptime(row[2], "%Y-%m-%dT%H:%M:%S.%fZ").date() == date)
+            if '2023' in start_date:
+                count = sum(1 for row in twitter_rows if dt.strptime(row[2], "%Y-%m-%d %H:%M:%S+00:00").date() == date)
+            else:
+                count = sum(1 for row in twitter_rows if dt.strptime(row[2], "%Y-%m-%dT%H:%M:%S.%fZ").date() == date)
             twitter_date_list.append([date.strftime('%Y/%m/%d'), count])
         twitter_graphs.append(twitter_date_list)
 
@@ -120,18 +159,26 @@ def index():
 
 @app.route('/<string:category>/detail/<string:app_name>')
 def read(category, app_name):
-    start_date = request.args.get('start-date', '2021-10-21')
-    end_date = request.args.get('end-date', '2021-12-15')
+    start_date = request.args.get('start-date', '2023-10-01') #2021-10-21
+    end_date = request.args.get('end-date', '2023-12-20') #2021-12-15
     keyword = request.args.get('keyword', '')
     app = app_name
     category = category
+    if '2023' in start_date:
+        app_names = app_names23
+    else:
+        app_names = app_names21
     rows = []
     clusters = []
     graphs = []
 
     # 対象カテゴリーのレビューのリストを作成
-    path = f'../クラスタリング/{category}_{app}.csv'
-    path2 = f'../クラスタタイトル/{category}_{app}.csv'
+    if '2023' in start_date:
+        path = f'../クラスタリング_23/{category}_{app}.csv'
+        path2 = f'../クラスタタイトル_23/{category}_{app}.csv'
+    else:
+        path = f'../クラスタリング/{category}_{app}.csv'
+        path2 = f'../クラスタタイトル/{category}_{app}.csv'
     with open(path, 'r', encoding='utf-8-sig') as clustering_csv_file, open(path2, 'r', encoding='utf-8-sig') as title_csv_file:
         cluster_csv_reader = csv.reader(clustering_csv_file)
         title_csv_reader = csv.reader(title_csv_file)
@@ -154,7 +201,7 @@ def read(category, app_name):
     ## 現在のページ番号を取得
     page = int(request.args.get(get_page_parameter(), 1))
     ## ページごとの表示件数
-    per_page = 1000
+    per_page = 100
     ## ページネーションオブジェクトを作成
     pagination = Pagination(page=page, per_page=per_page, total=len(rows))
     # 表示するデータを取得
@@ -180,12 +227,23 @@ def read(category, app_name):
     top_review = clusters[:10]
 
     # 日付ごとのレビュー数のリストを作成
-    for date in detail_date_range(displayed_rows[0][2], displayed_rows[-1][2], category):
-        if category=="google":
-            count = sum(1 for row in displayed_rows if dt.strptime(row[2], '%Y-%m-%d %H:%M:%S').date() == date)
-        else:
-            count = sum(1 for row in displayed_rows if dt.strptime(row[2], "%Y-%m-%dT%H:%M:%S.%fZ").date() == date)
-        graphs.append([date.strftime('%Y/%m/%d'), count])
+    if '2023' in start_date:
+        try:
+            for date in detail23_date_range(displayed_rows[0][2], displayed_rows[-1][2], category):
+                if category=="google":
+                    count = sum(1 for row in displayed_rows if dt.strptime(row[2], '%Y-%m-%d %H:%M:%S').date() == date)
+                else:
+                    count = sum(1 for row in displayed_rows if dt.strptime(row[2], "%Y-%m-%d %H:%M:%S+00:00").date() == date)
+                graphs.append([date.strftime('%Y/%m/%d'), count])
+        except IndexError:
+            print("レビューはありません")
+    else:
+        for date in detail_date_range(displayed_rows[0][2], displayed_rows[-1][2], category):
+            if category=="google":
+                count = sum(1 for row in displayed_rows if dt.strptime(row[2], '%Y-%m-%d %H:%M:%S').date() == date)
+            else:
+                count = sum(1 for row in displayed_rows if dt.strptime(row[2], "%Y-%m-%dT%H:%M:%S.%fZ").date() == date)
+            graphs.append([date.strftime('%Y/%m/%d'), count])
 
     return render_template("detail.html", 
                            app_names=app_names, 

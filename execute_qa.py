@@ -28,7 +28,7 @@ def create_answer_twitter(app_name):
     # paypay_index = 1
     # with open(f'データセット/paypay/paypay_{paypay_index}.csv', 'r', encoding='utf-8-sig') as csv_file, open(f"抽出結果/twitter_{app_name}_{paypay_index}.csv", 'w', encoding='utf-8', newline='') as output_file:
     # paypay以外の推論
-    with open('データセット/twitter_all_データセット.csv', 'r', encoding='utf-8-sig') as csv_file, open(f"抽出結果/twitter_{app_name}.csv", 'w', encoding='utf-8', newline='') as output_file:
+    with open('データセット_23/twitter_all_データセット.csv', 'r', encoding='utf-8-sig') as csv_file, open(f"抽出結果_23/twitter_{app_name}.csv", 'w', encoding='utf-8', newline='') as output_file:
         csv_reader = csv.reader(csv_file)
         csv_writer = csv.writer(output_file)
         csv_writer.writerow(output)
@@ -48,7 +48,7 @@ def create_answer_twitter(app_name):
 
 def create_answer_google(app_name):
     output = ["id", "app_name", "datetime", "context", "prediction"]
-    with open('データセット/google_all_データセット.csv', 'r', encoding='utf-8-sig') as csv_file, open(f"抽出結果/google_{app_name}.csv", 'w', encoding='utf-8', newline='') as output_file:
+    with open('データセット_23/google_all_データセット.csv', 'r', encoding='utf-8-sig') as csv_file, open(f"抽出結果_23/google_{app_name}.csv", 'w', encoding='utf-8', newline='') as output_file:
         csv_reader = csv.reader(csv_file)
         csv_writer = csv.writer(output_file)
         csv_writer.writerow(output)

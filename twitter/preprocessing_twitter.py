@@ -1,4 +1,4 @@
-import demoji
+import emoji
 import csv
 import re
 import unicodedata
@@ -25,7 +25,7 @@ def clean_url(html_text):
     return cleaned_text
 
 def clean_emoji(text):
-    cleaned_text = demoji.replace(string=text, repl="")
+    cleaned_text = emoji.replace_emoji(text) # 絵文字の削除
     return cleaned_text
 
 def lower_text(text):
@@ -64,7 +64,7 @@ app_names = ['capcut',
 for app_name in app_names:
     print(app_name)
     output=[['at','id','content']]
-    with open(f'Twitter_data(23_10_01~23_10_31)/{app_name}.csv', "r") as f:
+    with open(f'Twitter_data(23_10_01~23_12_20)/{app_name}.csv', "r") as f:
         reader = csv.reader(f)
         for line in reader:
             line[2] = normalize(line[2])
@@ -77,6 +77,6 @@ for app_name in app_names:
                         line[2] = i.strip()
                         output.append(copy.deepcopy(line))
 
-    with open(f'preprocessing_Twitter_data(23_10_01~10_31)/{app_name}.csv', "w", errors="ignore") as f:
+    with open(f'preprocessing_Twitter_data(23_10_01~23_12_20)/{app_name}.csv', "w", errors="ignore") as f:
         writer = csv.writer(f)
         writer.writerows(output)
