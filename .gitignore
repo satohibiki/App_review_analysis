@@ -11,8 +11,6 @@ twitter/*
 クラスタリング/
 クラスタタイトル/
 抽出結果/
-cached_dev_bert-base-japanese-whole-word-masking_384
-cached_train_bert-base-japanese-whole-word-masking_384
 !*.tex
 !*.bib
 !*.py
