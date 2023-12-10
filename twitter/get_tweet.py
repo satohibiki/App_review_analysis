@@ -31,7 +31,7 @@ def get_tweet(end_time, keyword):
                                              )
 
         # ツイートを検索してCSVファイルに保存
-        with open(f'Twitter_data(23_11_01~23_11_30)/{keyword}.csv', 'a', newline='', encoding='utf-8') as csvfile:
+        with open(f'Twitter_data(23_12)/{keyword}.csv', 'a', newline='', encoding='utf-8') as csvfile:
             csv_writer = csv.writer(csvfile)
             # csv_writer.writerow(['at', 'id', 'content'])
 

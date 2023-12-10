@@ -42,15 +42,15 @@ def main():
     category = 'google'
     app_name = 'capcut'
     threshold = 0.8
-    correct_csv_file = f'クラスタリング_正解/{category}_{app_name}.csv'
+    correct_csv_file = f'クラスタリング/正解/{category}_{app_name}.csv'
 
-    clustering_csv_file = f'クラスタリング/{category}_{app_name}_{threshold}.csv'
+    clustering_csv_file = f'クラスタリング/2023/{category}_{app_name}_{threshold}.csv'
     ari(clustering_csv_file, correct_csv_file)
 
-    # clustering_csv_file = f'クラスタリング_agg/{category}_{app_name}.csv'
+    # clustering_csv_file = f'クラスタリング/階層型/{category}_{app_name}.csv'
     # ari(clustering_csv_file, correct_csv_file)
 
-    clustering_csv_file = f'クラスタリング_kmeans/{category}_{app_name}.csv'
+    clustering_csv_file = f'クラスタリング/kmeans/{category}_{app_name}.csv'
     ari(clustering_csv_file, correct_csv_file)
 
 if __name__ == '__main__':

@@ -39,7 +39,7 @@ def compare_answer():
     partial_match_num = 0 # 答えのある問題の部分一致数
     no_match_num = 0 # 答えのある問題の誤答数
 
-    with open('データセット/テストデータ.csv', 'r', encoding='utf-8-sig') as csv_file:
+    with open('データセット/2021/テストデータ.csv', 'r', encoding='utf-8-sig') as csv_file:
         csv_reader = csv.reader(csv_file)
         rows = list(csv_reader)
 
@@ -59,7 +59,7 @@ def compare_answer():
             true_data.append(row[4])
 
     # 結果をCSVファイルに書き込む
-    with open("抽出結果/テスト結果.csv", 'w', encoding='utf-8', newline='') as output_file:
+    with open("抽出結果/2021/テスト結果.csv", 'w', encoding='utf-8', newline='') as output_file:
         csv_writer = csv.writer(output_file)
         csv_writer.writerow(["元のレビュー文", "予測した答え", "正解"])
         for (review, question, prediction, true) in zip(reviews, questions, predictions_data, true_data):
