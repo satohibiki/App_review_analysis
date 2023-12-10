@@ -5,9 +5,7 @@ tex/*
 runs/
 transformers/
 twitter/*
-データセット/2021/*.csv
-データセット/2023/*.csv
-データセット/2021/*.json
+データセット/2021/twitter_all_データセット.csv
 !*.tex
 !*.bib
 !*.py
