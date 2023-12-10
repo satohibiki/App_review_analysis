@@ -3,9 +3,7 @@ tex/*
 !tex/contents/
 runs/
 transformers/
-twitter/preprocessing_Twitter_data(21_10_21~21_12_15)
-twitter/Twitter_data(21_10_21~21_12_15)
-データセット/2021/twitter_all_データセット.csv
+データセット/2021/twitter_all.csv
 !*.tex
 !*.bib
 !*.py

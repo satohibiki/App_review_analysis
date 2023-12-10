@@ -28,7 +28,7 @@ def create_tweet():
                 row.insert(1, app_name)
                 output.append(row)
                 index += 1
-    with open(f'twitter_all_データセット.csv', 'w', encoding='utf-8', newline='') as output_file:
+    with open(f'twitter_all.csv', 'w', encoding='utf-8', newline='') as output_file:
         csv_writer = csv.writer(output_file)
         csv_writer.writerows(output)
 
@@ -46,7 +46,7 @@ def create_google():
                 row.insert(1, app_name)
                 output.append(row)
                 index += 1
-    with open(f'google_all_データセット.csv', 'w', encoding='utf-8', newline='') as output_file:
+    with open(f'google_all.csv', 'w', encoding='utf-8', newline='') as output_file:
         csv_writer = csv.writer(output_file)
         csv_writer.writerows(output)
 

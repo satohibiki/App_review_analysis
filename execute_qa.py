@@ -24,7 +24,7 @@ def exerute_answer(context, question):
 
 def create_answer_twitter(app_name):
     output = ["id", "app_name", "datetime", "context", "prediction"]
-    with open('データセット/2023/twitter_all_データセット.csv', 'r', encoding='utf-8-sig') as csv_file, open(f"抽出結果/2023/twitter_{app_name}.csv", 'w', encoding='utf-8', newline='') as output_file:
+    with open('データセット/2023/twitter_all.csv', 'r', encoding='utf-8-sig') as csv_file, open(f"抽出結果/2023/twitter_{app_name}.csv", 'w', encoding='utf-8', newline='') as output_file:
         csv_reader = csv.reader(csv_file)
         csv_writer = csv.writer(output_file)
         csv_writer.writerow(output)
@@ -44,7 +44,7 @@ def create_answer_twitter(app_name):
 
 def create_answer_google(app_name):
     output = ["id", "app_name", "datetime", "context", "prediction"]
-    with open('データセット/2023/google_all_データセット.csv', 'r', encoding='utf-8-sig') as csv_file, open(f"抽出結果/2023/google_{app_name}.csv", 'w', encoding='utf-8', newline='') as output_file:
+    with open('データセット/2023/google_all.csv', 'r', encoding='utf-8-sig') as csv_file, open(f"抽出結果/2023/google_{app_name}.csv", 'w', encoding='utf-8', newline='') as output_file:
         csv_reader = csv.reader(csv_file)
         csv_writer = csv.writer(output_file)
         csv_writer.writerow(output)

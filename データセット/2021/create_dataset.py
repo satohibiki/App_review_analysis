@@ -55,7 +55,7 @@ def select_tweet():
                     row.insert(1, app_name)
                     output.append(row)
                     index += 1
-    with open(f'twitter_all_データセット.csv', 'w', encoding='utf-8', newline='') as output_file:
+    with open(f'twitter_all.csv', 'w', encoding='utf-8', newline='') as output_file:
         csv_writer = csv.writer(output_file)
         csv_writer.writerows(output)
 
@@ -73,20 +73,20 @@ def select_google():
                 row.insert(1, app_name)
                 output.append(row)
                 index += 1
-    with open(f'google_all_データセット.csv', 'w', encoding='utf-8', newline='') as output_file:
+    with open(f'google_all.csv', 'w', encoding='utf-8', newline='') as output_file:
         csv_writer = csv.writer(output_file)
         csv_writer.writerows(output)
 
 def select_10000():
     output = []
-    with open(f'google_all_データセット.csv', 'r', encoding='utf-8') as csv_file:
+    with open(f'google_all.csv', 'r', encoding='utf-8') as csv_file:
         csv_reader = csv.reader(csv_file)
         rows = list(csv_reader)
         random.shuffle(rows)
         for row in rows[:5000]:
             row.append('')
             output.append(row)
-    with open(f'twitter_all_データセット.csv', 'r', encoding='utf-8') as csv_file:
+    with open(f'twitter_all.csv', 'r', encoding='utf-8') as csv_file:
         csv_reader = csv.reader(csv_file)
         rows = list(csv_reader)
         random.shuffle(rows)
