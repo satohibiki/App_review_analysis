@@ -63,7 +63,7 @@ app_names = ['capcut',
 for app_name in app_names:
     print(app_name)
     output=[['at', 'reviewId', 'content']]
-    with open(f'google_data(23_10_01~23_12_20)/{app_name}.csv', "r") as f:
+    with open(f'google_data2023/{app_name}.csv', "r") as f:
         reader = csv.reader(f)
         for line in reader:
             line[3] = normalize(line[3])
@@ -80,6 +80,6 @@ for app_name in app_names:
                         extraction_line.append(line[3])
                         output.append(extraction_line)
 
-    with open(f'preprocessing_google_data(23_10_01~23_12_20)/{app_name}.csv', "w", errors="ignore") as f:
+    with open(f'preprocessing_google_data2023/{app_name}.csv', "w", errors="ignore") as f:
         writer = csv.writer(f)
         writer.writerows(output)

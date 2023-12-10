@@ -64,7 +64,7 @@ app_names = ['capcut',
 for app_name in app_names:
     print(app_name)
     output=[['at','id','content']]
-    with open(f'Twitter_data(23_10_01~23_12_20)/{app_name}.csv', "r") as f:
+    with open(f'Twitter_data2023/{app_name}.csv', "r") as f:
         reader = csv.reader(f)
         for line in reader:
             line[2] = normalize(line[2])
@@ -77,6 +77,6 @@ for app_name in app_names:
                         line[2] = i.strip()
                         output.append(copy.deepcopy(line))
 
-    with open(f'preprocessing_Twitter_data(23_10_01~23_12_20)/{app_name}.csv', "w", errors="ignore") as f:
+    with open(f'preprocessing_Twitter_data2023/{app_name}.csv', "w", errors="ignore") as f:
         writer = csv.writer(f)
         writer.writerows(output)
