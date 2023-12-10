@@ -102,7 +102,7 @@ def csv_to_json(csv_file, json_file):
 
 def main():
     input_csv_file = 'データセット_v1.csv'
-    output_csv_file = 'データセット__v1_qa.csv'
+    output_csv_file = 'データセット_v1_qa.csv'
     csv_files = ['訓練データ.csv', '検証用データ.csv', 'テストデータ.csv']
     json_files = ['訓練データ.json', '検証用データ.json', 'テストデータ.json']
 

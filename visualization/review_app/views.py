@@ -86,9 +86,9 @@ def index():
     for app_name in app_names:
         # GooglePlayストアのレビューのリストを作成
         if '2023' in start_date:
-            path = f'../クラスタリング_23/google_{app_name}.csv'
+            path = f'../クラスタリング/2023/google_{app_name}.csv'
         else:
-            path = f'../クラスタリング/google_{app_name}.csv'
+            path = f'../クラスタリング/2021/google_{app_name}.csv'
         is_file = os.path.isfile(path)
         if is_file:
             with open(path, 'r', encoding='utf-8-sig') as google_csv_file:
@@ -118,9 +118,9 @@ def index():
 
         # ツイートのリスト作成
         if '2023' in start_date:
-            path = f'../クラスタリング_23/twitter_{app_name}.csv'
+            path = f'../クラスタリング/2023/twitter_{app_name}.csv'
         else:
-            path = f'../クラスタリング/twitter_{app_name}.csv'
+            path = f'../クラスタリング/2021/twitter_{app_name}.csv'
         is_file = os.path.isfile(path)
         if is_file:
             with open(path, 'r', encoding='utf-8-sig') as twitter_csv_file:
@@ -174,11 +174,11 @@ def read(category, app_name):
 
     # 対象カテゴリーのレビューのリストを作成
     if '2023' in start_date:
-        path = f'../クラスタリング_23/{category}_{app}.csv'
-        path2 = f'../クラスタタイトル_23/{category}_{app}.csv'
+        path = f'../クラスタリング/2023/{category}_{app}.csv'
+        path2 = f'../クラスタタイトル/2023/{category}_{app}.csv'
     else:
-        path = f'../クラスタリング/{category}_{app}.csv'
-        path2 = f'../クラスタタイトル/{category}_{app}.csv'
+        path = f'../クラスタリング/2021/{category}_{app}.csv'
+        path2 = f'../クラスタタイトル/2021/{category}_{app}.csv'
     with open(path, 'r', encoding='utf-8-sig') as clustering_csv_file, open(path2, 'r', encoding='utf-8-sig') as title_csv_file:
         cluster_csv_reader = csv.reader(clustering_csv_file)
         title_csv_reader = csv.reader(title_csv_file)

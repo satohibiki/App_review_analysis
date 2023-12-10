@@ -75,9 +75,6 @@ def process_csv(input_csv_file, output_csv_file):
 def main():
     create_tweet()
     create_google()
-    # input_csv_file = 'twitter_all_データセット.csv'
-    # output_csv_file = 'データセット_v1_qa.csv'
-    # process_csv(input_csv_file, output_csv_file)
 
 if __name__ == "__main__":
     main()

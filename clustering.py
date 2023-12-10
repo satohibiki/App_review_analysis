@@ -127,7 +127,7 @@ def create_review_list(input_csv_file, app_name):
 
 def create_correct_labels(category, app_name):
     labels_true = []
-    with open(f'クラスタリング_正解/{category}_{app_name}.csv', 'r', encoding='utf-8-sig') as csv_file:
+    with open(f'クラスタリング/正解/{category}_{app_name}.csv', 'r', encoding='utf-8-sig') as csv_file:
         csv_reader = csv.reader(csv_file)
         rows = list(csv_reader)
         for row in rows:
@@ -254,7 +254,7 @@ def cw_check(input_csv_file, category, app_name): # 指定されたアプリで�
         cluster.insert(2, review[2])
         cluster.insert(3, review[3])
 
-    with open(f"クラスタリング/{category}_{app_name}.csv", 'w', encoding='utf-8', newline='') as output_file:
+    with open(f"クラスタリング/2023/{category}_{app_name}.csv", 'w', encoding='utf-8', newline='') as output_file:
         csv_writer = csv.writer(output_file)
         clusters.sort(reverse=False, key=lambda x:x[5])
         csv_writer.writerows(clusters)
@@ -264,7 +264,7 @@ def cw(input_csv_file, category, app_name): # 指定されたアプリでのク�
     reviews = []
     sentences = create_review_list(input_csv_file, app_name)
     if sentences == []:
-        touch_file = pathlib.Path(f"クラスタリング_23/{category}_{app_name}.csv")
+        touch_file = pathlib.Path(f"クラスタリング/2023/{category}_{app_name}.csv")
         touch_file.touch()
         return
     sentence_vectors = model.encode(sentences)
@@ -293,7 +293,7 @@ def cw(input_csv_file, category, app_name): # 指定されたアプリでのク�
         cluster.insert(2, review[2])
         cluster.insert(3, review[3])
 
-    with open(f"クラスタリング_23/{category}_{app_name}.csv", 'w', encoding='utf-8', newline='') as output_file:
+    with open(f"クラスタリング/2023/{category}_{app_name}.csv", 'w', encoding='utf-8', newline='') as output_file:
         csv_writer = csv.writer(output_file)
         clusters.sort(reverse=False, key=lambda x:x[5])
         csv_writer.writerows(clusters)
@@ -338,7 +338,7 @@ def kmeans(input_csv_file, category, app_name):
     print(f'Cluster_count: {best_clusters}')
 
     # 結果を新しいCSVファイルに保存
-    output_csv_file = f'クラスタリング_kmeans/{category}_{app_name}.csv'
+    output_csv_file = f'クラスタリング/kmeans/{category}_{app_name}.csv'
     with open(output_csv_file, 'w', encoding='utf-8', newline='') as output_file:
         csv_writer = csv.writer(output_file)
         output = []
@@ -389,7 +389,7 @@ def agg(input_csv_file, category, app_name):
     print(f'Cluster_count: {best_cluster}')
 
     # 結果を新しいCSVファイルに保存
-    output_csv_file = f'クラスタリング_agg/{category}_{app_name}.csv'
+    output_csv_file = f'クラスタリング/階層型/{category}_{app_name}.csv'
     with open(output_csv_file, 'w', encoding='utf-8', newline='') as output_file:
         csv_writer = csv.writer(output_file)
         output = []
@@ -399,7 +399,7 @@ def agg(input_csv_file, category, app_name):
 
 
 def create_cluster_name(category, app_name):
-    with open(f"クラスタリング_23/{category}_{app_name}.csv", 'r', encoding='utf-8', newline='') as input_file, open(f"クラスタタイトル_23/{category}_{app_name}.csv", 'w', encoding='utf-8', newline='') as output_file:
+    with open(f"クラスタリング/2023/{category}_{app_name}.csv", 'r', encoding='utf-8', newline='') as input_file, open(f"クラスタタイトル/2023/{category}_{app_name}.csv", 'w', encoding='utf-8', newline='') as output_file:
         csv_writer = csv.writer(output_file)
         csv_reader = csv.reader(input_file)
         rows = list(csv_reader)
@@ -451,26 +451,26 @@ def main():
              '楽天ペイ']
 
     # 個別に実行
-    category = 'google'
-    app_name = 'capcut'
-    input_csv_file = f'抽出結果/{category}_{app_name}.csv'
+    # category = 'google'
+    # app_name = 'capcut'
+    # input_csv_file = f'抽出結果/2023/{category}_{app_name}.csv'
     # cw(input_csv_file, category, app_name)
     # cw_check(input_csv_file, category, app_name)
     # kmeans(input_csv_file, category, app_name)
-    agg(input_csv_file, category, app_name)
+    # agg(input_csv_file, category, app_name)
     # create_cluster_name(category, app_name)
 
     # まとめて実行
-    # for app_name in tqdm(app_names23, total=len(app_names23), desc=f"Processing Rows"):
-    #     category = 'google'
-    #     input_csv_file = f'抽出結果_23/{category}_{app_name}.csv'
-    #     cw(input_csv_file, category, app_name)
-    #     create_cluster_name(category, app_name)
+    for app_name in tqdm(app_names23, total=len(app_names23), desc=f"Processing Rows"):
+        category = 'google'
+        input_csv_file = f'抽出結果/2023/{category}_{app_name}.csv'
+        cw(input_csv_file, category, app_name)
+        create_cluster_name(category, app_name)
 
-    #     category = 'twitter'
-    #     input_csv_file = f'抽出結果_23/{category}_{app_name}.csv'
-    #     cw(input_csv_file, category, app_name)
-    #     create_cluster_name(category, app_name)
+        category = 'twitter'
+        input_csv_file = f'抽出結果/2023/{category}_{app_name}.csv'
+        cw(input_csv_file, category, app_name)
+        create_cluster_name(category, app_name)
 
 
 if __name__ == '__main__':

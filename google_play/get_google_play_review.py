@@ -15,14 +15,14 @@ def get_review(app_package):
     app_category = app_info['genre']
 
     # レビュー情報を取得
-    result, _ = reviews(app_package, lang='ja', count=1000, sort=Sort.NEWEST)
+    result, _ = reviews(app_package, lang='ja', count=1500, sort=Sort.NEWEST)
 
     # 対象期間を指定
-    start_time =  datetime.datetime(2023, 11, 1, 0, 0, 0)
-    end_time =  datetime.datetime(2023, 11, 30, 23, 59, 59)
+    start_time =  datetime.datetime(2023, 12, 1, 0, 0, 0)
+    end_time =  datetime.datetime(2023, 12, 20, 23, 59, 59)
 
     # CSVファイルに書き込む
-    with open(f'google_data(23_11_01~23_11_30)/{app_name}.csv', 'w', newline='', encoding='utf-8') as csvfile:
+    with open(f'google_data(23_12)/{app_name}.csv', 'w', newline='', encoding='utf-8') as csvfile:
         fieldnames = ['reviewId', 
                       'userName', 
                       'userImage', 
