@@ -15,9 +15,9 @@
 
 提案手法の流れを図\ref{fig:nagare}に示す. 
 
-\begin{figure}[hbtp]
+\begin{figure}[H]
   \centering
-  \includegraphics[width=\linewidth]
+  \includegraphics[scale=0.25]
        {contents/images/zisso_nagare.png}
   \caption{実装した提案手法の流れ\label{fig:nagare}}
 \end{figure}
@@ -27,7 +27,7 @@
 \section{対象アプリとレビュー}
 本研究では川面による先行研究\cite{kawatsura}のデータセットを使用するため対象アプリは先行研究のアプリに合わせている. 注意点として, BuzzVideoは2022年3月をもってサービスを終了しているため, 本研究で収集の対象となるアプリには含まれない. そのため, 本研究で新たに取得するレビューの対象となるアプリはBuzzVideo以外の12のアプリである. 
 対象となっているアプリを表\ref{tb:taisyouapuri}に示す. 
-\begin{table}[htbp]
+\begin{table}[H]
   \small
   \caption{本研究の対象アプリ一覧}
   \label{tb:taisyouapuri}
@@ -74,7 +74,7 @@
 抽出対象となる元の文章の特徴をモデルに理解させるために質問文にその文章がGoogle PlayストアのレビューなのかTwitterのツイートなのかという「カテゴリー」の情報と「アプリ名」という2つの情報を加えることにより学習性能を上げる. 
 図\ref{fig:fine-tuning}に質問応答形式によるfine-tuningのモデルを示す. 
 
-\begin{figure}[hbtp]
+\begin{figure}[H]
   \centering
   \includegraphics[scale=0.3]
        {contents/images/fine-tuning.png}
@@ -83,7 +83,7 @@
 
 また, 図\ref{fig:answer}に質問文とその答えの例を示す. 質問文にアプリの欠陥やアプリに対する要望を尋ねる文章を与え, その答えとしてオブジェクトを返すようにしている. 
 
-\begin{figure}[hbtp]
+\begin{figure}[H]
   \centering
   \includegraphics[scale=0.4]
        {contents/images/answer.png}
@@ -110,7 +110,7 @@
 \end{enumerate}
 
 以下の図\ref{fig:clustering}にクラスタリングの概略図を示す. 丸で示されているのが抽出されたオブジェクトを表すノードであり, 点線がエッジである. このエッジは設定された閾値によって変化する. 
-\begin{figure}[hbtp]
+\begin{figure}[H]
   \centering
   \includegraphics[scale=0.4]
        {contents/images/clustering.png}

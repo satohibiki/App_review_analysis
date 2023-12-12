@@ -37,7 +37,7 @@
 \end{itemize}
 
 先行研究では投稿日時が2021年10月21日〜2021年12月15日までの8週間のレビューを収集している. 収集されたGoogle Playストアの各アプリのレビュー数は表\ref{tb:rawreviewnum}の通りである. 
-\begin{table}[htbp]
+\begin{table}[H]
   \caption{収集したGoogle Playストアのレビュー数(2021/10/21〜12/15)（\cite{kawatsura} p.16, 表 4.2）}
   \label{tb:rawreviewnum}
   \begin{center}
@@ -62,7 +62,7 @@
 \end{table}
 
 この先行研究のデータに加え, 本研究では2023年10月1日〜12月15日のレビューを新たに取得する. 新たに取得されたGoogle Playストアの各アプリのレビュー数は表\ref{tb:rawreviewnum2023}の通りである. 
-\begin{table}[htbp]
+\begin{table}[H]
   \caption{収集したGoogle Playストアのレビュー数(2023/10/1〜12/15)}
   \label{tb:rawreviewnum2023}
   \begin{center}
@@ -101,7 +101,7 @@ Google PlayストアのレビューをスクレイピングするためにPython
 
 先行研究では投稿日時が2021年10月21日〜2021年12月15日までの8週間のツイートを収集している. 収集されたTwitterの各アプリのツイート数を表\ref{tb:rawtweetnum}に示す. 
 
-\begin{table}[htbp]
+\begin{table}[H]
   \caption{収集したTwitterのツイート数(2021/10/21〜12/15)（\cite{kawatsura} p.18, 表 4.3）}
   \label{tb:rawtweetnum}
   \begin{center}
@@ -128,7 +128,7 @@ Google PlayストアのレビューをスクレイピングするためにPython
 この先行研究に加え, 本研究では新たに2023年10月〜12月のツイートを取得する. Twitterのツイート取得に関してはTwitter APIを使用してスクレイピングを行う. Twitter APIのプランに関してはFree, Basic, Pro, Enterpriseの4つのプランが用意されておりそれぞれ料金や使用できる機能などが異なる. 大規模なサービスやビジネス向けのEnterpriseプラン以外の3つのプランの違いの一部を表\ref{tb:xplan}に示す. 
 表\ref{tb:xplan}よりツイートを取得するためにはBasicプラン以上に加入する必要がある. Basicプランに加入した場合でも合計で30,000件しか取得されないため本研究では先行研究のデータセットを追加で使用することとした. Twitterの利用規約によると, Twitterが提供するインターフェイスを介して行うスクレイピング以外は禁止としている. そのため, seleniumなどを使用したスクレイピングはせずに, 先行研究のデータを使用することとした. 
 
-\begin{table}[htbp]
+\begin{table}[H]
   \caption{プランとできること}
   \label{tb:xplan}
   \begin{center}
@@ -153,7 +153,7 @@ Twitter APIを使用してツイートを取得するためにPythonのプログ
 
 新たに取得したTwitterのツイート数を表\ref{tb:rawtweetnum2023}に示す
 
-\begin{table}[htbp]
+\begin{table}[H]
   \caption{収集したTwitterのツイート数(2023年10月〜2023年12月)}
   \label{tb:rawtweetnum2023}
   \begin{center}
@@ -196,7 +196,7 @@ Twitter APIを使用してツイートを取得するためにPythonのプログ
 \end{itemize}
 以下の図\ref{fig:preprocessing}がレビューを前処理した例である. 2つの文で構成されているため「。」で区切り分割している. また絵文字は削除されている. 
 
-\begin{figure}[hbtp]
+\begin{figure}[H]
  \centering
  \includegraphics[scale=0.5]
       {contents/images/preprocessing.png}
@@ -206,7 +206,7 @@ Twitter APIを使用してツイートを取得するためにPythonのプログ
 前処理した結果をcsvファイルにて保存する. 保存する項目は, 投稿日時(at), レビューのid(reviewId)またはツイートid(id), そして, 前処理した文章である. 
 % 図\ref{tb:googlecsv}, 図\ref{tb:twittercsv}に前処理結果後のcsvファイルの一部を示す. 
 
-% \begin{table}[htbp]
+% \begin{table}[H]
 %   \caption{Google Playストアレビューの前処理結果(buzzvideo)}
 %   \label{tb:googlecsv}
 %   \begin{center}
@@ -223,7 +223,7 @@ Twitter APIを使用してツイートを取得するためにPythonのプログ
 %   \end{tabularx}\end{center}
 % \end{table}
 
-% \begin{table}[htbp]
+% \begin{table}[H]
 %   \caption{ツイートの前処理結果(BuzzVideo)}
 %   \label{tb:twittercsv}
 %   \begin{center}
@@ -327,7 +327,7 @@ fine-tuningを行ったモデルを使用して自動抽出を行う. 前処理�
 
 結果は表\ref{tb:googleqa}に示すようにid, アプリ名, 投稿日時, 文章, 抽出したオブジェクトをcsv形式で保存する. 
 
-\begin{table}[htbp]
+\begin{table}[H]
   \caption{Google Playストアレビューの自動抽出結果}
   \label{tb:googleqa}
   \small
@@ -430,7 +430,7 @@ SentenceBertJapaneseクラスの引数に日本語モデル名を与えること
 クラスタリングした結果, それぞれの文章にクラスタの番号(以下 : クラスタ番号)が振られ, クラスタ番号が同じものが同じクラスタとなり番号が近いものは意味的相関が近いことを表す. コサイン類似度の閾値を決めることによりどの程度の類似文を同じクラスタと定義するのかが決定される. 本研究では検証を重ねた結果, 閾値は0.8とした. 
 結果はcsvファイルに保存される. 表\ref{tb:clustering}に示されるように抽出した文章にクラスタ番号が振られる. 
 
-\begin{table}[htbp]
+\begin{table}[H]
   \caption{抽出した文章とクラスタ番号(google\_fit)}
   \label{tb:clustering}
   \begin{center}
@@ -520,20 +520,20 @@ webアプリケーションの実装に使用した言語, フレームワーク
 アプリごとの詳細画面では, アコーディオンメニューを使用して抽出した文章の一覧をクラスタごとに表示する. また, 抽出した文章をクリックすると投稿日時や元のレビュー文がモーダルウィンドウで表示する. 
 そして, 日ごとのレビュー数を表す折れ線グラフとクラスタに含まれるレビュー数の上位10個を表す棒グラフの2つのグラフを表示する. 
 
-Google Playストアにおける日付とレビュー数の関係を表した折れ線グラフが図\ref{fig:google_graph}である. このグラフは右側にあるアプリ名をタップすることによりグラフ表示のON/OFFが切り替えられるようになっている. 
+例えば, majicaのレビューにおける日付とレビュー数の関係を表した折れ線グラフが図\ref{fig:majica_graph}である. このグラフは右側にあるアプリ名をタップすることによりグラフ表示のON/OFFが切り替えられるようになっている. 
 また, 検索結果に応じて日付やレビュー数が動的に変更されるようになっている. 
 
-\begin{figure}[hbtp]
+\begin{figure}[H]
   \centering
   \includegraphics[scale=0.3]
-    {contents/images/google_graph.png}
-  \caption{Google Playストアにおける日付とレビュー数の関係\label{fig:google_graph}}
+    {contents/images/majica_graph.png}
+  \caption{majicaのレビューにおける日付とレビュー数の関係\label{fig:majica_graph}}
 \end{figure}
 
 クラスタに含まれるレビュー数の上位10個を表す棒グラフが図\ref{fig:top10}である. このグラフはgoogle fitにおけるクラスタのうちレビュー数が多いものを10個表示している. 
 そして, このグラフも検索結果に応じてクラスタに含まれるレビュー数が動的に変更されるようになっている. 
 
-\begin{figure}[hbtp]
+\begin{figure}[H]
   \centering
   \includegraphics[scale=0.3]
     {contents/images/top10.png}
@@ -543,7 +543,7 @@ Google Playストアにおける日付とレビュー数の関係を表した折
 google fitのレビュー一覧の表示が図\ref{fig:review_items}である. この一覧はクラスタに含まれるレビュー数が多いものから順に表示されており, ページネーションにより1つのページでレビュー100件ごとに表示している. 
 クラスタリングごとに表示し, 類似したレビューをまとめることで開発者がレビューを確認しやすいようになっている. 
 
-\begin{figure}[hbtp]
+\begin{figure}[H]
   \centering
   \includegraphics[scale=0.3]
     {contents/images/review_items.png}
@@ -572,34 +572,6 @@ google fitのレビュー一覧の表示が図\ref{fig:review_items}である. �
               search_result.append(row)
   rows = search_result
 \end{lstlisting}
-
-% アルゴリズム
-% \begin{figure}[!t]
-%   \begin{algorithm}[H]
-%       \caption{Search}
-%       \label{search}
-%       \begin{algorithmic}[1]
-%         \STATE $path \leftarrow$ '../クラスタリング/twitter\_\{app\_name\}.csv'
-%         \STATE Open $twitter\_csv\_file$ with encoding 'utf-8-sig'
-%         \STATE $twitter\_csv\_reader \leftarrow$ CSV reader for $twitter\_csv\_file$
-%         \STATE $twitter\_rows \leftarrow$ Convert $twitter\_csv\_reader$ to a list
-%         \STATE Sort $twitter\_rows$ in ascending order by the date (element at index 2)
-%         \STATE $search\_result \leftarrow$ Empty list
-%         \FOR{$row$ in $twitter\_rows$}
-%           \IF{$start\_date \leq row[2][:10] \leq end\_date$}
-%             \IF{$keyword \neq ''$}
-%               \IF{$keyword$ is in $row[3]$}
-%                 \STATE Append $row$ to $search\_result$
-%               \ENDIF
-%             \ELSE
-%               \STATE Append $row$ to $search\_result$
-%             \ENDIF
-%           \ENDIF
-%         \ENDFOR
-%         \STATE $twitter\_rows \leftarrow search\_result$
-%       \end{algorithmic}
-%   \end{algorithm}
-% \end{figure}
 
 \subsection{グラフの作成}
 グラフの作成にはplotly.js\cite{plotly}を用いる. plotly.sjとはグラフ生成ライブラリであり, 3Dグラフや統計グラフなど40を超えるグラフタイプが同梱されている\cite{plotly}.

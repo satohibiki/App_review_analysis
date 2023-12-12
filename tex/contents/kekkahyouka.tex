@@ -3,11 +3,12 @@
 
 \section{RQ1:レビューの抽出性能はどの程度か}
 \subsection{結果}
-モデルをfine-tuningして作成された自動抽出器の抽出性能について調査する. テストデータ2,000件に対して自動抽出を行い手動で抽出した結果と比較した. この自動抽出に関しては, レビュー文中に有用な情報がないものは答えのない文章と判断し, レビュー文中に有用な情報がある場合は答えのある文章と判断する. また, 答えのある文章に関してはレビュー文の中にある有用な情報を答えとする. 
+作成された自動抽出器の抽出性能について調査する. テストデータ2,000件に対して自動抽出を行い手動で抽出した結果と比較した. この自動抽出に関しては, レビュー文中に有用な情報がないものは答えのない文章と判断し, レビュー文中に有用な情報がある場合は答えのある文章と判断する. また, 答えのある文章に関してはレビュー文の中にある有用な情報を答えとする. 
 答えがある問題では, 抽出した結果が完全に一致している場合, 部分的に一致している場合, 全く一致していない場合の3種類を考える. 結果を以下の表\ref{tb:qa}に示す. 
 
-\begin{table}[htbp]
+\begin{table}[H]
   \caption{抽出結果}
+  \small
   \label{tb:qa}
   \begin{center}
   \begin{tabularx}{\linewidth}{|X|X|}
@@ -34,8 +35,9 @@
 正答率が下がってしまった原因に関して考察する. 
 答えがある問題, すなわち有用な箇所が存在する文章のうち誤って抽出してしまった例を以下の表\ref{tb:mistake}に示す.
 
-\begin{table}[htbp]
+\begin{table}[H]
   \caption{誤答となったテスト結果(答えあり)}
+  \small
   \label{tb:mistake}
   \begin{center}
   \begin{tabularx}{\linewidth}{|X|X|X|}
@@ -50,12 +52,12 @@
     コークオンを使おうとしてるのに、使えないなんでか、解らない&コークオンを使おうとしてるのに、使えないなんでか&コークオンを使おうとしてるのに、使えない\\\hline
     12月1日正午再び開けなくなりバーコードのみ表示&再び開けなくなりバーコードのみ表示&開けなくなりバーコードのみ表示\\\hline
     クレジットカードがjcb縛りなんて驚愕です&&クレジットカードがjcb縛り\\\hline
-    機内モードにすることで会員バーコードは表示できるのでチャージや支払いは出来るが、クーポンを取得したりできないので不便&クーポンを取得したりできない&機内モードにすることで会員バーコードは表示できるのでチャージや支払いは出来るが、クーポンを取得したりできないので不便\\\hline
+    % 機内モードにすることで会員バーコードは表示できるのでチャージや支払いは出来るが、クーポンを取得したりできないので不便&クーポンを取得したりできない&機内モードにすることで会員バーコードは表示できるのでチャージや支払いは出来るが、クーポンを取得したりできないので不便\\\hline
   \end{tabularx}\end{center}
 \end{table}
 
 次に答えのない問題, すなわち有用な箇所が存在しないレビューにも関わらず誤って抽出してしまった例を以下の表\ref{tb:mistake2}に示す.
-\begin{table}[htbp]
+\begin{table}[H]
   \caption{誤答となったテスト結果(答えなし)}
   \label{tb:mistake2}
   \begin{center}
@@ -72,9 +74,7 @@
   \end{tabularx}\end{center}
 \end{table}
 
-このような結果から正答率の減少となる原因はいくつか考えられる. 
-
-まず, 手動で抽出した回答の精度に問題があることがわかる. データセットは情報工学科の学部4年生の2名で作成したものだが, このデータセットの精度に問題があることが正答率の減少につながっていると考えられる. 
+このような結果から正答率の減少となる原因はいくつか考えられる. まず, 手動で抽出した回答の精度に問題があることがわかる. データセットは情報工学科の学部4年生の2名で作成したものだが, このデータセットの精度に問題があることが正答率の減少につながっていると考えられる. 
 
 例えば, 表\ref{tb:mistake}にある「類似アプリと比べて突出した利点もなく、あえてlinemusicを選ぶ理由がない」というレビュー文に対して, 手動で「類似アプリと比べて突出した利点もなく」を抽出しているが, これはアプリの欠陥でもアプリに対する要望でもないため本来抽出するべきでない. 
 
@@ -123,7 +123,7 @@ RIでは, 2つのクラスタリングに相関がない場合でも高い値を
 本研究で実装しているグラフクラスタリングでは, 設定する閾値に応じて作成されるグラフが変わるため, クラスタリングの結果が大きく変わる. したがって, 閾値ごとのARIの結果を比較し最もARIが高くなる閾値を見つける必要がある. 
 閾値とARIの関係を以下のグラフ\ref{fig:cw_graph}に示す.
 
-\begin{figure}[hbtp]
+\begin{figure}[H]
   \centering
   \includegraphics[scale=0.8]
     {contents/images/cw_graph.png}
@@ -142,14 +142,14 @@ K-Meansは非階層型クラスタリングのアルゴリズムである. ま�
 K-Means, 階層型クラスタリングは共にクラスタ数を事前に選択する必要があるためクラスタ数をいくつに設定すると最もARIが高くなるか検証した. 
 K-Meansにおけるクラスタ数とARIの関係を図\ref{fig:kmeans_graph}, 階層型クラスタリングにおけるクラスタ数とARIの関係を図\ref{fig:agg_graph}にそれぞれ示す.
 
-\begin{figure}[hbtp]
+\begin{figure}[H]
   \centering
   \includegraphics[scale=0.8]
     {contents/images/kmeans_graph.png}
   \caption{K-Meansにおけるクラスタ数ごとのARIの結果\label{fig:kmeans_graph}}
 \end{figure}
 
-\begin{figure}[hbtp]
+\begin{figure}[H]
   \centering
   \includegraphics[scale=0.8]
     {contents/images/agg_graph.png}
@@ -158,7 +158,7 @@ K-Meansにおけるクラスタ数とARIの関係を図\ref{fig:kmeans_graph}, �
 
 検証した結果, K-Meansではクラスタ数が119, 階層型クラスタリングではクラスタ数が129の時にそれぞれARIは最も高い値を示した. 次にK-Means, 階層型クラスタリングとChinese WhispersのARIの最大値を比較した結果が以下の表\ref{tb:two_ari}である. 
 
-\begin{table}[htbp]
+\begin{table}[H]
   \caption{3つの手法におけるARI}
   \label{tb:two_ari}
   \begin{center}
@@ -175,7 +175,7 @@ K-Meansにおけるクラスタ数とARIの関係を図\ref{fig:kmeans_graph}, �
 
 \subsection{総評}
 Chinese Whispersで作成されるグラフの閾値について検証した結果, 閾値を0.8としたときに最もARIが高い値を示すことがわかった. 
-また, K-Means, 階層型クラスタリング, Chinese WhispersのARIの最大値を比較した結果, Chinese Whispersが最もARIが高くなったことから本研究のクラスタリング性能の高さを示すことができた. 
+また, K-Means, 階層型クラスタリング, Chinese Whispersの3つの手法におけるARIの最大値を比較した結果, Chinese Whispersが最もARIが高くなったことから本研究のクラスタリング性能の高さを示すことができた. 
 
 %ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
@@ -185,14 +185,14 @@ Chinese Whispersで作成されるグラフの閾値について検証した結�
 
 \subsection{Google Playストアのレビュー欄}
 Google Playストアのレビュー欄は以下の図\ref{fig:google_play}, 図\ref{fig:google_play_graph}のような構成となっている. 
-\begin{figure}[hbtp]
+\begin{figure}[H]
   \centering
-  \includegraphics[scale=0.3]
+  \includegraphics[scale=0.25]
     {contents/images/google_play.png}
   \caption{Google Playストアのレビュー欄\label{fig:google_play}}
 \end{figure}
 
-\begin{figure}[hbtp]
+\begin{figure}[H]
   \centering
   \includegraphics[scale=0.3]
     {contents/images/google_play_graph.png}
@@ -209,8 +209,26 @@ Google Playストアのレビュー欄では評価(星1〜星5)がそれぞれ�
 
 この機能は特にアプリのアップデート時に活用できる. アプリのアップデート時に開発者は改善した機能や新しく追加した機能が正常に動いているかどうか, アップデートの前後でレビュー数に変化があるかどうかを確認したい. そのため, この検索機能を用いて分析対象となるレビューを期間とキーワードで絞り込むことで確認するレビュー数を大幅に減らすことができる. 
 
+以下の図\ref{fig:paypay_search}は期間(2021/10/21〜2021/11/11)・キーワード(ログイン)で検索した例である. このように, 検索機能を活用して特定の期間や機能に関するレビューのみを表示することが可能となっている. 
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.3]
+    {contents/images/paypay_search.png}
+  \caption{paypayのレビュー検索結果\label{fig:paypay_search}}
+\end{figure}
+
 \subsection{アプリ間のレビュー比較}
 このwebサイトでは一覧画面にてアプリごとのレビュー数の推移を表示することができる. そのためアプリ間でレビュー数にどのような変化があるのかを1つのグラフで確認することができる. 
+
+Google Playストアにおける日付とレビュー数の関係を表した折れ線グラフが図\ref{fig:google_graph}である. このグラフは右側にあるアプリ名をタップすることによりグラフ表示のON/OFFが切り替えられるようになっている. 
+また, 検索結果に応じて日付やレビュー数が動的に変更されるようになっている. 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.3]
+    {contents/images/google_graph.png}
+  \caption{Google Playストアにおける日付とレビュー数の関係\label{fig:google_graph}}
+\end{figure}
 
 この機能を用いて, 類似した機能を持つアプリがどのような問題を抱えているかを分析することができる. 類似したアプリで見つけられた欠陥は自身の開発しているアプリで同じような欠陥が見つかる可能性がある. 
 したがって開発者はこのwebサイトで他のアプリのレビューを確認することにより自身の開発に活用することができる. 
