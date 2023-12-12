@@ -71,8 +71,8 @@ def detail23_date_range(start, stop, category, step = timedelta(1)):
 
 @app.route('/')
 def index():
-    start_date = request.args.get('start-date', '2023-10-01') #2021-10-21
-    end_date = request.args.get('end-date', '2023-12-20') #2021-12-15
+    start_date = request.args.get('start-date', '2021-10-21') #2023-10-01
+    end_date = request.args.get('end-date', '2021-12-15') #2023-12-20
     keyword = request.args.get('keyword', '')
     if '2023' in start_date:
         app_names = app_names23
@@ -159,8 +159,8 @@ def index():
 
 @app.route('/<string:category>/detail/<string:app_name>')
 def read(category, app_name):
-    start_date = request.args.get('start-date', '2023-10-01') #2021-10-21
-    end_date = request.args.get('end-date', '2023-12-20') #2021-12-15
+    start_date = request.args.get('start-date', '2021-10-21') #2023-10-01
+    end_date = request.args.get('end-date', '2021-12-15') #2023-12-20
     keyword = request.args.get('keyword', '')
     app = app_name
     category = category
@@ -238,12 +238,15 @@ def read(category, app_name):
         except IndexError:
             print("レビューはありません")
     else:
-        for date in detail_date_range(displayed_rows[0][2], displayed_rows[-1][2], category):
-            if category=="google":
-                count = sum(1 for row in displayed_rows if dt.strptime(row[2], '%Y-%m-%d %H:%M:%S').date() == date)
-            else:
-                count = sum(1 for row in displayed_rows if dt.strptime(row[2], "%Y-%m-%dT%H:%M:%S.%fZ").date() == date)
-            graphs.append([date.strftime('%Y/%m/%d'), count])
+        try:
+            for date in detail_date_range(displayed_rows[0][2], displayed_rows[-1][2], category):
+                if category=="google":
+                    count = sum(1 for row in displayed_rows if dt.strptime(row[2], '%Y-%m-%d %H:%M:%S').date() == date)
+                else:
+                    count = sum(1 for row in displayed_rows if dt.strptime(row[2], "%Y-%m-%dT%H:%M:%S.%fZ").date() == date)
+                graphs.append([date.strftime('%Y/%m/%d'), count])
+        except IndexError:
+            print("レビューはありません")
 
     return render_template("detail.html", 
                            app_names=app_names, 
