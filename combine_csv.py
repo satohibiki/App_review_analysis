@@ -29,7 +29,7 @@ def combine_twitter():
         #axis=0:行方向に結合
         df = pd.concat(data_list, axis=0)
 
-        df.to_csv(f"twitter/Twitter_data(23_10_01~23_12_20)/{app_name}.csv",index=False)
+        df.to_csv(f"twitter/Twitter_data2023/{app_name}.csv",index=False)
 
 def combine_google():
     app_names = ['CapCut - Video Editor', 
@@ -73,7 +73,7 @@ def combine_google():
         #axis=0:行方向に結合
         df = pd.concat(data_list, axis=0)
 
-        df.to_csv(f"google_play/google_data(23_10_01~23_12_20)/{new_app_name}.csv",index=False)
+        df.to_csv(f"google_play/google_data2023/{new_app_name}.csv",index=False)
 
 def main():
     combine_twitter()

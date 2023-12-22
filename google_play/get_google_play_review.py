@@ -19,7 +19,7 @@ def get_review(app_package):
 
     # 対象期間を指定
     start_time =  datetime.datetime(2023, 12, 1, 0, 0, 0)
-    end_time =  datetime.datetime(2023, 12, 20, 23, 59, 59)
+    end_time =  datetime.datetime(2023, 12, 22, 12, 0, 0)
 
     # CSVファイルに書き込む
     with open(f'google_data(23_12)/{app_name}.csv', 'w', newline='', encoding='utf-8') as csvfile:

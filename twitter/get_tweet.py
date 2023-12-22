@@ -19,10 +19,10 @@ client = tweepy.Client(
 )
 
 # 検索する期間を指定
-end_time =  datetime.datetime.now().replace(microsecond=0) + datetime.timedelta(hours=-9, seconds=-30)
+end_time =  datetime.datetime(2023, 12, 22, 3, 36, 49) # 2023-12-22 03:36:50+00:00
 
 def get_tweet(end_time, keyword):
-    for num in range(9):
+    for num in range(2):
         # ツイートの取得V2
         tweets = client.search_recent_tweets(query=keyword,  # 検索ワード
                                              end_time=end_time,
@@ -46,18 +46,18 @@ def get_tweet(end_time, keyword):
 def main():
     # 検索するキーワードを指定
     keywords = [
-        'にゃんトーク',
-        'スマートニュース',
-        'paypay',
-        'coke on',
-        'google fit',
-        'simeji',
-        'lemon8',
-        '楽天ペイ',
-        'majica',
-        'line music',
-        'ファミペイ',
-        'capcut'
+        # 'にゃんトーク',
+        # 'スマートニュース',
+        'paypay'
+        # 'coke on',
+        # 'google fit',
+        # 'simeji',
+        # 'lemon8',
+        # '楽天ペイ',
+        # 'majica',
+        # 'line music',
+        # 'ファミペイ',
+        # 'capcut'
     ]
 
     for keyword in keywords:
