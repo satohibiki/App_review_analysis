@@ -62,27 +62,27 @@
 \end{table}
 
 \noindent
-この先行研究のデータに加え, 本研究では2023年10月1日〜12月20日のレビューを新たに取得する. 新たに取得されたGoogle Playストアの各アプリのレビュー数は表\ref{tb:rawreviewnum2023}の通りである. 
+この先行研究のデータに加え, 本研究では2023年10月1日〜12月22日のレビューを新たに取得する. 新たに取得されたGoogle Playストアの各アプリのレビュー数は表\ref{tb:rawreviewnum2023}の通りである. 
 \begin{table}[H]
-  \caption{収集したGoogle Playストアのレビュー数 (2023/10/1〜12/20) }
+  \caption{収集したGoogle Playストアのレビュー数 (2023/10/1〜12/22) }
   \label{tb:rawreviewnum2023}
   \begin{center}
   \begin{tabular}{l|l}
     \hline
     アプリ名&収集したレビュー数（件）\\\hline\hline
-    にゃんトーク&\\\hline
-    スマートニュース&\\\hline
-    PayPay&\\\hline
-    Coke ON&\\\hline
-    Google Fit&\\\hline
-    Simeji&\\\hline
-    Lemon8&\\\hline
-    楽天ペイ&\\\hline
-    majica&\\\hline
-    LINE MUSIC&\\\hline
-    ファミマのアプリ&\\\hline
-    CapCut&\\\hline\hline
-    合計&
+    にゃんトーク&11\\\hline
+    スマートニュース&531\\\hline
+    PayPay&700\\\hline
+    Coke ON&840\\\hline
+    Google Fit&192\\\hline
+    Simeji&164\\\hline
+    Lemon8&122\\\hline
+    楽天ペイ&606\\\hline
+    majica&128\\\hline
+    LINE MUSIC&115\\\hline
+    ファミマのアプリ&295\\\hline
+    CapCut&263\\\hline\hline
+    合計&3,967
   \end{tabular}\end{center}
 \end{table}
 
@@ -127,7 +127,7 @@ Google PlayストアのレビューをスクレイピングするためにPython
 \end{table}
 
 \noindent
-この先行研究に加え, 本研究では新たに10月1日から12月15日のツイートを取得する. Twitterのツイート取得に関してはTwitter APIを使用してスクレイピングを行う. Twitter APIのプランに関してはFree, Basic, Pro, Enterpriseの4つのプランが用意されておりそれぞれ料金や使用できる機能などが異なる. 大規模なサービスやビジネス向けのEnterpriseプラン以外の3つのプランの違いの一部を表\ref{tb:xplan}に示す. 
+この先行研究に加え, 本研究では新たに10月1日から12月22日のツイートを取得する. Twitterのツイート取得に関してはTwitter APIを使用してスクレイピングを行う. Twitter APIのプランに関してはFree, Basic, Pro, Enterpriseの4つのプランが用意されておりそれぞれ料金や使用できる機能などが異なる. 大規模なサービスやビジネス向けのEnterpriseプラン以外の3つのプランの違いの一部を表\ref{tb:xplan}に示す. 
 表\ref{tb:xplan}よりツイートを取得するためにはBasicプラン以上に加入する必要がある. Basicプランに加入した場合でも合計で30,000件しか取得できないため本研究では先行研究のデータセットを追加で使用することとした. Twitterの利用規約によると, Twitterが提供するインターフェイスを介して行うスクレイピング以外は禁止としている. そのため, seleniumなどを使用したスクレイピングはせずに, 先行研究のデータを使用することとした. 
 
 \begin{table}[H]
@@ -155,25 +155,25 @@ Twitter APIを使用してツイートを取得するためにPythonのプログ
 新たに取得したTwitterのツイート数を表\ref{tb:rawtweetnum2023}に示す
 
 \begin{table}[H]
-  \caption{収集したTwitterのツイート数 (2023/10/1〜12/20) }
+  \caption{収集したTwitterのツイート数 (2023/10/1〜12/22) }
   \label{tb:rawtweetnum2023}
   \begin{center}
   \begin{tabular}{l|l}
     \hline
     アプリ名&収集したツイート数（件）\\\hline\hline
-    にゃんトーク&\\\hline
-    スマートニュース&\\\hline
-    PayPay&\\\hline
-    Coke ON&\\\hline
-    Google Fit&\\\hline
-    Simeji&\\\hline
-    Lemon8&\\\hline
-    楽天ペイ&\\\hline
-    majica&\\\hline
-    LINE MUSIC&\\\hline
-    ファミマのアプリ&\\\hline
-    CapCut&\\\hline\hline
-    合計&
+    にゃんトーク&27\\\hline
+    スマートニュース&2,575\\\hline
+    PayPay&3,297\\\hline
+    Coke ON&2,595\\\hline
+    Google Fit&2,760\\\hline
+    Simeji&2,579\\\hline
+    Lemon8&2,593\\\hline
+    楽天ペイ&2,591\\\hline
+    majica&2.596\\\hline
+    LINE MUSIC&2,580\\\hline
+    ファミマのアプリ&2,575\\\hline
+    CapCut&2,592\\\hline\hline
+    合計&29,360
   \end{tabular}\end{center}
 \end{table}
 
