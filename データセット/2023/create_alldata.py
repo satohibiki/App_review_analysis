@@ -18,7 +18,7 @@ def create_tweet():
     index = 1
     output = []
     for app_name in app_names:
-        with open(f'../twitter/preprocessing_Twitter_data2023/{app_name}.csv', 'r', encoding='utf-8') as csv_file:
+        with open(f'../../twitter/preprocessing_Twitter_data2023/{app_name}.csv', 'r', encoding='utf-8') as csv_file:
             csv_reader = csv.reader(csv_file)
             rows = list(csv_reader)
             random.shuffle(rows)
@@ -36,7 +36,7 @@ def create_google():
     index = 1
     output = []
     for app_name in app_names:
-        with open(f'../google_play/preprocessing_google_data2023/{app_name}.csv', 'r', encoding='utf-8') as csv_file:
+        with open(f'../../google_play/preprocessing_google_data2023/{app_name}.csv', 'r', encoding='utf-8') as csv_file:
             csv_reader = csv.reader(csv_file)
             rows = list(csv_reader)
             random.shuffle(rows)
