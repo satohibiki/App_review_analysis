@@ -107,7 +107,7 @@ ARIの計算にはRI (Rand Index) の値を用いる. RIは式 (\ref{eq:ri}) に
   RI = \frac{a+b}{\binom{n}{2}}
 \end{equation}
 
-ここで, \(a\)は予測されたクラスタリング結果とGround-truth (正解) のクラスタリング結果で同じクラスタに割り振られるペアの数を表し, \(b\)は異なるクラスタに割り振られるペアの数を表す. \(\binom{n}{2}\)は\(n\)個の抽出したオブジェクトの集合において順序のないペアの総数である. 
+ここで, \(a\)は予測されたクラスタリング結果とGround-truth (正解) のクラスタリング結果で同じクラスターに割り振られるペアの数を表し, \(b\)は異なるクラスターに割り振られるペアの数を表す. \(\binom{n}{2}\)は\(n\)個の抽出したオブジェクトの集合において順序のないペアの総数である. 
 RIでは, 2つのクラスタリングに相関がない場合でも高い値を取ってしまう. したがってARIでは相関のないクラスタリングに``相関のない (独立な) クラスタリングをした時のRIの値''というペナルティを与える. ARIは式 (\ref{eq:ari}) に示されるように計算される. 
 
 \begin{equation}
@@ -115,12 +115,12 @@ RIでは, 2つのクラスタリングに相関がない場合でも高い値を
   ARI = \frac{RI-E (RI) }{max (RI) -E (RI) }
 \end{equation}
 
-\(E(RI)\)はRIの期待値となっている. このように計算することによって, クラスタ数やサンプル数に関係なく, ランダムなクラスタリングではARIが0に近い値を持つことが保証されている. 
+\(E(RI)\)はRIの期待値となっている. このように計算することによって, クラスター数やサンプル数に関係なく, ランダムなクラスタリングではARIが0に近い値を持つことが保証されている. 
 クラスタリング性能を評価するために, Google Playストアのcapcutに関するレビューから自動抽出したオブジェクト166件を手動でクラスタリングし, 正解データを作成した. 本研究ではこの正解データとのARIを算出し精度を確認することとする. 
 
 \subsection{閾値ごとの結果}
 本研究で実装しているグラフクラスタリングでは, 設定する閾値に応じて作成されるグラフが変わるため, クラスタリングの結果が大きく変わる. したがって, 閾値ごとのARIの結果を比較し最もARIが高くなる閾値を見つける必要がある. 
-閾値とARIの関係を以下のグラフ\ref{fig:cw_graph}に示す.
+閾値とARIの関係を以下の図\ref{fig:cw_graph}に示す.
 
 \begin{figure}[H]
   \centering
@@ -130,33 +130,33 @@ RIでは, 2つのクラスタリングに相関がない場合でも高い値を
 \end{figure}
 
 \noindent
-グラフ\ref{fig:cw_graph}より, 閾値を0.8としたときのARIが最も高くなることがわかった. したがって本研究では全てのデータのクラスタリングにおいて閾値は0.8に設定して行った. 
+図\ref{fig:cw_graph}より, 閾値を0.8としたときのARIが最も高くなることがわかった. したがって本研究では全てのデータのクラスタリングにおいて閾値は0.8に設定して行った. 
 
 \subsection{他の手法との比較}
 本研究で実装したChinese Whispersと, 一般的に使用されているクラスタリングであるK-Means, 階層型クラスタリングを比較することにより本研究のクラスタリング手法の性能を検証する. 
 
-K-Meansは非階層型クラスタリングのアルゴリズムである. まず, 互いのデータをランダムなクラスに配置したのちにクラスごとの重心を計算する. そして, 各データに対して重心が最も近いクラスタを割り振り重心を再計算する. このステップを重心が動かなくなるまで繰り返すことによりクラスを決定する.
+K-Meansは非階層型クラスタリングのアルゴリズムである. まず, 互いのデータをランダムなクラスターに配置したのちにクラスターごとの重心を計算する. そして, 各データに対して重心が最も近いクラスターを割り振り重心を再計算する. このステップを重心が動かなくなるまで繰り返すことによりクラスターを決定する.
 
-階層型クラスタリングはデータからクラスタの階層構造を抽出する手法である. 最初は各データがそれぞれ1つのクラスタを持つ. そしてクラスタ間の距離が最も近い2つのクラスタを1つのクラスタにまとめる. これを繰り返していき, クラスタを大きくしていく. クラスタ間距離の計算方法はウォード法や群平均法, 最短距離法, 最長距離法などいくつかの方法がある. 
+階層型クラスタリングはデータからクラスターの階層構造を抽出する手法である. 最初は各データがそれぞれ1つのクラスターを持つ. そしてクラスター間の距離が最も近い2つのクラスターを1つのクラスターにまとめる. これを繰り返していき, クラスターを大きくしていく. クラスター間距離の計算方法はウォード法や群平均法, 最短距離法, 最長距離法などいくつかの方法がある. 
 
-K-Means, 階層型クラスタリングは共にクラスタ数を事前に選択する必要があるためクラスタ数をいくつに設定すると最もARIが高くなるか検証した. 
-K-Meansにおけるクラスタ数とARIの関係を図\ref{fig:kmeans_graph}, 階層型クラスタリングにおけるクラスタ数とARIの関係を図\ref{fig:agg_graph}にそれぞれ示す.
+K-Means, 階層型クラスタリングは共にクラスター数を事前に選択する必要があるためクラスター数をいくつに設定すると最もARIが高くなるか検証した. 
+K-Meansにおけるクラスター数とARIの関係を図\ref{fig:kmeans_graph}, 階層型クラスタリングにおけるクラスター数とARIの関係を図\ref{fig:agg_graph}にそれぞれ示す.
 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.8]
     {contents/images/kmeans_graph.png}
-  \caption{K-Meansにおけるクラスタ数ごとのARIの結果\label{fig:kmeans_graph}}
+  \caption{K-Meansにおけるクラスター数ごとのARIの結果\label{fig:kmeans_graph}}
 \end{figure}
 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.8]
     {contents/images/agg_graph.png}
-  \caption{階層型クラスタリングにおけるクラスタ数ごとのARIの結果\label{fig:agg_graph}}
+  \caption{階層型クラスタリングにおけるクラスター数ごとのARIの結果\label{fig:agg_graph}}
 \end{figure}
 
-検証した結果, K-Meansではクラスタ数が119, 階層型クラスタリングではクラスタ数が129の時にそれぞれARIは最も高い値を示した. 次にK-Means, 階層型クラスタリングとChinese WhispersのARIの最大値を比較した結果が以下の表\ref{tb:two_ari}である. 
+検証した結果, K-Meansではクラスター数が119, 階層型クラスタリングではクラスター数が129の時にそれぞれARIは最も高い値を示した. 次にK-Means, 階層型クラスタリングとChinese WhispersのARIの最大値を比較した結果が以下の表\ref{tb:two_ari}である. 
 
 \begin{table}[H]
   \caption{3つの手法におけるARI}
@@ -185,21 +185,22 @@ Chinese Whispersで作成されるグラフの閾値について検証した結�
 
 \subsection{Google Playストアのレビュー欄}
 Google Playストアのレビュー欄は以下の図\ref{fig:google_play}, 図\ref{fig:google_play_graph}のような構成となっている. 
-\begin{figure}[H]
-  \centering
-  \includegraphics[scale=0.25]
-    {contents/images/google_play.png}
-  \caption{Google Playストアのレビュー欄\label{fig:google_play}}
-\end{figure}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[scale=0.3]
+  \includegraphics[scale=0.4]
     {contents/images/google_play_graph.png}
   \caption{各評価の数を表すグラフ\label{fig:google_play_graph}}
 \end{figure}
 
-Google Playストアのレビュー欄では評価 (星1〜星5) がそれぞれいくつ付けられているのかを表示するグラフ (図\ref{fig:google_play_graph}) と, 各レビューが記載されている (図\ref{fig:google_play}) . 各レビューには何人のユーザが役に立ったかが記載されており, これによりユーザーから見た各レビューの評価がわかる. 
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.4]
+    {contents/images/google_play.png}
+  \caption{Google Playストアのレビュー欄\label{fig:google_play}}
+\end{figure}
+
+Google Playストアのレビュー欄では評価 (星1〜星5) がそれぞれいくつ付けられているのかを表示するグラフ (図\ref{fig:google_play_graph}) と, 各レビューが記載されている (図\ref{fig:google_play}) . 各レビューには何人のユーザーが役に立ったかが記載されており, これによりユーザーから見た各レビューの評価がわかる. 
 また, 主な機能として評価ごとの絞り込み, 評価や時系列による並び替えがある. 
 
 以下ではGoogle Playストアのレビュー欄と本研究のwebアプリの違いを示すことで本研究のwebアプリの有用性を示す. 
