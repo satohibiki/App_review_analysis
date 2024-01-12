@@ -116,7 +116,12 @@
                     var layout = {
                         title: '種類ごとのレビュー数',
                         height: 600,
-                        width: 1000
+                        width: 1000,
+                        xaxis: {
+                            tickvals: labels,
+                            tickangle: 0,
+                            ticktext: labels.map(label => label.replace(/\s/g, '<br>')), // スペースがあれば改行に変換
+                        }
                     };
                 
                     Plotly.newPlot('bar', data, layout);

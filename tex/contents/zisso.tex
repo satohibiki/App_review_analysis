@@ -19,14 +19,14 @@
 
 %ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
-\section{スクレイピング}
+\section{スクレイピング}\label{scraping}
 \subsection{Google Playストアのスクレイピング}
 本研究で取得するレビュー情報は先行研究\cite{kawatsura}に合わせて下記とする. 
 
 \begin{itemize}
  \item reviewId : レビューID
- \item userName : ユーザー名
- \item userImage : ユーザーのプロフィール画像
+ \item userName : ユーザ名
+ \item userImage : ユーザのプロフィール画像
  \item at : 投稿日時
  \item score : 星の数
  \item content : レビュー内容
@@ -41,7 +41,7 @@
   \caption{収集したGoogle Playストアのレビュー数 (2021/10/21〜12/15) （ \cite{kawatsura} p.16, 表 4.2）}
   \label{tb:rawreviewnum}
   \begin{center}
-  \begin{tabular}{l|l}
+  \begin{tabular}{l|r}
     \hline
     アプリ名&収集したレビュー数（件）\\\hline\hline
     にゃんトーク&171\\\hline
@@ -67,7 +67,7 @@
   \caption{収集したGoogle Playストアのレビュー数 (2023/10/1〜12/22) }
   \label{tb:rawreviewnum2023}
   \begin{center}
-  \begin{tabular}{l|l}
+  \begin{tabular}{l|r}
     \hline
     アプリ名&収集したレビュー数（件）\\\hline\hline
     にゃんトーク&11\\\hline
@@ -86,7 +86,8 @@
   \end{tabular}\end{center}
 \end{table}
 
-Google PlayストアのレビューをスクレイピングするためにPythonのプログラムである\verb|get_google_play_review.py|を作成した. このプログラムの作成にあたり, Pythonのライブラリであるgoogle-play-scraperを使用する. google-play-scraperでは外部依存関係なしでPython用のGoogle Playストアを簡単にクロールするためのAPIが提供されている\cite{google-play-scraper}. 
+Google PlayストアのレビューをスクレイピングするためにPythonのプログラムである\verb|get_google_play_review.py|を作成した. このプログラムでは, アプリのパッケージ名を与えると, そのアプリのレビュー情報をcsv形式で保存するよう実装となっている. 
+レビューのスクレイピングのために, Pythonのライブラリであるgoogle-play-scraperを使用する. google-play-scraperでは外部依存関係なしでPython用のGoogle Playストアを簡単にクロールするためのAPIが提供されている\cite{google-play-scraper}. 
 このライブラリを使用することにより, アプリのパッケージ名, 言語, 取得する数, 順序を指定してレビューの一覧を取得することができる. 
 
 %ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
@@ -106,7 +107,7 @@ Google PlayストアのレビューをスクレイピングするためにPython
   \caption{収集したTwitterのツイート数 (2021/10/21〜12/15) （ \cite{kawatsura} p.18, 表 4.3）}
   \label{tb:rawtweetnum}
   \begin{center}
-  \begin{tabular}{l|l}
+  \begin{tabular}{l|r}
     \hline
     アプリ名&収集したツイート数（件）\\\hline\hline
     にゃんトーク&2,525\\\hline
@@ -127,7 +128,7 @@ Google PlayストアのレビューをスクレイピングするためにPython
 \end{table}
 
 \noindent
-この先行研究に加え, 本研究では新たに10月1日から12月22日のツイートを取得する. Twitterのツイート取得に関してはTwitter APIを使用してスクレイピングを行う. Twitter APIのプランに関してはFree, Basic, Pro, Enterpriseの4つのプランが用意されておりそれぞれ料金や使用できる機能などが異なる. 大規模なサービスやビジネス向けのEnterpriseプラン以外の3つのプランの違いの一部を表\ref{tb:xplan}に示す. 
+先行研究で得たデータに加え, 本研究では新たに2023年10月1日から2023年12月22日のツイートを取得する. Twitterのツイート取得に関してはTwitter APIを使用してスクレイピングを行う. Twitter APIのプランに関してはFree, Basic, Pro, Enterpriseの4つのプランが用意されておりそれぞれ料金や使用できる機能などが異なる. 大規模なサービスやビジネス向けのEnterpriseプラン以外の3つのプランの違いの一部を表\ref{tb:xplan}に示す. 
 表\ref{tb:xplan}よりツイートを取得するためにはBasicプラン以上に加入する必要がある. Basicプランに加入した場合でも合計で30,000件しか取得できないため本研究では先行研究のデータセットを追加で使用することとした. Twitterの利用規約によると, Twitterが提供するインターフェイスを介して行うスクレイピング以外は禁止としている. そのため, seleniumなどを使用したスクレイピングはせずに, 先行研究のデータを使用することとした. 
 
 \begin{table}[H]
@@ -144,8 +145,9 @@ Google PlayストアのレビューをスクレイピングするためにPython
 \end{table}
 
 Twitter APIを使用してツイートを取得するためにPythonのプログラムである\verb|get_tweet.py|を作成した. このプログラムではTwitter APIにアクセスするためのライブラリであるTweepy\cite{tweepy}を使用した. まずAPIキーなどの4つの認証情報をセットする. 次にClientクラスのsearch\_resent\_tweetメソッドを使用してツイートを取得する. 
-このメソッドは最大で過去7日間まで遡ってツイートを取得できる. search\_all\_tweetsメソッドでは全てのツイートを取得できるが, 「Academic Research」という学術用の用途でAPI承認されたユーザーしか使用できないため本研究では使用しなかった. 
-先行研究と同じ情報を取得するために, 本研究では引数として以下のものを与えた. 
+このメソッドは最大で過去7日間まで遡ってツイートを取得できる. search\_all\_tweetsメソッドでは全てのツイートを取得できるが, Academic Researchアクセスの利用資格があるものしか使用できないメソッドである. このアクセスを利用するにはAcademic Research申請を提出する必要があり, ``修士課程の学生, 博士号取得候補者, 博士研究員, 大学教員, 学術機関または大学の研究員である''ことが申し込みをする1つの条件となっている. \cite{academic-research}
+私は申し込みの条件を満たしていないため, このメソッドは使用しなかった. 
+先行研究と同じ情報を取得するために, 本研究では引数として次に示すものを与えた. 
 \begin{itemize}
  \item max\_result : 検索結果の最大数. 10〜100の数値で, デフォルトは10
  \item query: 検索ワード
@@ -158,7 +160,7 @@ Twitter APIを使用してツイートを取得するためにPythonのプログ
   \caption{収集したTwitterのツイート数 (2023/10/1〜12/22) }
   \label{tb:rawtweetnum2023}
   \begin{center}
-  \begin{tabular}{l|l}
+  \begin{tabular}{l|r}
     \hline
     アプリ名&収集したツイート数（件）\\\hline\hline
     にゃんトーク&27\\\hline
@@ -179,11 +181,11 @@ Twitter APIを使用してツイートを取得するためにPythonのプログ
 
 %ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
-\section{前処理}
-機械学習によるレビューに含まれる有用な箇所の自動抽出における精度を上げるために, Google PlayストアとTwitterから取得したデータに対して前処理を行うプログラム (\verb|preprocessing_google.py|, \verb|preprocessing_twitter.py|) を作成した. この処理では以下に示す処理を行う. この処理は一般的な自然言語処理の手法を参考としている. 
+\section{前処理}\label{preprocessing}
+機械学習によるレビューに含まれる有用な箇所の自動抽出における精度を上げるために, Google PlayストアとTwitterから取得したデータに対して前処理を行うプログラム (\verb|preprocessing_google.py|, \verb|preprocessing_twitter.py|) を作成した. このプログラムでは次に示す処理を行う. 処理は一般的な自然言語処理の手法を参考としている. 
 \begin{itemize}
   \item 英語を全て小文字に揃える
-  \item 以下の文字列を削除
+  \item 次に示すの文字列を削除
     \begin{itemize}
       \item 「」【】（） () 『』
       \item @＠から始まるメンション
@@ -195,7 +197,7 @@ Twitter APIを使用してツイートを取得するためにPythonのプログ
     \end{itemize}
   \item レビューやツイートには, 異なる欠陥の報告やアプリに対する要望に関する文が2文以上からなるものがある. そのため, 「。」「.」「！」「!」「？」「!」「\verb|\n|」「\verb|\r\n|」でそれぞれの文に分割する. 
 \end{itemize}
-以下の図\ref{fig:preprocessing}がレビューを前処理した例である. 2つの文で構成されているため「。」で区切り分割している. また絵文字は削除されている. 
+図\ref{fig:preprocessing}がレビューを前処理した例である. 2つの文で構成されているため「。」で区切り分割している. また絵文字は削除されている. 
 
 \begin{figure}[H]
  \centering
@@ -242,11 +244,11 @@ Twitter APIを使用してツイートを取得するためにPythonのプログ
 
 %ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
-\section{有用な箇所の自動抽出}
-\subsection{データセット}
-モデルのfine-tuningに使用されるデータセットとして, Google PlayストアとTwitterのツイートからそれぞれ5,000件ずつ合計で10,000件のデータをランダムに抽出し手作業で有用な箇所を抽出した. データセットの作成は情報工学科の学部4年生2人がそれぞれ手作業で行い, お互いの抽出した箇所が異なっていたものは議論することにより統一した. 
-データセットには前処理したデータが格納されたcsvファイルを利用して, 抽出したオブジェクトを含めた新たなcsvファイルを作成する. 作成されたcsvファイルにはid,アプリ名,投稿日時,本文, 抽出したオブジェクトの5つのデータが入っている. idは前処理したデータを識別するために与えられ, Google Playストアのレビュー文はg\_ (index) , Twitterのツイートのidはt\_ (index) とする.  indexには各データに応じた番号が振られている. 
-10,000件のデータセットのうち, 6,000件を訓練データ, 2,000件を検証用データ, 2,000件をテストデータとする. 質問応答形式のfine-tuningを行うために, csv形式であるデータセットをソースコード\ref{json}に示すようにjson形式に変換する. 
+\section{有用な箇所の自動抽出}\label{extraction}
+\subsection{データセット}\label{dataset}
+モデルのファインチューニングに使用されるデータセットとして, Google PlayストアとTwitterのツイートからそれぞれ5,000件ずつ合計で10,000件のデータをランダムに抽出し手作業で有用な箇所を抽出した. データセットの作成は情報工学科の学部4年生2人がそれぞれ手作業で行い, お互いの抽出した箇所が異なっていたものは議論することにより統一した. 
+データセットには前処理したデータが格納されたcsvファイルを利用して, 抽出したオブジェクトを含めた新たなcsvファイルを作成する. 作成されたcsvファイルにはid,アプリ名,投稿日時,本文, 抽出したオブジェクトの5つのデータが入っている. idは前処理したデータを識別するために与えられ, Google Playストアのレビューはg\_ (index) , Twitterのツイートのidはt\_ (index) とする.  indexには各データに応じた番号が振られている. 
+10,000件のデータセットのうち, 6,000件を訓練データ, 2,000件を検証用データ, 2,000件をテストデータとする. 質問応答形式のファインチューニングを行うために, csv形式であるデータセットをソースコード\ref{json}に示すようにjson形式に変換する. 
 
 \begin{lstlisting}[caption=データセット.json,label=json]
   {
@@ -295,12 +297,12 @@ Twitter APIを使用してツイートを取得するためにPythonのプログ
   } 
 \end{lstlisting}
 \noindent
-このjsonファイルは下記の要素によって構成になっている. 
+このjsonファイルは下記の要素によって構成である. 
 
 \begin{itemize}
-  \item version: バージョンを表す. 今回は答えられない質問を含むSQuAD 2.0と同じバージョンのため, v2.0とする
+  \item version: バージョンを表す. 今回は答えられない質問を含むSQuAD 2.0と同じバージョンのため, v2.0とする. SQuAD 2.0とは, スタンフォード質問回答データセットであり質問応答タスクで一般的に使用されているデータセットである. 
   \item title: contextのタイトル
-  \item paragraphs: context1つとそれに関連する質問, 答えがリスト形式で保持されている
+  \item paragraphs: context 1つとそれに関連する質問, 答えがリスト形式で保持されている
   \item qas: 質問と回答がリスト形式となっている
   \item context: 元の文章 (抽出する前の文章) 
   \item id: 設定したid
@@ -312,9 +314,9 @@ Twitter APIを使用してツイートを取得するためにPythonのプログ
   \item answer\_start: contextから抜き出した答えの位置情報
 \end{itemize}
 
-\subsection{モデルのfine-tuning}
-用意したデータセットを用いて事前学習済みモデルをfine-tuningする. 本研究では事前学習済みモデルとしてHuging FaceのTransformersを通して利用できる東北大学のモデル\cite{tohoku}を使用する. このモデルは日本語のWikipediaのデータを用いて学習されている\cite{tohoku}. 
-この東北大学が公開している日本語BERTのうち, whole word maskingを適用して学習させているモデル\cite{masking}を用いる. whole word maskingとは事前学習時に単語ごとでマスクするかどうかを決め, マスクする単語に対応するサブワードを全てマスクする方式である. モデルのパラメータは以下に示す通りである. 
+\subsection{モデルのファインチューニング}
+用意したデータセットを用いて事前学習済みモデルをファインチューニングする. 本研究では事前学習済みモデルとしてHugging FaceのTransformersを通して利用できる東北大学のモデル\cite{tohoku}を使用する. このモデルは日本語のWikipediaのデータを用いて学習されている\cite{tohoku}. 
+この東北大学が公開している日本語BERTのうち, whole word maskingを適用して学習させているモデル\cite{masking}を用いる. whole word maskingとは事前学習時に単語ごとでマスクするかどうかを決め, マスクする単語に対応するサブワードを全てマスクする方式である. モデルのパラメータは次に示す通りである. 
 \begin{itemize}
   \item 学習率: 3e-5
   \item エポック数: 10
@@ -323,7 +325,7 @@ Twitter APIを使用してツイートを取得するためにPythonのプログ
 実装にはTransformersに含まれるスクリプトであるrun\_squad.pyを用いる. 
 
 \subsection{自動抽出}
-fine-tuningを行ったモデルを使用して自動抽出を行う. 前処理したGoogle PlayストアとTwitterのデータから有用な箇所を自動抽出する. 
+前処理したGoogle PlayストアとTwitterのデータから有用な箇所を自動抽出する. 自動抽出にはファインチューニングを行ったモデルとトークン化を行うトークナイザーを使用する. 質問文と抽出対象のデータをトークナイザーでトークン化し, 各トークンをモデルに与えると抽出したオブジェクトとそのオブジェクトの開始位置が返される. 
 結果は表\ref{tb:googleqa}に示すようにid, アプリ名, 投稿日時, 文章, 抽出したオブジェクトをcsv形式で保存する. 
 
 \begin{table}[H]
@@ -333,25 +335,18 @@ fine-tuningを行ったモデルを使用して自動抽出を行う. 前処理�
   \begin{center}
   \begin{tabularx}{\linewidth}{l|l|X|X|X}
     \hline
-    id&app\_name&datetime&context&prediction\\\hline\hline
+    id&アプリ名&投稿日時&元の文章&抽出したオブジェクト\\\hline\hline
     g\_955&coke\_on&2021-11-27 11:17:03&商品が出ない事が何回か発生しました&商品が出ない\\\hline
     g\_956&coke\_on&2021-11-02 12:15:37&使用している端末が、利用できる端末の一覧表にないため、サポートは期待できない&使用している端末が、利用できる端末の一覧表にない\\\hline
     g\_959&coke\_on&2021-11-11 15:32:50&そもそも自販機側が黄色点滅していなくて買えないことが多過ぎです&自販機側が黄色点滅していなくて買えない\\\hline
     g\_961&coke\_on&2021-11-14 23:13:26&今まではcoke\_on対応を優先してかっていたが、これからはコカコーラ製品全般をできるだけ買わないようにする&今まではcoke\_on対応を優先してかっていたが、これからはコカコーラ製品全般をできるだけ買わないようにする\\\hline
     g\_964&coke\_on&2021-10-24 12:30:07&自販機との接続を早くしてほしい&自販機との接続を早くしてほしい\\\hline
-    % g\_965&coke\_on&2021-11-11 16:43:39&やっと繋がっても先にキャンペーン広告が出てすぐに買えないのが不親切&キャンペーン広告が出てすぐに買えない\\\hline
-    % g\_969&coke\_on&2021-12-07 08:28:27&コークオンパスのフリー20プランの残り回数が分かりやすく表示してほしい&コークオンパスのフリー20プランの残り回数が分かりやすく表示してほしい\\\hline
-    % g\_973&coke\_on&2021-11-23 14:51:45&反応しない&反応しない\\\hline
-    % g\_977&coke\_on&2021-11-11 18:22:04&2本以上の購入はとても使えません&2本以上の購入はとても使えません\\\hline
-    % g\_978&coke\_on&2021-11-01 11:06:09&それと対応自販機との連携が悪い&自販機との連携が悪い\\\hline
-    % g\_980&coke\_on&2021-10-22 03:22:06&動きが遅い&動きが遅い\\\hline
-    % g\_982&coke\_on&2021-11-22 11:58:45&ただ自分のスマホのストレージが小さく、データ容量が大きいため今回一先ず削除いたします&自分のスマホのストレージが小さく、データ容量が大きい\\\hline
   \end{tabularx}\end{center}
 \end{table}
 
 %ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
-\section{クラスタリング}
+\section{クラスタリング}\label{clustering}
 \subsection{ベクトルの生成}
 抽出した文章をその文章が示す意味に応じてクラスタリングする. クラスタリングするために日本語Sentence-BERTクラスを定義する. 日本語Sentence-BERTクラス (SentenceBertJapanese) の各関数の概要を示す. 
 \begin{itemize}
@@ -360,7 +355,7 @@ fine-tuningを行ったモデルを使用して自動抽出を行う. 前処理�
   \item encode関数 : 文のリストから各文章の埋め込みを求める
 \end{itemize}
 
-このように, 日本語BERT用にfine-tuningしたBERTを用いて各トークンの埋め込みを求め, 平均を取ることにより文全体の埋め込みを求めている. 
+このように, 日本語BERT用にファインチューニングしたBERTを用いて各トークンの埋め込みを求め, 平均を取ることにより文全体の埋め込みを求めている. 
 
 % \begin{lstlisting}[caption=clustering.py,label=sentence-bert]
 %   class SentenceBertJapanese:
@@ -406,7 +401,7 @@ SentenceBertJapaneseクラスの引数に日本語モデル名を与えること
 \subsection{グラフクラスタリング}
 次に, それぞれの抽出したオブジェクトをノード, ノードのベクトル間のコサイン類似度をエッジとする無向グラフを作成する. グラフの作成にはcreate\_graph関数を使用する. 引数には文書埋め込み, 閾値, 生成されたオブジェクトのベクトルを渡す. 
 
-作成されたグラフからChinese Whispersによりグラフクラスタリングが実行される. 作成したクラスタリングに関するcw関数はソースコード\ref{cw}に示す. chinese\_whispers関数の引数に作成したグラフ, エッジの重み付けを決定する方法, Chinese Whisperアルゴリズムの反復回数を与える. 本研究ではエッジの重み付けを決定する方法はデフォルトのtop (エッジの重みをそのまま使用する方法) にし, エッジの最大トークンが重みとして使用される. また, 反復回数は20とした. 
+作成されたグラフからChinese Whispersによりグラフクラスタリングが実行される. 作成したクラスタリングに関するcw関数はソースコード\ref{cw}に示す. 
 
 \begin{lstlisting}[caption=cw関数,label=cw]
   def cw (input_csv_file, category, app_name) :
@@ -426,18 +421,28 @@ SentenceBertJapaneseクラスの引数に日本語モデル名を与えること
         clusters.append ([text, label]) 
 \end{lstlisting}
 
+この関数は次に示す手順で実行される. 
+
+\begin{enumerate}
+  \item モデルを使用して文のベクトル表現 (sentence\_vectors) を生成 (3行目) 
+  \item Chinese Wispersで使用される閾値 (threshold) , 抽出したオブジェクトとクラスター番号を格納する2次元配列 (clusters) を用意 (5, 6行目)
+  \item 文の埋め込み, 閾値, 文のベクトル表現を与えてグラフを作成 (9行目)
+  \item chinese\_whispers関数の引数に作成されたグラフ, エッジの重み付けを決定する方法, Chinese Whisperアルゴリズムの反復回数を与えて実行
+  \item chinese\_whispers関数の実行によりグラフの各ノードに抽出されたオブジェクト (text) とクラスター番号 (label) が格納されているためfor文で各情報をclusterに格納していく (12行目〜15行目)
+\end{enumerate}
+
+本研究ではエッジの重み付けを決定する方法はデフォルトのtop (エッジの重みをそのまま使用する方法) にし, エッジの最大トークンが重みとして使用される. また, 反復回数は20とした. 
+
 クラスタリングした結果, それぞれの文章にクラスターの番号 (以下 : クラスター番号) が振られる. クラスター番号が同じものが同じクラスターとなり, クラスター番号が近いものは意味的相関が近いことを表す. コサイン類似度の閾値を決めることによりどの程度の類似文を同じクラスターと定義するのかが決定される. 
 結果はcsvファイルに保存される. 表\ref{tb:clustering}に示されるように抽出したオブジェクトにそれぞれクラスター番号が振られる. 
 
 \begin{table}[H]
-  \caption{抽出した文章とクラスター番号 (google\_fit) }
+  \caption{抽出したオブジェクトとクラスター番号 (google\_fit) }
   \label{tb:clustering}
   \begin{center}
   \begin{tabularx}{\linewidth}{X|c}
     \hline
-    prediction&cluster\\\hline\hline
-    % 十分歩いて108歩とかふざけんな&273\\\hline
-    % 278歩に減っていた&274\\\hline
+    抽出したオブジェクト&cluster\\\hline\hline
     再起動しても直らない&275\\\hline
     接続/連携を適宜確認しておく必要がある&276\\\hline
     歩いた歩数より足りない&279\\\hline
@@ -458,12 +463,6 @@ SentenceBertJapaneseクラスの引数に日本語モデル名を与えること
     カウント出来ていない&283\\\hline
     カウントされず&283\\\hline
     記録ができませんと&283\\\hline
-    % 計測しなくなった&283\\\hline
-    % カウントされなくなった&283\\\hline
-    % カウントしない&283\\\hline
-    % 全くカウントされていない&283\\\hline
-    % カウントしなくなりました&283\\\hline
-    % データが反映されなくなった&283\\\hline
   \end{tabularx}\end{center}
 \end{table}
 
@@ -482,7 +481,7 @@ KeyBERTのキーワード抽出によりクラスター名称を決定する手�
     # spaCyを使用して名詞, 固有名詞, 動詞, 形容詞, 数詞を抽出
     doc = nlp (text) 
     tokens = [token.text for token in doc if token.pos_ == 'NOUN' or token.pos_ == 'PROPN' or token.pos_ == 'ADJ' or token.pos_ == 'NUM' or token.pos_ == 'VERB']
-    # 名詞のリストをKeyBERTに渡してキーワード抽出
+    # tokensをKeyBERTに渡してキーワード抽出
     tokens_text = ' '.join (tokens) 
     keywords = keybert_model.extract_keywords (tokens_text, top_n = 3, keyphrase_ngram_range= (1, 1) , stop_words=None) 
     title = ""
@@ -491,16 +490,23 @@ KeyBERTのキーワード抽出によりクラスター名称を決定する手�
     return title
 \end{lstlisting}
 
-この関数では, 最初にクラスターの各オブジェクトを結合して1つの大きな文書を生成する. そして, この文書の特徴を表すキーワードを抽出し, クラスターの名称とする. キーワード抽出の対象となる品詞は名詞, 固有名詞, 数詞, 形容詞, 動詞である. 
-そのため, 文書をトークンに分割し, 名詞, 固有名詞, 数詞, 形容詞, 動詞のトークンのみを取得して, 空白で結合した新たな文書を生成する. 
-KeyBERTモデルのインスタンスを生成する. 作成されたKeyBERTモデルのメソッドであるextract\_keywordを用いてキーワードの抽出を行う. 引数で抽出対象となる文書, 抽出するキーワードの数, キーワードの長さを指定することができる. 
-クラスターの名称が決定したあとは, クラスター番号とクラスター名称の組み合わせを格納したcsvファイルを作成する. 
+この関数は次に示す手順で実行される. 
+
+\begin{enumerate}
+  \item クラスターの各オブジェクトを結合した1つの大きな文書 (text)をトークン化する (10行目)
+  \item トークンのうち名詞, 固有名詞, 動詞, 形容詞, 数詞のみを含む配列を作成 (11行目)
+  \item この配列を' ' (空白) で結合し, 新たな文書を生成 (13行目)
+  \item KeyBERTモデルのインスタンスからキーワードを抽出するメソッド (extract\_keywords) を呼び出し, キーワードを配列で取得. メソッドの引数には抽出対象となる文書, 抽出するキーワードの数, キーワードの長さを与える. (14行目)
+  \item キーワードからタイトルを生成し, 返す (15行目〜18行目)
+\end{enumerate}
+
+クラスターの名称が決定したら, クラスター番号とクラスター名称の組み合わせを格納したcsvファイルを作成する. 
 
 %ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
-\section{画面出力・可視化}
+\section{画面出力・可視化}\label{display}
 \subsection{使用した言語・フレームワーク}
-webアプリケーションの実装に使用した言語, フレームワークは以下となっている. 
+Webアプリケーションの実装に使用した言語, フレームワークは次に示す通りである. 
 \begin{itemize}
     \item フロントエンド: HTML/CSS, JavaScript
     \item バックエンド: Python
@@ -508,45 +514,51 @@ webアプリケーションの実装に使用した言語, フレームワーク
 \end{itemize}
 
 \subsection{概要}
-分類した結果の含まれたcsvファイルの情報をバックエンド側で処理し, リストを作成する. そのリストをフロントエンド側に渡し処理することでレビューの情報をwebブラウザ上に表示することができる. 
+レビューを抽出, クラスタリングした結果を開発者が分析しやすくするためにwebサイト上で表示する. 表示する際は適切な2種類のグラフを用いているため, レビュー内容が把握しやすくなっている. また, 期間やキーワードで検索できるような機能を入れているためレビューを条件に応じて絞り込むことができる. 
 
 \subsection{画面構成}
-画面は大きく分けて一覧画面とアプリごとの詳細画面の2つである. 
+画面は大きく分けて一覧画面とアプリごとの詳細画面の2つからなる. 
 
-一覧画面では全てのアプリに対する日ごとのレビュー数を表す折れ線グラフを表示する. 
-このグラフをGoogle Playストアのレビューとツイートの2つ作成する. 
+一覧画面では次に示す項目や機能を表示, 付与する. 
 
-アプリごとの詳細画面では, アコーディオンメニューを使用して抽出した文章の一覧をクラスターごとに表示する. また, 抽出した文章をクリックすると投稿日時や元のレビュー文がモーダルウィンドウで表示する. 
-そして, 日ごとのレビュー数を表す折れ線グラフとクラスターに含まれるレビュー数の上位10個を表す棒グラフの2つのグラフを表示する. 
+\begin{itemize}
+  \item 期間, キーワードで絞り込める検索機能の付与
+  \item 全てのアプリに対する日ごとのレビュー数を表す折れ線グラフ (Google Playストアのレビューとツイートそれぞれについて)
+\end{itemize}
 
-例えば, majicaのレビューにおける日付とレビュー数の関係を表した折れ線グラフが図\ref{fig:majica_graph}である. このグラフを閲覧することでいつ多くのレビューが挙げられているかどうか確認することができる. また, 検索結果に応じて日付やレビュー数が動的に変更されるようになっている. 
-図\ref{fig:majica_graph}より, majicaのレビューは11月25日に多くのレビューが挙げられていることがわかる. 
+アプリごとの詳細画面では, 次に示す項目や機能を表示, 付与する.
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[scale=0.3]
-    {contents/images/majica_graph.png}
-  \caption{majicaのレビューにおける日付とレビュー数の関係\label{fig:majica_graph}}
-\end{figure}
+\begin{itemize}
+  \item 期間, キーワードで絞り込める検索機能の付与
+  \item アコーディオンメニューを使用して抽出した文章の一覧をクラスターごとに表示
+  \item 抽出した文章をクリックすると投稿日時や元のレビューがモーダルウィンドウで表示
+  \item 日ごとのレビュー数を表す折れ線グラフの表示
+  \item クラスターに含まれるレビュー数の上位10個を表す棒グラフの表示
+\end{itemize}
 
-クラスターに含まれるレビュー数の上位10個を表す棒グラフが図\ref{fig:top10}である. このグラフはgoogle fitにおけるクラスターのうちレビュー数が多いものを10個表示している. 
-そして, このグラフも検索結果に応じてクラスターに含まれるレビュー数が動的に変更されるようになっている. 
+アプリの修正や機能の追加などを行った際に, ユーザがアプリの変更に対してどのような内容のレビューを挙げているか, レビュー数に変化があるかどうかを確認することはアプリの開発にとって非常に重要であると考えられる. 
+したがって, このwebサイトでは日ごとのレビュー数を表す折れ線グラフや, クラスターに含まれるレビュー数の上位10個を表す棒グラフを表示している. 
+また, 特定の機能や期間に関するレビューだけを確認したい際には検索機能を使用してレビューを絞り込むことができる. 
+これらの機能によって膨大な数があるレビューを開発者が確認する負担を軽減し, 効率を向上させることができる. 
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[scale=0.3]
-    {contents/images/top10.png}
-  \caption{Google Playストアにおける日付とレビュー数の関係\label{fig:top10}}
-\end{figure}
-
-google fitのレビュー一覧の表示が図\ref{fig:review_items}である. この一覧はクラスターに含まれるレビュー数が多いものから順に表示されており, ページネーションにより1つのページでレビュー100件ごとに表示している. 
-クラスタリングごとに表示し, 類似したレビューをまとめることで開発者がレビューを確認しやすいようになっている. 
+google fitのレビュー一覧の表示が図\ref{fig:review_items}である. 
 
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.3]
     {contents/images/review_items.png}
   \caption{google fitのレビュー一覧\label{fig:review_items}}
+\end{figure}
+
+この一覧はクラスターに含まれるレビュー数が多いものから順に表示されており, ページネーションにより1つのページでレビュー100件ごとに表示している. 
+初期状態では, クラスターのタイトルのみ表示されており, タイトルをクリックするとアコーディオンメニューが開き, そのクラスターに属するレビューの一覧が表示される. アコーディオンメニュー内では投稿された日付と抽出されたオブジェクトのみ表示されるが, 抽出されたオブジェクトをクリックすると投稿日時, レビューの全文, 抽出した文章がモーダルで表示される (図\ref{fig:modal}). 
+クラスターごとに表示し, 類似したレビューをまとめることで開発者がレビューを確認する効率を上げることができる. 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.5]
+    {contents/images/modal.png}
+  \caption{レビューのモーダル表示\label{fig:modal}}
 \end{figure}
 
 \subsection{検索のロジック}
@@ -564,7 +576,7 @@ google fitのレビュー一覧の表示が図\ref{fig:review_items}である. �
   search_result = []
   for row in rows:
       if start_date <= row[2][:10] <= end_date:
-          if keyword != 」:
+          if keyword != "":
               if keyword in row[3]:
                   search_result.append (row) 
           else:
@@ -572,11 +584,19 @@ google fitのレビュー一覧の表示が図\ref{fig:review_items}である. �
   rows = search_result
 \end{lstlisting}
 
+このコードは次に示す手順で実行される. 
+
+\begin{enumerate}
+  \item 抽出, クラスタリングが行われた結果を格納したcsvファイルを開き, リスト形式に変換する (1行目〜5行目)
+  \item 各レビューの投稿期間が検索で指定した期間の範囲内にあるかどうかを確認する (10行目)
+  \item 検索で指定したキーワードがないなら, そのまま検索結果を格納するリスト (search\_list) に格納する(11, 14, 15行目)
+  \item 検索で指定したキーワードがある場合, レビューがそのキーワードを含む場合は検索結果を格納するリスト (search\_list) に格納する (11行目〜13行目)
+\end{enumerate}
+
 \subsection{グラフの作成}
-グラフの作成にはplotly.jsを用いる. plotly.sjとはグラフ生成ライブラリであり, 3Dグラフや統計グラフなど40を超えるグラフタイプが同梱されている\cite{plotly}.
+グラフの作成にはplotly.jsを用いる. plotly.jsとはグラフ生成ライブラリであり, 3Dグラフや統計グラフなど40を超えるグラフタイプが同梱されている\cite{plotly}.
 plotly.jsで作成されたグラフにはオプションとしてズーム機能やグラフのダウンロード機能が付随している. 
-日付ごとのレビュー数に関するグラフを表示するソースコード\ref{graph}を示す. 設定したタグをDOMのターゲットにしてplotly.jsに書き換えてもらう. graphsはバックエンド側で作成された日付とその日のレビュー数に関する二次元リストであり, 横軸に日付, 縦軸にレビュー数を取るグラフである. 
-dataのtypeでグラフタイプを指定でき, layoutでタイトルや表の大きさを指定できる. 
+日付ごとのレビュー数に関するグラフを表示するソースコード\ref{graph}を示す. 
 
 \begin{lstlisting}[caption=detail.html, label=graph]
   <div class="graph-title">日付ごとのレビュー数の推移</div>
@@ -610,3 +630,45 @@ dataのtypeでグラフタイプを指定でき, layoutでタイトルや表の�
       Plotly.newPlot ('scatter', data, layout) ;
   </script>
 \end{lstlisting}
+
+このコードは次に示す構造となっている. 
+ここでgraphsはレビューが投稿された日付とその日のレビュー数が格納された二次元リストである. この二次元リストはバックエンド側で作成される. 
+横軸にレビューが投稿された日付, 縦軸にレビュー数を取るグラフである. 
+dataのtypeでグラフタイプを指定でき, layoutでタイトルや表の大きさを指定できる. 
+
+\begin{itemize}
+  \item DOMのターゲットを設定する (2行目)
+  \item graphsからレビューが投稿された日付を取得し, 配列 (labels) を生成する (6行目)
+  \item グラフの横軸に表示する日付のみを格納したリスト (displayLabels) を生成する (8行目〜11行目)
+  \item graphsから日付ごとのレビュー数を取得し, 配列 (values) を生成する (12行目)
+  \item 横軸に日付, 縦軸にその日付に投稿されたレビュー数を表示する折れ線グラフを生成するための変数 (data) を宣言する (14行目〜18行目)
+  \item タイトルやグラフのサイズ, 横軸に表示する内容を指定するための変数 (layout) を宣言する (20行目〜27行目)
+  \item JavaScriptのPlotlyライブラリにあるnewPlotメソッドでグラフを生成する. 引数には, DOMのターゲットのid, 宣言済みのdata, layoutを渡す (20行目〜27行目)
+\end{itemize}
+
+ソースコード\ref{graph}によって作成されたグラフが図\ref{fig:majica_graph}である. このグラフは, majicaのレビューにおける日付とレビュー数の関係を表した折れ線グラフである. 
+横軸がレビューが投稿された日付, 縦軸がレビュー数をそれぞれ表している. 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.4]
+    {contents/images/majica_graph.png}
+  \caption{majicaのレビューにおける日付とレビュー数の関係\label{fig:majica_graph}}
+\end{figure}
+
+このグラフを閲覧することでいつ多くのレビューが挙げられているかどうか確認することができる. また, 検索結果に対応してグラフの日付やレビュー数が変更されるようになっている. 
+図\ref{fig:majica_graph}より, majicaのレビューは11月25日に多くのレビューが挙げられていることがわかる. そして11月25日のレビューの内容を詳細画面で確認すると, ``更新したらアプリが開けない'', ``更新してから開けなくなりました''といったアプリの更新によるアプリの不具合が多く報告されていることがわかった. 
+このレビューをもとに開発者は更新の内容や起動時のコードなどを確認し, 早急に修正を行うと考えられる. 
+
+クラスターに含まれるレビュー数の上位10個を表す棒グラフが図\ref{fig:top10}である. 横軸がクラスターのタイトル, 縦軸がレビュー数をそれぞれ表している. 
+このグラフはgoogle fitにおけるクラスターのうちレビュー数が多いものを10個表示している. 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.4]
+    {contents/images/top10.png}
+  \caption{google fitのレビューにおける種類ごとのレビュー数\label{fig:top10}}
+\end{figure}
+
+このグラフを確認すると, インストールやログインに関する不具合や歩数が減少してしまう不具合を報告するレビューが多いことがわかる. このように1つ1つのレビューを確認しなくてもどのような内容のレビューが多く投稿されているのかが可視化されている. 
+そして, このグラフも検索結果に対応して, 各クラスターに含まれるレビュー数が変更されるようになっている. 

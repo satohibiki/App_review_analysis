@@ -7,7 +7,7 @@ from tqdm import tqdm
 model = AutoModelForQuestionAnswering.from_pretrained('output/')  
 tokenizer = BertJapaneseTokenizer.from_pretrained('cl-tohoku/bert-base-japanese-whole-word-masking')
 
-def exerute_answer(context, question):
+def execute_answer(context, question):
     # 入力テキスト, 質問
     context = context
     question = question 
@@ -50,7 +50,7 @@ def compare_answer():
             reviews.append(context)
             questions.append(question)
             # 予測結果をモデルから取得
-            prediction = exerute_answer(context, question)
+            prediction = execute_answer(context, question)
             if prediction == '[CLS]':
                 predictions_data.append('')
             else:
