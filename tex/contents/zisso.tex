@@ -38,7 +38,7 @@
 
 先行研究では投稿日時が2021年10月21日〜2021年12月15日までの8週間のレビューを収集している. 収集されたGoogle Playストアの各アプリのレビュー数は表\ref{tb:rawreviewnum}の通りである. 
 \begin{table}[H]
-  \caption{収集したGoogle Playストアのレビュー数 (2021/10/21〜12/15) （ \cite{kawatsura} p.16, 表 4.2）}
+  \caption{収集したGoogle Playストアのレビュー数 (2021/10/21〜2021/12/15) （ \cite{kawatsura} p.16, 表 4.2）}
   \label{tb:rawreviewnum}
   \begin{center}
   \begin{tabular}{l|r}
@@ -62,9 +62,9 @@
 \end{table}
 
 \noindent
-この先行研究のデータに加え, 本研究では2023年10月1日〜12月22日のレビューを新たに取得する. 新たに取得されたGoogle Playストアの各アプリのレビュー数は表\ref{tb:rawreviewnum2023}の通りである. 
+この先行研究のデータに加え, 本研究では2023年10月1日〜2023年12月22日のレビューを新たに取得する. 新たに取得されたGoogle Playストアの各アプリのレビュー数は表\ref{tb:rawreviewnum2023}の通りである. 
 \begin{table}[H]
-  \caption{収集したGoogle Playストアのレビュー数 (2023/10/1〜12/22) }
+  \caption{収集したGoogle Playストアのレビュー数 (2023/10/1〜2023/12/22) }
   \label{tb:rawreviewnum2023}
   \begin{center}
   \begin{tabular}{l|r}
@@ -86,9 +86,15 @@
   \end{tabular}\end{center}
 \end{table}
 
-Google PlayストアのレビューをスクレイピングするためにPythonのプログラムである\verb|get_google_play_review.py|を作成した. このプログラムでは, アプリのパッケージ名を与えると, そのアプリのレビュー情報をcsv形式で保存するよう実装となっている. 
-レビューのスクレイピングのために, Pythonのライブラリであるgoogle-play-scraperを使用する. google-play-scraperでは外部依存関係なしでPython用のGoogle Playストアを簡単にクロールするためのAPIが提供されている\cite{google-play-scraper}. 
-このライブラリを使用することにより, アプリのパッケージ名, 言語, 取得する数, 順序を指定してレビューの一覧を取得することができる. 
+Google PlayストアのレビューをスクレイピングするためにPythonのプログラムである\verb|get_google_play_review.py|を作成した. 
+このプログラムは, レビューのスクレイピングのために, Pythonのライブラリであるgoogle-play-scraperを使用している. google-play-scraperでは外部依存関係なしでPython用のGoogle Playストアを簡単にクロールするためのAPIが提供されている\cite{google-play-scraper}. 
+実装したプログラムの概要を次に示す. 
+
+\begin{enumerate}
+  \item アプリのパッケージ名, 言語, 取得する数, 順序を指定してレビューの一覧を取得
+  \item レビュー一覧のうち指定した期間内のレビューのみを絞り込む
+  \item 本論文で取得するレビュー情報のみをcsv形式で保存
+\end{enumerate}
 
 %ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
@@ -104,7 +110,7 @@ Google PlayストアのレビューをスクレイピングするためにPython
 先行研究では投稿日時が2021年10月21日〜2021年12月15日までの8週間のツイートを収集している. 収集されたTwitterの各アプリのツイート数を表\ref{tb:rawtweetnum}に示す. 
 
 \begin{table}[H]
-  \caption{収集したTwitterのツイート数 (2021/10/21〜12/15) （ \cite{kawatsura} p.18, 表 4.3）}
+  \caption{収集したTwitterのツイート数 (2021/10/21〜2021/12/15) （ \cite{kawatsura} p.18, 表 4.3）}
   \label{tb:rawtweetnum}
   \begin{center}
   \begin{tabular}{l|r}
@@ -128,7 +134,7 @@ Google PlayストアのレビューをスクレイピングするためにPython
 \end{table}
 
 \noindent
-先行研究で得たデータに加え, 本研究では新たに2023年10月1日から2023年12月22日のツイートを取得する. Twitterのツイート取得に関してはTwitter APIを使用してスクレイピングを行う. Twitter APIのプランに関してはFree, Basic, Pro, Enterpriseの4つのプランが用意されておりそれぞれ料金や使用できる機能などが異なる. 大規模なサービスやビジネス向けのEnterpriseプラン以外の3つのプランの違いの一部を表\ref{tb:xplan}に示す. 
+先行研究で得たデータに加え, 本研究では2023年10月1日〜2023年12月22日のツイートを新たに取得する. Twitterのツイート取得に関してはTwitter APIを使用してスクレイピングを行う. Twitter APIのプランに関してはFree, Basic, Pro, Enterpriseの4つのプランが用意されておりそれぞれ料金や使用できる機能などが異なる. 大規模なサービスやビジネス向けのEnterpriseプラン以外の3つのプランの違いの一部を表\ref{tb:xplan}に示す. 
 表\ref{tb:xplan}よりツイートを取得するためにはBasicプラン以上に加入する必要がある. Basicプランに加入した場合でも合計で30,000件しか取得できないため本研究では先行研究のデータセットを追加で使用することとした. Twitterの利用規約によると, Twitterが提供するインターフェイスを介して行うスクレイピング以外は禁止としている. そのため, seleniumなどを使用したスクレイピングはせずに, 先行研究のデータを使用することとした. 
 
 \begin{table}[H]
@@ -144,8 +150,14 @@ Google PlayストアのレビューをスクレイピングするためにPython
   \end{tabular}\end{center}
 \end{table}
 
-Twitter APIを使用してツイートを取得するためにPythonのプログラムである\verb|get_tweet.py|を作成した. このプログラムではTwitter APIにアクセスするためのライブラリであるTweepy\cite{tweepy}を使用した. まずAPIキーなどの4つの認証情報をセットする. 次にClientクラスのsearch\_resent\_tweetメソッドを使用してツイートを取得する. 
-このメソッドは最大で過去7日間まで遡ってツイートを取得できる. search\_all\_tweetsメソッドでは全てのツイートを取得できるが, Academic Researchアクセスの利用資格があるものしか使用できないメソッドである. このアクセスを利用するにはAcademic Research申請を提出する必要があり, ``修士課程の学生, 博士号取得候補者, 博士研究員, 大学教員, 学術機関または大学の研究員である''ことが申し込みをする1つの条件となっている. \cite{academic-research}
+Twitter APIを使用してツイートを取得するためにPythonのプログラムである\verb|get_tweet.py|を作成した. このプログラムではTwitter APIにアクセスするためのライブラリであるTweepy\cite{tweepy}を使用した. 
+実装したプログラムの概要を次に示す.
+\begin{enumerate}
+  \item APIキーなどの5つの認証情報をセット
+  \item Clientクラスのsearch\_resent\_tweetメソッドを使用してツイートを取得. 引数には検索ワード (対象のアプリ名) や取得件数を渡す
+  \item 検索ワードを含むツイート情報のうち本論文で取得する情報のみをcsv形式で保存
+\end{enumerate}
+search\_resent\_tweetメソッドは最大で過去7日間まで遡ってツイートを取得できる. search\_all\_tweetsメソッドでは全てのツイートを取得できるが, Academic Researchアクセスの利用資格があるものしか使用できないメソッドである. このアクセスを利用するにはAcademic Research申請を提出する必要があり, ``修士課程の学生, 博士号取得候補者, 博士研究員, 大学教員, 学術機関または大学の研究員である''ことが申し込みをする1つの条件となっている\cite{academic-research}. 
 私は申し込みの条件を満たしていないため, このメソッドは使用しなかった. 
 先行研究と同じ情報を取得するために, 本研究では引数として次に示すものを与えた. 
 \begin{itemize}
@@ -244,7 +256,7 @@ Twitter APIを使用してツイートを取得するためにPythonのプログ
 
 %ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
-\section{有用な箇所の自動抽出}\label{extraction}
+\section{キーフレーズの自動抽出}\label{extraction}
 \subsection{データセット}\label{dataset}
 モデルのファインチューニングに使用されるデータセットとして, Google PlayストアとTwitterのツイートからそれぞれ5,000件ずつ合計で10,000件のデータをランダムに抽出し手作業で有用な箇所を抽出した. データセットの作成は情報工学科の学部4年生2人がそれぞれ手作業で行い, お互いの抽出した箇所が異なっていたものは議論することにより統一した. 
 データセットには前処理したデータが格納されたcsvファイルを利用して, 抽出したキーフレーズを含めた新たなcsvファイルを作成する. 作成されたcsvファイルにはid,アプリ名,投稿日時,本文, 抽出したキーフレーズの5つのデータが入っている. idは前処理したデータを識別するために与えられ, Google Playストアのレビューはg\_ (index) , Twitterのツイートのidはt\_ (index) とする.  indexには各データに応じた番号が振られている. 
@@ -297,12 +309,12 @@ Twitter APIを使用してツイートを取得するためにPythonのプログ
   } 
 \end{lstlisting}
 \noindent
-このjsonファイルは下記の要素によって構成である. 
+このjsonファイルは次に示す要素によって構成される. 
 
 \begin{itemize}
-  \item version: バージョンを表す. 今回は答えられない質問を含むSQuAD 2.0と同じバージョンのため, v2.0とする. SQuAD 2.0とは, スタンフォード質問回答データセットであり質問応答タスクで一般的に使用されているデータセットである. 
+  \item version: バージョンを表す. 本研究で用意したデータセットはスタンフォード質問回答データセットであるSQuAD 2.0 (質問応答タスクで一般的に使用されているデータセット, 答えられない質問を含む) と同じバージョンであるため, v2.0とする. 
   \item title: contextのタイトル
-  \item paragraphs: context 1つとそれに関連する質問, 答えがリスト形式で保持されている
+  \item paragraphs: context一つとそれに関連する質問, 答えがリスト形式で保持されている
   \item qas: 質問と回答がリスト形式となっている
   \item context: 元の文章 (抽出する前の文章) 
   \item id: 設定したid
@@ -325,7 +337,37 @@ Twitter APIを使用してツイートを取得するためにPythonのプログ
 実装にはTransformersに含まれるスクリプトであるrun\_squad.pyを用いる. 
 
 \subsection{自動抽出}
-前処理したGoogle PlayストアとTwitterのデータから有用な箇所を自動抽出する. 自動抽出にはファインチューニングを行ったモデルとトークン化を行うトークナイザーを使用する. 質問文と抽出対象のデータをトークナイザーでトークン化し, 各トークンをモデルに与えると抽出したキーフレーズとそのキーフレーズの開始位置が返される. 
+前処理したGoogle PlayストアとTwitterのデータから有用な箇所を自動抽出する. 自動抽出を行うexecute\_answer関数をソースコード\ref{answer}に示す. 
+\begin{lstlisting}[caption=execute\_answer関数,label=answer]
+# モデルとトークナイザーの準備
+model = AutoModelForQuestionAnswering.from_pretrained('output/')  
+tokenizer = BertJapaneseTokenizer.from_pretrained('cl-tohoku/bert-base-japanese-whole-word-masking') 
+
+def execute_answer(context, question):
+    # 自動抽出の実行
+    inputs = tokenizer.encode_plus(question, context, add_special_tokens=True, return_tensors="pt")
+    input_ids = inputs["input_ids"].tolist()[0]
+    output = model(**inputs)
+    answer_start = torch.argmax(output.start_logits)  
+    answer_end = torch.argmax(output.end_logits) + 1 
+    answer = tokenizer.convert_tokens_to_string(tokenizer.convert_ids_to_tokens(input_ids[answer_start:answer_end]))
+    answer = answer.replace(" ", "")
+
+    del inputs, output
+    torch.cuda.empty_cache()
+
+    return answer
+\end{lstlisting}
+このソースコードの詳細を次に示す.  
+
+\begin{enumerate}
+  \item ファインチューニングを行ったモデルとトークン化を行うためのBERT用トークナイザーを準備 (2, 3行目)
+  \item 質問文と抽出対象のデータをトークナイザーでトークン化し, モデルへの入力データ (inputs) を作成 (7行目)
+  \item トークン化された文章のidをリスト (input\_ids) に変換 (8行目)
+  \item 作成した入力データを使ってモデルに入力し, 出力 (output) を取得 (9行目)
+  \item 抽出したキーフレーズのトークンの開始位置と終了位置を取得 (10, 11行目)
+  \item 開始位置から終了位置までのトークンを文字列に変換してキーフレーズ (answer) を取得 (12行目)
+\end{enumerate}
 結果は表\ref{tb:googleqa}に示すようにid, アプリ名, 投稿日時, 文章, 抽出したキーフレーズをcsv形式で保存する. 
 
 \begin{table}[H]
@@ -421,7 +463,7 @@ SentenceBertJapaneseクラスの引数に日本語モデル名を与えること
         clusters.append ([text, label]) 
 \end{lstlisting}
 
-この関数は次に示す手順で実行される. 
+このソースコードの詳細を次に示す. 
 
 \begin{enumerate}
   \item モデルを使用して文のベクトル表現 (sentence\_vectors) を生成 (3行目) 
@@ -490,7 +532,7 @@ KeyBERTのキーワード抽出によりクラスター名称を決定する手�
     return title
 \end{lstlisting}
 
-この関数は次に示す手順で実行される. 
+このソースコードの詳細を次に示す. 
 
 \begin{enumerate}
   \item クラスターの各キーフレーズを結合した1つの大きな文書 (text)をトークン化する (10行目)
@@ -514,7 +556,7 @@ Webアプリケーションの実装に使用した言語, フレームワーク
 \end{itemize}
 
 \subsection{概要}
-レビューを抽出, クラスタリングした結果を開発者が分析しやすくするためにwebサイト上で表示する. 表示する際は適切な2種類のグラフを用いているため, レビュー内容が把握しやすくなっている. また, 期間やキーワードで検索できるような機能を入れているためレビューを条件に応じて絞り込むことができる. 
+レビューを抽出, クラスタリングした結果を開発者が分析しやすくするためにwebブラウザ上で表示する. 表示する際は適切な2種類のグラフを用いているため, レビュー内容が把握しやすくなっている. また, 期間やキーワードで検索できるような機能を入れているためレビューを条件に応じて絞り込むことができる. 
 
 \subsection{画面構成}
 画面は大きく分けて一覧画面とアプリごとの詳細画面の2つからなる. 
@@ -531,13 +573,13 @@ Webアプリケーションの実装に使用した言語, フレームワーク
 \begin{itemize}
   \item 期間, キーワードで絞り込める検索機能の付与
   \item アコーディオンメニューを使用して抽出した文章の一覧をクラスターごとに表示
-  \item 抽出した文章をクリックすると投稿日時や元のレビューがモーダルウィンドウで表示
+  \item 抽出した文章をクリックすると投稿日時や元のレビューをモーダルウィンドウで表示
   \item 日ごとのレビュー数を表す折れ線グラフの表示
   \item クラスターに含まれるレビュー数の上位10個を表す棒グラフの表示
 \end{itemize}
 
 アプリの修正や機能の追加などを行った際に, ユーザがアプリの変更に対してどのような内容のレビューを挙げているか, レビュー数に変化があるかどうかを確認することはアプリの開発にとって非常に重要であると考えられる. 
-したがって, このwebサイトでは日ごとのレビュー数を表す折れ線グラフや, クラスターに含まれるレビュー数の上位10個を表す棒グラフを表示している. 
+したがって, 本研究で実装した可視化ツールには日ごとのレビュー数を表す折れ線グラフや, クラスターに含まれるレビュー数の上位10個を表す棒グラフを表示している. 
 また, 特定の機能や期間に関するレビューだけを確認したい際には検索機能を使用してレビューを絞り込むことができる. 
 これらの機能によって膨大な数があるレビューを開発者が確認する負担を軽減し, 効率を向上させることができる. 
 
@@ -584,7 +626,7 @@ google fitのレビュー一覧の表示が図\ref{fig:review_items}である.
   rows = search_result
 \end{lstlisting}
 
-このコードは次に示す手順で実行される. 
+このソースコードの詳細を次に示す. 
 
 \begin{enumerate}
   \item 抽出, クラスタリングが行われた結果を格納したcsvファイルを開き, リスト形式に変換する (1行目〜5行目)
@@ -631,12 +673,9 @@ plotly.jsで作成されたグラフにはオプションとしてズーム機�
   </script>
 \end{lstlisting}
 
-このコードは次に示す構造となっている. 
-ここでgraphsはレビューが投稿された日付とその日のレビュー数が格納された二次元リストである. この二次元リストはバックエンド側で作成される. 
-横軸にレビューが投稿された日付, 縦軸にレビュー数を取るグラフである. 
-dataのtypeでグラフタイプを指定でき, layoutでタイトルや表の大きさを指定できる. 
+このソースコードの詳細を次に示す.
 
-\begin{itemize}
+\begin{enumerate}
   \item DOMのターゲットを設定する (2行目)
   \item graphsからレビューが投稿された日付を取得し, 配列 (labels) を生成する (6行目)
   \item グラフの横軸に表示する日付のみを格納したリスト (displayLabels) を生成する (8行目〜11行目)
@@ -644,7 +683,10 @@ dataのtypeでグラフタイプを指定でき, layoutでタイトルや表の�
   \item 横軸に日付, 縦軸にその日付に投稿されたレビュー数を表示する折れ線グラフを生成するための変数 (data) を宣言する (14行目〜18行目)
   \item タイトルやグラフのサイズ, 横軸に表示する内容を指定するための変数 (layout) を宣言する (20行目〜27行目)
   \item JavaScriptのPlotlyライブラリにあるnewPlotメソッドでグラフを生成する. 引数には, DOMのターゲットのid, 宣言済みのdata, layoutを渡す (20行目〜27行目)
-\end{itemize}
+\end{enumerate}
+ここでgraphsはレビューが投稿された日付とその日のレビュー数が格納された二次元リストである. この二次元リストはバックエンド側で作成される. 
+横軸にレビューが投稿された日付, 縦軸にレビュー数を取るグラフである. 
+dataのtypeでグラフタイプを指定でき, layoutでタイトルや表の大きさを指定できる. 
 
 ソースコード\ref{graph}によって作成されたグラフが図\ref{fig:majica_graph}である. このグラフは, majicaのレビューにおける日付とレビュー数の関係を表した折れ線グラフである. 
 横軸がレビューが投稿された日付, 縦軸がレビュー数をそれぞれ表している. 
