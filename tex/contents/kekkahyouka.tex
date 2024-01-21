@@ -36,7 +36,7 @@ RQ3では, 本論文で実装した可視化ツールが開発者にとって有
   \small
   \label{tb:qa}
   \begin{center}
-  \begin{tabularx}{\linewidth}{X|X}
+  \begin{tabularx}{\linewidth}{X|r}
     \hline
     答えがある問題数&468\\\hline
     答えがある問題の正当数&261\\\hline
@@ -187,12 +187,13 @@ K-Meansにおけるクラスター数とARIの関係を図\ref{fig:kmeans_graph}
   \caption{3つの手法におけるARI}
   \label{tb:two_ari}
   \begin{center}
-  \begin{tabularx}{\linewidth}{X|X}
+  \begin{tabularx}{\linewidth}{X|r|r}
     \hline
-    手法&ARIの最大値\\\hline\hline
-    階層型クラスタリング&0.34\\\hline
-    K-Means&0.36\\\hline
-    Chinese Whispers&\textbf{0.55}\\\hline
+    手法&ARIの最大値&クラスター数\\\hline\hline
+    手動&-&123\\\hline
+    階層型クラスタリング&0.34&129\\\hline
+    K-Means&0.36&119\\\hline
+    Chinese Whispers&\textbf{0.55}&144\\\hline
   \end{tabularx}\end{center}
 \end{table}
 
@@ -274,7 +275,7 @@ Google Playストアのレビュー欄の欠点は開発に役立たないレビ
   \caption{抽出されたキーフレーズの数}
   \label{tb:app_count}
   \begin{center}
-  \begin{tabularx}{\linewidth}{X|X|X}
+  \begin{tabularx}{\linewidth}{X|r|r}
     \hline
     アプリ名&Google Playストア&Twitter\\\hline\hline
     にゃんトーク&\textbf{199}&144\\\hline

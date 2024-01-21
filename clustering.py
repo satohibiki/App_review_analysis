@@ -228,6 +228,7 @@ def cw_check(input_csv_file, category, app_name): # 指定されたアプリで�
     # グラフ描写
     x_values = [point[0] for point in ari_list]
     y_values = [point[1] for point in ari_list]
+    # print(y_values)
     plt.plot(x_values, y_values, marker='o', linestyle='-')
     plt.title('閾値とARIの関係')
     plt.xlabel('閾値')
@@ -259,18 +260,17 @@ def cw_check(input_csv_file, category, app_name): # 指定されたアプリで�
         clusters.sort(reverse=False, key=lambda x:x[5])
         csv_writer.writerows(clusters)
 
-def cw(input_csv_file, category, app_name): # 指定されたアプリでのクラスタリング
+def cw(input_csv_file, category, app_name, threshold): # 指定されたアプリでのクラスタリング
     clusters = []
     reviews = []
     sentences = create_review_list(input_csv_file, app_name)
     if sentences == []:
-        touch_file = pathlib.Path(f"クラスタリング/2023/{category}_{app_name}.csv")
+        touch_file = pathlib.Path(f"クラスタリング/2021/{category}_{app_name}.csv")
         touch_file.touch()
         return
     sentence_vectors = model.encode(sentences)
     domain_docs = {f'{app_name}': sentences}
     doc_embeddings = compute_embeddings(domain_docs)
-    threshold = 0.8
     G = create_graph(doc_embeddings, threshold, sentence_vectors)
     # Perform clustering of G, parameters weighting and seed can be omitted
     chinese_whispers(G, weighting='top', iterations=20)
@@ -293,9 +293,9 @@ def cw(input_csv_file, category, app_name): # 指定されたアプリでのク�
         cluster.insert(2, review[2])
         cluster.insert(3, review[3])
 
-    with open(f"クラスタリング/2023/{category}_{app_name}.csv", 'w', encoding='utf-8', newline='') as output_file:
+    with open(f"クラスタリング/CW/{category}_{app_name}_{threshold}.csv", 'w', encoding='utf-8', newline='') as output_file:
         csv_writer = csv.writer(output_file)
-        clusters.sort(reverse=False, key=lambda x:x[5])
+        # clusters.sort(reverse=False, key=lambda x:x[5])
         csv_writer.writerows(clusters)
 
 def kmeans(input_csv_file, category, app_name):
@@ -451,26 +451,28 @@ def main():
              '楽天ペイ']
 
     # 個別に実行
-    # category = 'google'
-    # app_name = 'capcut'
-    # input_csv_file = f'抽出結果/2023/{category}_{app_name}.csv'
-    # cw(input_csv_file, category, app_name)
-    # cw_check(input_csv_file, category, app_name)
+    category = 'google'
+    app_name = 'capcut'
+    input_csv_file = f'抽出結果/2021/{category}_{app_name}.csv'
+    # for i in tqdm(range(0, 21), total=21, desc=f"Processing Rows"):  # 0から20までの範囲を0.05倍して0から1にする
+    #     threshold = i / 20.0
+    #     cw(input_csv_file, category, app_name, threshold)
+    cw_check(input_csv_file, category, app_name)
     # kmeans(input_csv_file, category, app_name)
     # agg(input_csv_file, category, app_name)
     # create_cluster_name(category, app_name)
 
     # まとめて実行
-    for app_name in tqdm(app_names23, total=len(app_names23), desc=f"Processing Rows"):
-        category = 'google'
-        input_csv_file = f'抽出結果/2023/{category}_{app_name}.csv'
-        cw(input_csv_file, category, app_name)
-        create_cluster_name(category, app_name)
+    # for app_name in tqdm(app_names23, total=len(app_names23), desc=f"Processing Rows"):
+    #     category = 'google'
+    #     input_csv_file = f'抽出結果/2023/{category}_{app_name}.csv'
+    #     cw(input_csv_file, category, app_name)
+    #     create_cluster_name(category, app_name)
 
-        category = 'twitter'
-        input_csv_file = f'抽出結果/2023/{category}_{app_name}.csv'
-        cw(input_csv_file, category, app_name)
-        create_cluster_name(category, app_name)
+    #     category = 'twitter'
+    #     input_csv_file = f'抽出結果/2023/{category}_{app_name}.csv'
+    #     cw(input_csv_file, category, app_name)
+    #     create_cluster_name(category, app_name)
 
 
 if __name__ == '__main__':
