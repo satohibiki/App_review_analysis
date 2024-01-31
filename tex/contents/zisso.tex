@@ -87,7 +87,7 @@
 \end{table}
 
 Google PlayストアのレビューをスクレイピングするためにPythonのプログラムである\verb|get_google_play_review.py|を作成した. 
-実装したプログラムの概要を次に示す. 
+作成したプログラムの概要を次に示す. 
 
 \begin{enumerate}
   \item アプリのパッケージ名, 言語, 取得する数, 順序を指定してレビューの一覧を取得
@@ -160,7 +160,7 @@ google-play-scraperでは外部依存関係なしでPython用のGoogle Playス�
   \end{tabular}\end{center}
 \end{table}
 
-Twitterのツイート取得に関してはTwitter APIを使用してスクレイピングを行う. Twitter APIのプランに関してはFree, Basic, Pro, Enterpriseの4つのプランが用意されておりそれぞれ料金や使用できる機能などが異なる. 大規模なサービスやビジネス向けのEnterpriseプラン以外の3つのプランの違いの一部を表\ref{tb:xplan}に示す. 
+Twitterのツイート取得に関してはTwitter APIを使用してスクレイピングを行う. Twitter APIのプランに関してはFree, Basic, Pro, Enterpriseの4つのプランが用意されており, それぞれ料金や使用できる機能などが異なる. 大規模なサービスやビジネス向けのEnterpriseプラン以外の3つのプランの違いの一部を表\ref{tb:xplan}に示す. 
 
 \begin{table}[H]
   \caption{プランとできること}
@@ -174,7 +174,7 @@ Twitterのツイート取得に関してはTwitter APIを使用してスクレ�
     月間ツイート取得数&0件&10,000件&1,000,000件 \\\hline
   \end{tabular}\end{center}
 \end{table}
-表\ref{tb:xplan}よりツイートを取得するためにはBasicプラン以上に加入する必要がある. Basicプランに加入した場合でも合計で30,000件しか取得できないため本研究では先行研究のデータセットを追加で使用することとした. Twitterの利用規約によると, Twitterが提供するインターフェイスを介して行うスクレイピング以外は禁止としている. そのため, seleniumなどを使用したスクレイピングは行わなかった.  
+表\ref{tb:xplan}よりツイートを取得するためにはBasicプラン以上に加入する必要がある. Basicプランに加入した場合でも合計で30,000件しか取得できないため, データセットの不足を補うため本研究では先行研究のデータセットを追加で使用することとした. Twitterの利用規約によると, Twitterが提供するインターフェイスを介して行うスクレイピング以外は禁止としている. そのため, seleniumなどを使用したスクレイピングは行わなかった.  
 
 Twitter APIを使用してツイートを取得するためにPythonのプログラムである\verb|get_tweet.py|を作成した. このプログラムではTwitter APIにアクセスするためのライブラリであるTweepy\cite{tweepy}を使用した. 
 実装したプログラムの概要を次に示す.
@@ -187,7 +187,7 @@ Twitter APIを使用してツイートを取得するためにPythonのプログ
 \begin{itemize}
  \item max\_result : 検索結果の最大数. 10〜100の数値で, デフォルトは10
  \item query: 検索ワード
- \item tweet\_field: リスト形式でツイートフィールドを選択. 今回はツイート日時を取得するために["created\_at"]とした. 
+ \item tweet\_field: リスト形式でツイートフィールドを選択. 今回はツイート日時を取得するために["created\_at"]とした
  \item end\_time: 期間の終わりを指定できる (UTCタイムスタンプ) 
 \end{itemize}
 search\_resent\_tweetsメソッドは最大で過去7日間まで遡ってツイートを取得できる. search\_all\_tweetsメソッドでは全てのツイートを取得できるが, Academic Researchアクセスの利用資格があるものしか使用できない. このアクセスを利用するにはAcademic Research申請を提出する必要があり, ``修士課程の学生, 博士号取得候補者, 博士研究員, 大学教員, 学術機関または大学の研究員である''ことが申し込みをする1つの条件となっている\cite{academic-research}. 
@@ -220,8 +220,8 @@ search\_resent\_tweetsメソッドは最大で過去7日間まで遡ってツイ
  \caption{前処理の例\label{fig:preprocessing}}
 \end{figure}
 
-最後に, 前処理した結果をcsvファイルにて保存する. 
-表\ref{tb:googlecsv}, 表\ref{tb:twittercsv}に前処理後に生成されるcsvファイルの一部を示す. 
+最後に, 前処理した結果をcsvファイルに保存する. 
+表\ref{tb:googlecsv}, 表\ref{tb:twittercsv}に前処理した結果を格納するcsvファイルの一部を示す. 
 
 \begin{table}[H]
   \caption{レビューの前処理結果 (BuzzVideo) }
@@ -256,7 +256,7 @@ search\_resent\_tweetsメソッドは最大で過去7日間まで遡ってツイ
   \end{tabularx}\end{center}
 \end{table}
 保存する項目は, 投稿日時 (at) , レビューのid (reviewId) またはツイートid (id) , そして, 前処理した文章である. 
-1つのレビュー, ツイートをいくつかの文に分割した場合には同じreviewId, idが割り振られていることがわかる. 
+1つのレビュー, ツイートをいくつかの文に分割した場合には同じreviewId, idが割り振られる. 
 
 %ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
@@ -316,22 +316,22 @@ search\_resent\_tweetsメソッドは最大で過去7日間まで遡ってツイ
 このjsonファイルは次に示す要素によって構成される. 
 
 \begin{itemize}
-  \item version: バージョンを表す. 本研究で用意したデータセットはSQuAD 2.0と同じバージョンであるため, v2.0とする. (詳細は後述)
+  \item version: バージョンを表す. 本研究で用意したデータセットはSQuAD 2.0と同じバージョンであるため, v2.0とする (詳細は後述)
   \item title: contextのタイトル
-  \item paragraphs: context一つとそれに関連する質問, 答えがリスト形式で保持されている
+  \item paragraphs: 1つのcontextとそれに関連する質問, 答えがリスト形式で保持されている
   \item qas: 質問と回答がリスト形式となっている
   \item context: 元の文章 (抽出する前の文章) 
   \item id: 設定したid
   \item question: 質問文
   \item is\_impossible: 答えられない質問ならtrue, それ以外はfalse
   \item plausible\_answers: 質問が答えられない時のみ存在し, 問題文から答えになりうる部分を抽出
-  \item answers: contextから抜き出したキーフレーズとその位置情報がリスト形式で保持されている. キーフレーズを複数用意することもできる. 
+  \item answers: contextから抜き出したキーフレーズとその位置情報がリスト形式で保持されている. キーフレーズを複数用意することもできる
   \item text: contextから抜き出したキーフレーズのテキスト
   \item answer\_start: contextから抜き出したキーフレーズの位置情報
 \end{itemize}
 
 ここでSQuADとは質問応答タスクで一般的に使用されているスタンフォード質問回答データセットである. 
-SQuADにはv1.1とv2.0という2つのバージョンがある. v1.1は全ての質問が回答可能で, v2.0では答えられない質問が含まれる. 本研究ではキーフレーズが含まれないレビューも存在し, データセットはSQuAD 2.0と同じ形式であるため, v2.0としている. 
+SQuADにはv1.1とv2.0という2つのバージョンがある. v1.1は全ての質問が回答可能で, v2.0では答えられない質問が含まれる. 本研究ではキーフレーズが含まれないレビューも存在し, SQuAD 2.0と同じ形式であるため, v2.0としている. 
 
 \subsection{モデルのファインチューニング}
 用意したデータセットを用いて事前学習済みモデルをファインチューニングする. 本研究では事前学習済みモデルとしてHugging FaceのTransformersを通して利用できる東北大学のモデル\cite{tohoku}を使用する. このモデルは日本語のWikipediaのデータを用いて学習されている\cite{tohoku}. 
@@ -384,7 +384,7 @@ def execute_answer(context, question):
   \begin{center}
   \begin{tabularx}{\linewidth}{l|l|X|X|X}
     \hline
-    id&アプリ名&投稿日時&元のレビュー文&抽出したキーフレーズ\\\hline\hline
+    id&アプリ名&投稿日時&元のレビュー&抽出したキーフレーズ\\\hline\hline
     g\_955&coke\_on&2021-11-27 11:17:03&商品が出ない事が何回か発生しました&商品が出ない\\\hline
     g\_959&coke\_on&2021-11-11 15:32:50&そもそも自販機側が黄色点滅していなくて買えないことが多過ぎです&自販機側が黄色点滅していなくて買えない\\\hline
     g\_961&coke\_on&2021-11-14 23:13:26&今まではcoke\_on対応を優先してかっていたが、これからはコカコーラ製品全般をできるだけ買わないようにする&今まではcoke\_on対応を優先してかっていたが、これからはコカコーラ製品全般をできるだけ買わないようにする\\\hline
@@ -392,7 +392,7 @@ def execute_answer(context, question):
   \end{tabularx}\end{center}
 \end{table}
 
-表\ref{tb:googleqa}からわかるように, ``自販機との接続を早くしてほしい''という文章から``自販機との接続を早くしてほしい''というキーフレーズを抽出するなど, 元の文章がそのままキーフレーズとして抽出されることがある. 
+表\ref{tb:googleqa}からわかるように, ``自販機との接続を早くしてほしい''という元のレビューから``自販機との接続を早くしてほしい''というキーフレーズを抽出するなど, 元のレビューがそのままキーフレーズとして抽出されることがある. 
 
 %ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
@@ -452,7 +452,7 @@ SentenceBertJapaneseクラスの引数に日本語モデル名を与えること
 \subsection{グラフクラスタリング}
 次に, それぞれの抽出したキーフレーズをノード, ノードのベクトル間のコサイン類似度をエッジとする無向グラフを作成する. 
 
-作成されたグラフからChinese Whispersによりグラフクラスタリングが実行される. 作成したクラスタリングに関するcw関数はソースコード\ref{cw}に示す. 
+作成されたグラフからChinese Whispersによりグラフクラスタリングが実行される. クラスタリングを実行するcw関数をソースコード\ref{cw}に示す. 
 
 \begin{lstlisting}[caption=cw関数,label=cw]
   def cw (input_csv_file, category, app_name) :
@@ -478,13 +478,13 @@ SentenceBertJapaneseクラスの引数に日本語モデル名を与えること
   \item モデルを使用して文のベクトル表現 (sentence\_vectors) を生成 (3行目) 
   \item Chinese Whispersで使用される閾値 (threshold) , 抽出したキーフレーズとクラスタ番号を格納する2次元配列 (clusters) を用意 (5, 6行目)
   \item create\_graph関数を使用し, グラフを作成. 引数には文の埋め込み, 閾値, 文のベクトル表現を与える (9行目)
-  \item chinese\_whispers関数の引数に作成されたグラフ, エッジの重み付けを決定する方法, Chinese Whispersアルゴリズムの反復回数を与えて実行
+  \item chinese\_whispers関数の引数に作成されたグラフ, エッジの重み付けを決定する方法 (詳細は後述) , Chinese Whispersアルゴリズムの反復回数を与えて実行
   \item chinese\_whispers関数の実行によりグラフの各ノードに抽出されたキーフレーズ (text) とクラスタ番号 (label) が格納されているためfor文で各情報をclusterに格納していく (12行目〜15行目)
 \end{enumerate}
 
 本研究ではエッジの重み付けを決定する方法はデフォルトのtop (エッジの重みをそのまま使用する方法) にし, エッジの最大トークンが重みとして使用される. また, 反復回数は20とした. 
 
-クラスタリングした結果, それぞれの文章にクラスタを識別する番号 (以下 : クラスタ番号) が振られる. クラスタ番号が同じものが同じクラスタとなり, クラスタ番号が近いものは意味的相関が近いことを表す. コサイン類似度の閾値を決めることで, どの程度類似した文章を同じクラスタと定義するのかが決定される. 
+クラスタリングした結果, それぞれの文章にクラスタを識別する番号 (以下 : クラスタ番号) が振られる. クラスタ番号が同じものが同じクラスタとなり, クラスタ番号が近いものは意味的相関が近いことを表す. ノード間のコサイン類似度スコアの閾値を決めることで, どの程度類似した文章を同じクラスタとして定義するのかが決定される. 
 結果はcsvファイルに保存される. 表\ref{tb:clustering}に示されるように抽出したキーフレーズにそれぞれクラスタ番号が振られる. 
 
 \begin{table}[H]
@@ -531,13 +531,13 @@ KeyBERTのキーワード抽出によりクラスタ名を決定する手法に�
   def keybert (text) :
     # spaCyを使用して名詞, 固有名詞, 動詞, 形容詞, 数詞を抽出
     doc = nlp (text) 
-    tokens = [token.text for token in doc if token.pos_ == 'NOUN' or token.pos_ == 'PROPN' or token.pos_ == 'ADJ' or token.pos_ == 'NUM' or token.pos_ == 'VERB']
+    tokens = [token.text for token in doc if token.pos_ == ''NOUN'' or token.pos_ == ''PROPN'' or token.pos_ == ``ADJ'' or token.pos_ == ``NUM'' or token.pos_ == ``VERB'']
     # tokensをKeyBERTに渡してキーワード抽出
-    tokens_text = ' '.join (tokens) 
+    tokens_text = `` ''.join (tokens) 
     keywords = keybert_model.extract_keywords (tokens_text, top_n = 3, keyphrase_ngram_range= (1, 1) , stop_words=None) 
-    title = ""
+    title = ``''
     for title_word in keywords:
-        title = title + "【" + title_word[0] + "】 "
+        title = title + ``【'' + title_word[0] + ``】 ''
     return title
 \end{lstlisting}
 
@@ -546,7 +546,7 @@ KeyBERTのキーワード抽出によりクラスタ名を決定する手法に�
 \begin{enumerate}
   \item クラスタの各キーフレーズを結合した1つの大きな文書 (text) をトークン化する (10行目)
   \item トークンのうち名詞, 固有名詞, 動詞, 形容詞, 数詞のみを含む配列を作成 (11行目)
-  \item この配列を' ' (空白) で結合し, 新たな文書を生成 (13行目)
+  \item この配列を`` '' (空白) で結合し, 新たな文書を生成 (13行目)
   \item KeyBERTモデルのインスタンスからキーワードを抽出するメソッド (extract\_keywords) を呼び出し, キーワードを配列で取得. メソッドの引数には抽出対象となる文書, 抽出するキーワードの数, キーワードの長さを与える. (14行目)
   \item キーワードからクラスタ名を生成し, 返す (15行目〜18行目)
 \end{enumerate}
@@ -581,7 +581,7 @@ KeyBERTのキーワード抽出によりクラスタ名を決定する手法に�
 アプリごとの詳細画面では, 次に示す項目や機能を表示, 付与する.
 
 \begin{itemize}
-  \item 期間, キーワードで絞り込める検索機能の付与
+  \item 期間, キーワードで絞り込める検索機能
   \item アコーディオンメニューを使用して抽出したキーフレーズの一覧をクラスタごとに表示
   \item 抽出したキーフレーズをクリックすると投稿日時や元のレビューをモーダルウィンドウで表示
   \item 日ごとのレビュー数を表す折れ線グラフの表示
@@ -721,7 +721,7 @@ dataのtypeでグラフタイプを指定でき, layoutでタイトルや表の�
   \centering
   \includegraphics[scale=0.4]
     {contents/images/top10.png}
-  \caption{Google Fitのレビューにおける種類ごとのレビュー数\label{fig:top10}}
+  \caption{Google Fitのレビューにおけるクラスタごとのレビュー数\label{fig:top10}}
 \end{figure}
 
 このグラフを確認すると, インストールやログインに関する不具合や歩数が減少してしまう不具合を報告するレビューが多いことがわかる. このように1つ1つのレビューを確認しなくてもどのような内容のレビューが多く投稿されているのかが可視化されている. 
